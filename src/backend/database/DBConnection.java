@@ -1,13 +1,8 @@
 package backend.database;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
-
 import backend.properties.Props;
 
 public class DBConnection {
@@ -21,8 +16,8 @@ public class DBConnection {
 			Props props = Props.getInstance();
 			Connection connection = null;
 			try {
-				Class.forName(""); // prop.getProperty("driver")
-				connection = DriverManager.getConnection(); // prop.getProperty("url"), prop.getProperty("user"), prop.getProperty("password")
+				Class.forName(props.getProp("driver")); // prop.getProperty("driver")
+				connection = DriverManager.getConnection(props.getProp("url"), props.getProp("user"), props.getProp("password"));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
