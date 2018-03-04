@@ -16,7 +16,7 @@ public class DBConnection {
 			Props props = Props.getInstance();
 			Connection connection = null;
 			try {
-				Class.forName(props.getProp("driver")); // prop.getProperty("driver")
+				Class.forName(props.getProp("driver"));
 				connection = DriverManager.getConnection(props.getProp("url"), props.getProp("user"), props.getProp("password"));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();

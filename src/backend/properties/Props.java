@@ -8,14 +8,13 @@ import java.util.Properties;
 public class Props {
 	
 	private static Props propsInstance = null;
-	private Properties props = null; 
+	private Properties props = new Properties(); 
 	
 	private Props() {
-		Properties prop = new Properties();
 		InputStream is = null;
 		try {
-			is = new FileInputStream("");
-			prop.load(is);
+			is = new FileInputStream("C:\\Users\\jc\\Documents\\Java\\JEE\\BlueTube\\configs\\bluetube.properties");
+			this.props.load(is);
 		}catch(IOException e){
 			System.out.println(e.toString());
 		}
