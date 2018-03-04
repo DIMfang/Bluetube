@@ -30,41 +30,42 @@ public class Register extends HttpServlet {
      */
     public Register() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		Connection con = DBConnection.getConnection();
 		Props props = Props.getInstance();
 		PreparedStatement pst = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;	
 		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-
 		try {
-//			Class.forName(props.getProp("driver"));
-			pst = con.prepareStatement(props.getProp("q1"));
-			rs = pst.executeQuery();
-			while(rs.next()) {
-				System.out.println(rs.getString("type_des"));
-			}
+			pst = con.prepareStatement(props.getProp("insertUser"));
+			pst.setString(1, json.getString("name"));
+			pst.setString(2, json.getString("lastname"));
+			pst.setString(3, json.getString("username"));
+			pst.setString(4, json.getString("password"));
+			pst.setString(5, json.getString("email"));
+			int result = pst.executeUpdate();
+			
+			if(result == 1) {
+				System.out.println("Usuario agregado");
+			}		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+	
 	}
 
+	
 }
 
 
