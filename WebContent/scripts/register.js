@@ -21,3 +21,11 @@ function post() {
     });
     xhr.execute(inputs);
 }
+
+function login(){
+	let inputs = getValues();
+	xhr.preparedXHR('POST', './Login', (data)=> {
+		console.log(data);
+	});
+	xhr.execute(inputs);
+}
