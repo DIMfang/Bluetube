@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>BlueTube</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen"/>
     <style>
         .titlediv {
             background-color: #42a1f4;
@@ -61,6 +61,8 @@
     </style>
 </head>
 <body>
+    <script src="scripts/XHR.js"></script>
+    <script src="scripts/register.js"></script>
 	<img src="img/Logo.png" id='Logo-icon' style='position: absolute; left:40%;height:20%; min-height: 150px;'>
     <div id="wrapper" style="min-width: 275px;">
         <div>
@@ -72,26 +74,26 @@
             <div class="infodiv">
                 <menutext>First Name</menutext>
                 <br>
-                <input id="nameInp" style="padding-left: 5px"></input>
+                <input id="firstname" style="padding-left: 5px"></input>
                 <br>
                 <menutext>Last Name</menutext>
                 <br>
-                <input style="padding-left: 5px" id="lastInp"></input>
+                <input style="padding-left: 5px" id="lastname"></input>
                 <br>
                 <menutext>Username</menutext>
                 <br>
-                <input style="padding-left: 5px" id="userInp"></input>
+                <input style="padding-left: 5px" id="username"></input>
                 <br>
                 <menutext>E-Mail</menutext>
                 <br>
-                <input style="padding-left: 5px" id="emailInp"></input>
+                <input style="padding-left: 5px" id="email"></input>
                 <br>
                 <menutext>Password</menutext>
                 <br>
-                <input style="padding-left: 5px" id="passInp"></input>
+                <input style="padding-left: 5px" id="password"></input>
                 <br>
                 <br>
-                <button class="defaultbutton">Create Account</button>
+                <button class="defaultbutton" onclick="post()">Create Account</button>
             </div>
         </div>
     </div>

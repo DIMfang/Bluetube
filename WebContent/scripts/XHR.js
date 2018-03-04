@@ -29,7 +29,7 @@ function myXHR () {
     this.setCallback = (callBack) => {
         xhr.onreadystatechange = () => {
             // Get method
-            if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300) {
+            if (xhr.readyState == 4 && xhr.status == 200) {
                 try {
                 	let data = JSON.parse(xhr.responseText);
                     callBack(data);
