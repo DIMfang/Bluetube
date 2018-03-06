@@ -52,7 +52,7 @@ public class Login extends HttpServlet {
 		
 		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 		try {			
-			stmt = connex.prepareStatement(propiedades.getProp("loginCheck"));
+			stmt = connex.prepareStatement(propiedades.getProp("checkLogin"));
 			stmt.setString(1, json.getString("username"));
 			stmt.setString(2, json.getString("password"));
 			rs = stmt.executeQuery();			

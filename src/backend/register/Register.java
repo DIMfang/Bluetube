@@ -1,10 +1,7 @@
 package backend.register;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -15,8 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import backend.database.DBConnection;
-import backend.properties.Props;
+import backend.database.Queries;
 
 /**
  * Servlet implementation class Register
@@ -43,41 +39,31 @@ public class Register extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Connection con = DBConnection.getConnection();
-		Props props = Props.getInstance();
-		PreparedStatement pst = null;
-		ResultSet rs = null;	
-		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+		PrintWriter out = response.getWriter();
+		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+		Queries queries = new Queries(); 
 		
-		try {
+		if (queries.checkEmail(params.getString("email"))) {
+			System.out.println("The email is already registered");
+			message.put("status", "1").put("message", "The email is already registered");
 			
-			pst = con.prepareStatement(props.getProp("findUsername"));
-			pst.setString(1, json.getString("username"));
-			rs = pst.executeQuery();
+		} else if (queries.checkUsername(params.getString("username"))) {
+			System.out.println("The username is already in use");
+			message.put("status", "2").put("message", "The username is already in use");
+		} else {		
 			
-			if(rs.next()) {
-				System.out.println("EL USUARIO YA EXISTE");
-			}else {
-				try {
-					
-					pst = con.prepareStatement(props.getProp("insertUser"));
-					pst.setString(1, json.getString("name"));
-					pst.setString(2, json.getString("lastname"));
-					pst.setString(3, json.getString("username"));
-					pst.setString(4, json.getString("password"));
-					pst.setString(5, json.getString("email"));
-					int result = pst.executeUpdate();
-					if(result == 1) {
-						System.out.println("Usuario agregado");
-					}		
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			if(queries.newUser(params)) {
+				System.out.println("User successfully added");
+				message.put("status", "3").put("message", "Congratulations!");
+			} else {
+				System.err.println("Unknow problema");
+				message.put("status", "4").put("message", "Unknown problem, try again");
 			}
-		}catch(SQLException e) {
-			e.printStackTrace();
 		}
+		out.println(message.toString());
 	}
+
+
 }
 
 

@@ -1,7 +1,7 @@
 package backend.register;
 
 import java.io.IOException;
-
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -48,7 +48,8 @@ public class Test extends HttpServlet {
 		try {
 			System.out.println(q.checkUsername(json.getString("username")));
 			System.out.println(q.checkEmail(json.getString("email")));
-		} catch (JSONException e) {
+			System.out.println(q.checkLogin(json.getString("username"), json.getString("password")));
+		} catch (JSONException | SQLException e) {
 			e.printStackTrace();
 		}
 		
