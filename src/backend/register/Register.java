@@ -42,13 +42,16 @@ public class Register extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		Connection con = DBConnection.getConnection();
 		Props props = Props.getInstance();
 		PreparedStatement pst = null;
 		ResultSet rs = null;	
 		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+		
 		try {
-			pst = con.prepareStatement(props.getProp("finduser"));
+			
+			pst = con.prepareStatement(props.getProp("findUsername"));
 			pst.setString(1, json.getString("username"));
 			rs = pst.executeQuery();
 			
@@ -56,6 +59,7 @@ public class Register extends HttpServlet {
 				System.out.println("EL USUARIO YA EXISTE");
 			}else {
 				try {
+					
 					pst = con.prepareStatement(props.getProp("insertUser"));
 					pst.setString(1, json.getString("name"));
 					pst.setString(2, json.getString("lastname"));

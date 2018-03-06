@@ -13,7 +13,7 @@ public class Props {
 	private Props() {
 		InputStream is = null;
 		try {
-			is = new FileInputStream("C:\\Users\\Fabio Pineda\\git\\BlueTube\\configs\\bluetube.properties");
+			is = new FileInputStream("C:\\Users\\jc\\Documents\\Java\\JEE\\BlueTube\\configs\\bluetube.properties");
 			this.props.load(is);
 		}catch(IOException e){
 			System.out.println(e.toString());

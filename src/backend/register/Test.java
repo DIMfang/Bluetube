@@ -1,10 +1,7 @@
-package backend.login;
+package backend.register;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -13,22 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import backend.database.DBConnection;
-import backend.properties.Props;
+import backend.database.Queries;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Test
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/Test")
+public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Test() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,32 +35,23 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		Connection connex = DBConnection.getConnection();
-		Props propiedades = Props.getInstance();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		
 		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		try {			
-			stmt = connex.prepareStatement(propiedades.getProp("loginCheck"));
-			stmt.setString(1, json.getString("username"));
-			stmt.setString(2, json.getString("password"));
-			rs = stmt.executeQuery();			
-			if(!rs.next()) {
-				System.out.println("The users does not exist or the password is incorrect");
-			}else {
-				System.out.println("Welcome");
-			}
-		} catch(SQLException e) {
+		Queries q = new Queries();
+		try {
+			System.out.println(q.checkUsername(json.getString("username")));
+			System.out.println(q.checkEmail(json.getString("email")));
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 }
