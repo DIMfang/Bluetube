@@ -5,18 +5,13 @@ function $(id) {
 }
 
 function getValues() {
-	if($("username").value && $("firstname").value && $("lastname").value && $("email").value && $("password").value != null){
-		return {
-			username: $("username").value,
-			name: $("firstname").value,
-			lastname: $("lastname").value,
-			email: $("email").value,
-			password: $("password").value
-		}
-	} else {
-		alert('There are empty inputs');
-		return null;
-	}
+  return {
+    username: $("username").value,
+    name: $("firstname").value,
+    lastname: $("lastname").value,
+    email: $("email").value,
+    password: $("password").value
+  }
 }
 
 function post() {
@@ -29,12 +24,3 @@ function post() {
     }
 }
 
-function login(){
-	let inputs = getValues();
-	if(inputs != null){
-		xhr.preparedXHR('POST', './Login', (data)=> {
-			console.log(data);
-		});
-		xhr.execute(inputs);
-	}
-}

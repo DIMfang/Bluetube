@@ -1,20 +1,28 @@
 package backend.properties;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class Props {
-	
 	private static Props propsInstance = null;
-	private Properties props = new Properties(); 
+//	private static ArrayList<String> arrayOfFiles = new ArrayList<String>();
+	private HashMap<String, Properties> props = new HashMap<String, Properties>();
 	
 	private Props() {
-		InputStream is = null;
 		try {
-			is = new FileInputStream("C:\\Users\\jc\\Documents\\Java\\JEE\\BlueTube\\configs\\bluetube.properties");
-			this.props.load(is);
+			Properties prop = new Properties(System.getProperties()); 
+			prop.load(getClass().getClassLoader().getResourceAsStream("db.properties"));
+			this.props.put("db", prop);
+			prop.load(getClass().getClassLoader().getResourceAsStream("queries.properties"));
+			this.props.put("queries", prop);
+			prop.load(getClass().getClassLoader().getResourceAsStream("messages.properties"));
+			this.props.put("messages", prop);
+//			for(int i = 0; i < arrayOfFiles.size(); i++) {
+//				String fileName = arrayOfFiles.get(i);
+//				prop.load(getClass().getClassLoader().getResourceAsStream(fileName + ".properties"));
+//				props.put(fileName, prop);
+//			}
 		}catch(IOException e){
 			System.out.println(e.toString());
 		}
@@ -31,9 +39,13 @@ public class Props {
 		return propsInstance;
 	}
 	
+//	public static void loadFile(String fileName) {
+//		arrayOfFiles.add(fileName);
+//	};
+	
 
-	public String getProp(String prop) {
-		return this.props.getProperty(prop);
+	public String getProp(String file, String prop) {
+		return this.props.get(file).getProperty(prop);
 	}
 	
 }

@@ -1,9 +1,7 @@
 package backend.login;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -12,11 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import backend.database.DBConnection;
-import backend.properties.Props;
+import backend.database.Queries;
+
 
 /**
  * Servlet implementation class Login
@@ -37,33 +36,44 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		Connection connex = DBConnection.getConnection();
-		Props propiedades = Props.getInstance();
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+	
+		Queries queries = new Queries();
+		PrintWriter out = response.getWriter();
+		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+		HttpSession session = request.getSession();
 		
-		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		try {			
-			stmt = connex.prepareStatement(propiedades.getProp("checkLogin"));
-			stmt.setString(1, json.getString("username"));
-			stmt.setString(2, json.getString("password"));
-			rs = stmt.executeQuery();			
-			if(!rs.next()) {
-				System.out.println("The users does not exist or the password is incorrect");
-			}else {
-				System.out.println("Welcome");
+		if(session.isNew()) {
+			try {
+				if(queries.checkLogin(params.getString("username"), params.getString("password"))) {
+					message.put("status", 13).put("message", "Sucess");
+				} else {
+					message.put("status", 14).put("message", "invalid username or password");
+					session.invalidate();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
 			}
-		} catch(SQLException e) {
-			e.printStackTrace();
+		} else {
+			message.put("status", 2).put("message", "You are already log in");
+		}
+		
+		out.println(message.toString());
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private void storeValue(String value, HttpSession session) {
+		if(value==null) {
+			session.setAttribute("session", "");
+		} else {
+			session.setAttribute("session", value);
 		}
 	}
-
+	
 }

@@ -85,7 +85,7 @@
 </head>
 <body>
     <script src="scripts/XHR.js"></script>
-    <script src="scripts/register.js"></script>
+    <script src="scripts/login.js"></script>
     <img src="img/Logo.png" id='Logo-icon'>
     <div id="wrapper">
         <div>
@@ -94,21 +94,21 @@
             </div>
         </div>
         <div class="maincontainer">
-            <div class="infodiv">
-                <b>Username</b>
-                <br>
-                <input id="username"></input>
-                <br>
-                <b>Password</b>
-                <br>
-                <input id="password" type="password"></input>
-                <br>
-                <br>
-                <button class="defaultbutton" onclick="login();">Log In</button>
-            </div>
+          <div class="infodiv">
+            <b>Username</b>
+            <br>
+            <input id="username" name="username">
+            <br>
+            <b>Password</b>
+            <br>
+            <input id="password" type="password" name="password">
+            <br>
+            <br>
+            <button onclick="login()" class="defaultbutton">Login</button>             
+          </div>
         </div>
         <div class="footerdiv">
-        	<b><a href="Registry.html" style="color: black;">Don't have an account? Create one!</a></b>
+          <b><a href="register.html" style="color: black;">Don't have an account? Create one!</a></b>
         </div>
     </div>
 </body>

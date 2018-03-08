@@ -2,6 +2,7 @@ package backend.register;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -43,23 +44,28 @@ public class Register extends HttpServlet {
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 		Queries queries = new Queries(); 
 		
-		if (queries.checkEmail(params.getString("email"))) {
-			System.out.println("The email is already registered");
-			message.put("status", "1").put("message", "The email is already registered");
-			
-		} else if (queries.checkUsername(params.getString("username"))) {
-			System.out.println("The username is already in use");
-			message.put("status", "2").put("message", "The username is already in use");
-		} else {		
-			
-			if(queries.newUser(params)) {
-				System.out.println("User successfully added");
-				message.put("status", "3").put("message", "Congratulations!");
-			} else {
-				System.err.println("Unknow problema");
-				message.put("status", "4").put("message", "Unknown problem, try again");
-			}
+		try {
+			if (queries.checkEmail(params.getString("email"))) {
+				System.out.println("The email is already registered");
+				message.put("status", "1").put("message", "The email is already registered");
+				
+			} else if (queries.checkUsername(params.getString("username"))) {
+				System.out.println("The username is already in use");
+				message.put("status", "2").put("message", "The username is already in use");
+			} else {		
+				
+				if(queries.newUser(params)) {
+					System.out.println("User successfully added");
+					message.put("status", "3").put("message", "Congratulations!");
+				} else {
+					System.err.println("Unknow problema");
+					message.put("status", "4").put("message", "Unknown problem, try again");
+				}
+			}	
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}
+		
 		out.println(message.toString());
 	}
 

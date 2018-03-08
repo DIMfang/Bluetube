@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.json.JSONObject;
 
 import backend.properties.Props;
+import backend.security.Encrypt;
 
 public class Queries {
 	
@@ -25,60 +26,44 @@ public class Queries {
 	}
 	
 	// Function to verify if the username is already is use
-	public boolean checkUsername(String username) {
-		try {
-			String query = this.props.getProp("findUsername");
-			this.pst = this.con.prepareStatement(query);
-			this.pst.setString(1, username);
-			this.rs = this.pst.executeQuery();
-			return this.rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+	public boolean checkUsername(String username) throws SQLException {
+		this.pst = this.con.prepareStatement(this.props.getProp("queries", "findUsername"));
+		this.pst.setString(1, username);
+		this.rs = this.pst.executeQuery();
+		return this.rs.next();
+		
 	}
 	
 	// Function to verify if the email is already registered
-	public boolean checkEmail(String email) {
-		try {
-			String query = this.props.getProp("findEmail");
-			this.pst = this.con.prepareStatement(query);
-			this.pst.setString(1, email);
-			this.rs = this.pst.executeQuery();
-			return this.rs.next();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+	public boolean checkEmail(String email) throws SQLException{
+		this.pst = this.con.prepareStatement(this.props.getProp("queries", "findEmail"));
+		this.pst.setString(1, email);
+		this.rs = this.pst.executeQuery();
+		return this.rs.next();
 	}
 	
 	// Function to verify is the user exist
 	public boolean checkLogin(String username, String password) throws SQLException {	
-		String query = this.props.getProp("checkLogin");
-		this.pst = this.con.prepareStatement(query);
+		String encryptedPass = Encrypt.HashPassword(password);
+		this.pst = this.con.prepareStatement(this.props.getProp("queries", "checkLogin"));
 		this.pst.setString(1, username);
-		this.pst.setString(2, password);
+		this.pst.setString(2, encryptedPass);
 		this.rs = this.pst.executeQuery();
 		return this.rs.next();
 	}
 	
 	// Function to add a new user
-	public boolean newUser(JSONObject userData) {
-		try {	
-			pst = con.prepareStatement(props.getProp("insertUser"));
-			pst.setString(1, userData.getString("name"));
-			pst.setString(2, userData.getString("lastname"));
-			pst.setString(3, userData.getString("username"));
-			pst.setString(4, userData.getString("password"));
-			pst.setString(5, userData.getString("email"));
-			int result = pst.executeUpdate();
-			if(result == 1) {
-				return true;
-			}		
-		} catch (SQLException e) {
-			e.printStackTrace(); // Hay que ver como manejar el error
-		}
-		return false;
+	public boolean newUser(JSONObject userData) throws SQLException {
+		// Como se, si se encripto bien?
+		String encryptedPass = Encrypt.HashPassword(userData.getString("password"));
+		pst = con.prepareStatement(props.getProp("queries", "insertUser"));
+		pst.setString(1, userData.getString("name"));
+		pst.setString(2, userData.getString("lastname"));
+		pst.setString(3, userData.getString("username"));
+		pst.setString(4, encryptedPass);
+		pst.setString(5, userData.getString("email"));
+		int result = pst.executeUpdate();
+		return (result == 1) ? true : false;
 	}
 
 }
