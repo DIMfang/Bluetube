@@ -35,11 +35,10 @@ public class Logout extends HttpServlet {
 		JSONObject json = new JSONObject();
 		if(session.isNew()) {
 			json.put("status", 304).put("res", "session not started");
-			session.invalidate();
 		} else {
 			json.put("status", 200).put("res", "session finished");
-			session.invalidate();
 		}
+		session.invalidate();
 		out.println(json.toString());
 	}
 

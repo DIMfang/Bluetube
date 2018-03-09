@@ -58,7 +58,7 @@ public class Register extends HttpServlet {
 					System.out.println("User successfully added");
 					message.put("status", "3").put("message", "Congratulations!");
 				} else {
-					System.err.println("Unknow problema");
+					System.err.println("Unknow problem");
 					message.put("status", "4").put("message", "Unknown problem, try again");
 				}
 			}	

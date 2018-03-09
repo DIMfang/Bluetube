@@ -44,8 +44,8 @@ public class Props {
 //	};
 	
 
-	public String getProp(String file, String prop) {
-		return this.props.get(file).getProperty(prop);
+	public String getProp(String key, String prop) {
+		return this.props.get(key).getProperty(prop);
 	}
 	
 }
