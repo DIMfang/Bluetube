@@ -1,28 +1,26 @@
 package backend.properties;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
 public class Props {
+	
 	private static Props propsInstance = null;
-//	private static ArrayList<String> arrayOfFiles = new ArrayList<String>();
+	private ArrayList<String> arrayOfFiles = new ArrayList<String>();
 	private HashMap<String, Properties> props = new HashMap<String, Properties>();
 	
 	private Props() {
 		try {
+			arrayOfFiles = Files.getFiles("properties");
 			Properties prop = new Properties(System.getProperties()); 
-			prop.load(getClass().getClassLoader().getResourceAsStream("db.properties"));
-			this.props.put("db", prop);
-			prop.load(getClass().getClassLoader().getResourceAsStream("queries.properties"));
-			this.props.put("queries", prop);
-			prop.load(getClass().getClassLoader().getResourceAsStream("messages.properties"));
-			this.props.put("messages", prop);
-//			for(int i = 0; i < arrayOfFiles.size(); i++) {
-//				String fileName = arrayOfFiles.get(i);
-//				prop.load(getClass().getClassLoader().getResourceAsStream(fileName + ".properties"));
-//				props.put(fileName, prop);
-//			}
+			for(int i = 0; i < arrayOfFiles.size(); i++) {
+				String[] fileName = arrayOfFiles.get(i).split("\\.");
+				prop.load(getClass().getClassLoader().getResourceAsStream(arrayOfFiles.get(i)));
+				props.put(fileName[0], prop);
+			}
+			
 		}catch(IOException e){
 			System.out.println(e.toString());
 		}
@@ -38,14 +36,19 @@ public class Props {
 		}
 		return propsInstance;
 	}
-	
-//	public static void loadFile(String fileName) {
-//		arrayOfFiles.add(fileName);
-//	};
-	
-
-	public String getProp(String key, String prop) {
+		
+	// Getters
+	public String getProperty(String key, String prop) {
 		return this.props.get(key).getProperty(prop);
+	}
+	public String getDB(String prop) {
+		return this.props.get("db").getProperty(prop);
+	}
+	public String getQuery(String prop) {
+		return this.props.get("queries").getProperty(prop);
+	}
+	public String getMessage(String prop) {
+		return this.props.get("messages").getProperty(prop);
 	}
 	
 }

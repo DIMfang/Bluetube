@@ -1,58 +1,45 @@
 package backend.register;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import backend.database.Queries;
-
-/**
- * Servlet implementation class Test
- */
-@WebServlet("/Test")
-public class Test extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Test() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+public class Test {
+	
+	public static ArrayList<String> getFiles(String format) {
+		ArrayList<String> nameOfFiles = new ArrayList<String>(); 
+		String path = "C:\\Develop\\apache-tomcat-8.5.20\\conf\\Catalina\\localhost";
+		File folder = new File(path);
+		// + "\\conf\\Catalina\\localhost"
+		File[] listOfFiles = folder.listFiles();
+		 
+		
+		for(int i = 0; i < listOfFiles.length; i++) {
+			if(listOfFiles[i].isFile() && listOfFiles[i].getName().endsWith("." + format)) {
+				nameOfFiles.add(listOfFiles[i].getName()); 
+			}
+		}
+		return nameOfFiles; 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	public static void main(String[] args) {
 		
-		JSONObject json = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		Queries q = new Queries();
-		try {
-			System.out.println(q.checkUsername(json.getString("username")));
-			System.out.println(q.checkEmail(json.getString("email")));
-			System.out.println(q.checkLogin(json.getString("username"), json.getString("password")));
-		} catch (JSONException | SQLException e) {
-			e.printStackTrace();
+		ArrayList<String> arr = new ArrayList<String>();
+		//arr = getFiles("properties");
+//		Iterator<String> i = arr.iterator();
+//		while(i.hasNext()) {
+//			System.out.println(i.next());
+//		}
+//		for(int j = 0; j < arr.size(); j++) {
+//			System.out.println(arr.get(j));
+//		}
+		for(Object s : arr.toArray()) {
+			System.out.println(s);
 		}
 		
-	}
-
+		
+    }
 }
+
+

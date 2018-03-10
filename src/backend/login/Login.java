@@ -3,6 +3,7 @@ package backend.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -42,7 +43,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		Queries queries = new Queries();
 		PrintWriter out = response.getWriter();
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));

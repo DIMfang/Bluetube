@@ -31,8 +31,7 @@ public class Context implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
-         @SuppressWarnings("unused")
-		Props prop = Props.getInstance();
+         Props.getInstance();
     }
 	
 }
