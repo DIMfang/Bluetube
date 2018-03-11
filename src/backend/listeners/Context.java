@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import backend.properties.Props;
+import backend.util.properties.Props;
 
 /**
  * Application Lifecycle Listener implementation class Context

@@ -1,4 +1,4 @@
-package backend.properties;
+package backend.util.properties;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +13,8 @@ public class Props {
 	
 	private Props() {
 		try {
-			arrayOfFiles = Files.getFiles("properties");
+			String path = System.getProperty("catalina.home") + "\\conf\\Catalina\\localhost";
+			arrayOfFiles = Files.getFiles(path, "properties");
 			Properties prop = new Properties(System.getProperties()); 
 			for(int i = 0; i < arrayOfFiles.size(); i++) {
 				String[] fileName = arrayOfFiles.get(i).split("\\.");

@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 import org.json.JSONObject;
 
-import backend.properties.Props;
-import backend.security.Encrypt;
+import backend.util.properties.Props;
+import backend.util.security.Encrypt;
 
 public class Queries {
 	

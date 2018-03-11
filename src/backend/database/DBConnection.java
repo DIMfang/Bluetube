@@ -3,7 +3,8 @@ package backend.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import backend.properties.Props;
+
+import backend.util.properties.Props;
 
 public class DBConnection {
 	

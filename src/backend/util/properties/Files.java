@@ -1,13 +1,12 @@
-package backend.properties;
+package backend.util.properties;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class Files {
 	
-	public static ArrayList<String> getFiles(String format) {
+	public static ArrayList<String> getFiles(String path, String format) {
 		ArrayList<String> nameOfFiles = new ArrayList<String>(); 
-		String path = System.getProperty("catalina.home") + "\\conf\\Catalina\\localhost";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		 
