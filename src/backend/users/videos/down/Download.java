@@ -1,4 +1,4 @@
-package backend.users.videos.up;
+package backend.users.videos.down;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Upload
+ * Servlet implementation class Download
  */
-@WebServlet("/Upload")
-public class Upload extends HttpServlet {
+@WebServlet("/Download")
+public class Download extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Upload() {
+    public Download() {
         super();
         // TODO Auto-generated constructor stub
     }
