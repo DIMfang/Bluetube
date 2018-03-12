@@ -39,7 +39,7 @@ public class Queries {
 	}
 	
 	// Function to verify if the email is already registered
-	public boolean checkEmail(String email) throws SQLException{
+	public boolean checkEmail(String email) throws SQLException {
 		executeQuery("findEmail", email);
 		return this.rs.next();
 	}
@@ -62,18 +62,14 @@ public class Queries {
 	public boolean newUser(JSONObject userData) throws SQLException {
 		// Como se, si se encripto bien?
 		String encryptedPass = Encrypt.HashPassword(userData.getString("password"));
-		pst = con.prepareStatement(props.getQuery("insertUser"));
-		pst.setString(1, userData.getString("name"));
-		pst.setString(2, userData.getString("lastname"));
-		pst.setString(3, userData.getString("username"));
-		pst.setString(4, encryptedPass);
-		pst.setString(5, userData.getString("email"));
-		int result = pst.executeUpdate();
+		this.pst = this.con.prepareStatement(props.getQuery("insertUser"));
+		this.pst.setString(1, userData.getString("name"));
+		this.pst.setString(2, userData.getString("lastname"));
+		this.pst.setString(3, userData.getString("username"));
+		this.pst.setString(4, encryptedPass);
+		this.pst.setString(5, userData.getString("email"));
+		int result = this.pst.executeUpdate();
 		return (result == 1) ? true : false;
-	}
-
-	public void newVideo() {
-		
 	}
 
 }

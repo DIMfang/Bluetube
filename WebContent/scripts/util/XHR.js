@@ -18,7 +18,6 @@ function myXHR () {
         this.setUrl(url);
         this.setMethod(method);
         this.setMode(mode);
-//      if params==undefined ? 1 : this.setJSON(params);
 
     }
 
@@ -63,8 +62,19 @@ function myXHR () {
             // Reinicio el formData
             fd = new FormData();
         }
-    
     }
+    
+    this.executeGet() {
+        xhr.open('GET', properties.url, properties.mode)
+        xhr.send();
+    }
+    
+    this.executePost() {
+        xhr.open('POST', properties.url, properties.mode)
+        xhr.send(fd);
+    }
+    
+    
     
 }
 

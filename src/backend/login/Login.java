@@ -3,7 +3,7 @@ package backend.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -71,9 +71,13 @@ public class Login extends HttpServlet {
 	
 	// Function to store some values on the session
 	private void storeValues(JSONObject userData, HttpSession session) {
-		session.setAttribute("type_user", userData.get("type_id"));
-		session.setAttribute("username", userData.get("username"));
-		session.setAttribute("email", userData.get("email"));
+		Iterator<String> i = userData.keys();
+		while(i.hasNext()) {
+			String value = i.next();
+			session.setAttribute(value, userData.get(value));
+		}
 	}
+	
+	
 	
 }

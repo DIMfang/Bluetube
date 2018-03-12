@@ -18,6 +18,8 @@ import javax.servlet.http.Part;
 
 import org.json.JSONObject;
 
+import backend.database.MediaQueries;
+
 /**
  * Servlet implementation class Upload
  */
@@ -36,9 +38,8 @@ public class Upload extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 */ 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
 	}
 
 	/**
@@ -47,25 +48,26 @@ public class Upload extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Part file = request.getPart("file");
-		InputStream fileContent = request.getInputStream();
+		InputStream fileContent = file.getInputStream();
 		OutputStream os = null;
-//		FileOutputStream os = null;
 		String path = "C:\\Bluetube\\users-videos";
 		PrintWriter out = response.getWriter();
-		JSONObject message = new JSONObject();	
+		JSONObject message = new JSONObject();
+		MediaQueries mq = new MediaQueries();		
 		try {
 			if(!session.isNew()) {
 				System.out.println(this.getFileName(file));
 				File folder = new File(path + "\\" + session.getAttribute("email"));
-				if(!folder.exists()) {
+				if(!folder.exists()) 
 					folder.mkdir();
-				}
-				os = new FileOutputStream(path + "\\"+ session.getAttribute("email") + "\\" + this.getFileName(file));
+				path = path + "\\"+ session.getAttribute("email") + "\\" + this.getFileName(file);
+				os = new FileOutputStream(path);
 				int read = 0;
 				byte[] bytes = new byte[1024];				
 				while((read = fileContent.read(bytes)) != -1) {
 					os.write(bytes, 0, read);
 				}
+				mq.newVideo();
 				message.put("status", 200).put("description", "Success");
 			} else {
 				message.put("status", 403).put("description", "Access denied");
