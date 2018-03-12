@@ -1,3 +1,5 @@
+// import myXHR from '/util/XHR.js';
+
 var xhr = new myXHR();
 
 function $(id) {
@@ -15,7 +17,7 @@ function getValues() {
 
 }
 
-function post() {
+function register() {
     let inputs = getValues();
     xhr.preparedXHR('POST', './Register', (data) => {
         console.log(data);

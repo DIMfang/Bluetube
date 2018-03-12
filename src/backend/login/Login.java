@@ -46,34 +46,34 @@ public class Login extends HttpServlet {
 		Queries queries = new Queries();
 		PrintWriter out = response.getWriter();
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+		JSONObject userData = new JSONObject();
 		HttpSession session = request.getSession();
 		
 		if(session.isNew()) {
 			try {
-				if(queries.checkLogin(params.getString("username"), params.getString("password"))) {
-					message.put("status", 13).put("message", "Sucess");
+				userData = queries.getUserData(params);
+				if(userData.length() > 0) {
+					message.put("status", 14).put("description", "Sucess");
+					storeValues(userData, session);
 				} else {
-					message.put("status", 14).put("message", "invalid username or password");
+					message.put("status", 409).put("description", "Invalid username or password");
 					session.invalidate();
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
 			}
 		} else {
-			message.put("status", 2).put("message", "You are already log in");
+			message.put("status", 403).put("description", "Access denied");
 		}
 		
 		out.println(message.toString());
 	}
 	
-	
-	@SuppressWarnings("unused")
-	private void storeValue(String value, HttpSession session) {
-		if(value==null) {
-			session.setAttribute("session", "");
-		} else {
-			session.setAttribute("session", value);
-		}
+	// Function to store some values on the session
+	private void storeValues(JSONObject userData, HttpSession session) {
+		session.setAttribute("type_user", userData.get("type_id"));
+		session.setAttribute("username", userData.get("username"));
+		session.setAttribute("email", userData.get("email"));
 	}
 	
 }

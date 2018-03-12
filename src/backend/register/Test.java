@@ -2,7 +2,10 @@ package backend.register;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.PrintWriter;
 
 public class Test {
 	
@@ -25,18 +28,9 @@ public class Test {
 	
 	public static void main(String[] args) {
 		
-		ArrayList<String> arr = new ArrayList<String>();
-		//arr = getFiles("properties");
-//		Iterator<String> i = arr.iterator();
-//		while(i.hasNext()) {
-//			System.out.println(i.next());
-//		}
-//		for(int j = 0; j < arr.size(); j++) {
-//			System.out.println(arr.get(j));
-//		}
-		for(Object s : arr.toArray()) {
-			System.out.println(s);
-		}
+		String path = "C:\\Bluetube\\users-videos";	
+		File folder = new File(path + "\\" + "jeanxd17@h2otmail.com");
+		folder.mkdir();
 		
 		
     }

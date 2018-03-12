@@ -16,7 +16,6 @@ public class Queries {
 	private Connection con; 
 	private PreparedStatement pst; 
 	private ResultSet rs; 
-	@SuppressWarnings("unused")
 	private ResultSetMetaData rsmd;
 	private Props props; 
 	
@@ -25,31 +24,38 @@ public class Queries {
 		this.props = Props.getInstance();
 	}
 	
+	private void executeQuery(String query, Object... values) throws SQLException {
+		this.pst = this.con.prepareStatement(this.props.getQuery(query));
+		for(int i = 0; i < values.length; i++) {
+			this.pst.setObject(i + 1, values[i]);
+		}
+		this.rs = this.pst.executeQuery();
+	}
+	
 	// Function to verify if the username is already is use
 	public boolean checkUsername(String username) throws SQLException {
-		this.pst = this.con.prepareStatement(this.props.getQuery("findUsername"));
-		this.pst.setString(1, username);
-		this.rs = this.pst.executeQuery();
+		executeQuery("findUsername", username);
 		return this.rs.next();
-		
 	}
 	
 	// Function to verify if the email is already registered
 	public boolean checkEmail(String email) throws SQLException{
-		this.pst = this.con.prepareStatement(this.props.getQuery("findEmail"));
-		this.pst.setString(1, email);
-		this.rs = this.pst.executeQuery();
+		executeQuery("findEmail", email);
 		return this.rs.next();
 	}
 	
-	// Function to verify is the user exist
-	public boolean checkLogin(String username, String password) throws SQLException {	
-		String encryptedPass = Encrypt.HashPassword(password);
-		this.pst = this.con.prepareStatement(this.props.getQuery("checkLogin"));
-		this.pst.setString(1, username);
-		this.pst.setString(2, encryptedPass);
-		this.rs = this.pst.executeQuery();
-		return this.rs.next();
+	// Function to verify is the user exist, and return he's data
+	public JSONObject getUserData(JSONObject user) throws SQLException {	
+		String encryptedPass = Encrypt.HashPassword(user.getString("password"));
+		JSONObject userData = new JSONObject();
+		executeQuery("checkLogin", user.get("username"), encryptedPass);
+		if(this.rs.next()) {
+			this.rsmd = rs.getMetaData();
+			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
+				userData.put(rsmd.getColumnLabel(i), rs.getObject(i));
+			}
+		}
+		return userData;
 	}
 	
 	// Function to add a new user
@@ -64,6 +70,10 @@ public class Queries {
 		pst.setString(5, userData.getString("email"));
 		int result = pst.executeUpdate();
 		return (result == 1) ? true : false;
+	}
+
+	public void newVideo() {
+		
 	}
 
 }
