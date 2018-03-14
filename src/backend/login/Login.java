@@ -3,7 +3,6 @@ package backend.login;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -54,7 +53,7 @@ public class Login extends HttpServlet {
 				userData = queries.getUserData(params);
 				if(userData.length() > 0) {
 					message.put("status", 14).put("description", "Sucess");
-					storeValues(userData, session);
+					storeValue(session, userData);
 				} else {
 					message.put("status", 409).put("description", "Invalid username or password");
 					session.invalidate();
@@ -67,17 +66,14 @@ public class Login extends HttpServlet {
 		}
 		
 		out.println(message.toString());
-	}
+	}	
 	
-	// Function to store some values on the session
-	private void storeValues(JSONObject userData, HttpSession session) {
-		Iterator<String> i = userData.keys();
-		while(i.hasNext()) {
-			String value = i.next();
-			session.setAttribute(value, userData.get(value));
+	private void storeValue(HttpSession session, JSONObject json) {
+		if(json == null) {
+			session.setAttribute("session", "");
+		} else {
+			session.setAttribute("session", json);
 		}
 	}
-	
-	
 	
 }

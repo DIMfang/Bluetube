@@ -31,6 +31,16 @@ public class Queries {
 		}
 		this.rs = this.pst.executeQuery();
 	}
+	private JSONObject getData() throws SQLException {
+		JSONObject userData = new JSONObject();
+		if(this.rs.next()) {
+			this.rsmd = rs.getMetaData();
+			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
+				userData.put(rsmd.getColumnLabel(i), rs.getObject(i));
+			}
+		}
+		return userData;
+	}
 	
 	// Function to verify if the username is already is use
 	public boolean checkUsername(String username) throws SQLException {
@@ -49,18 +59,12 @@ public class Queries {
 		String encryptedPass = Encrypt.HashPassword(user.getString("password"));
 		JSONObject userData = new JSONObject();
 		executeQuery("checkLogin", user.get("username"), encryptedPass);
-		if(this.rs.next()) {
-			this.rsmd = rs.getMetaData();
-			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
-				userData.put(rsmd.getColumnLabel(i), rs.getObject(i));
-			}
-		}
+		userData = getData();
 		return userData;
 	}
 	
 	// Function to add a new user
 	public boolean newUser(JSONObject userData) throws SQLException {
-		// Como se, si se encripto bien?
 		String encryptedPass = Encrypt.HashPassword(userData.getString("password"));
 		this.pst = this.con.prepareStatement(props.getQuery("insertUser"));
 		this.pst.setString(1, userData.getString("name"));
@@ -71,5 +75,6 @@ public class Queries {
 		int result = this.pst.executeUpdate();
 		return (result == 1) ? true : false;
 	}
-
+	
+	
 }

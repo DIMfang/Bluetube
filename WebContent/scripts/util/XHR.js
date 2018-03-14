@@ -64,17 +64,6 @@ function myXHR () {
         }
     }
     
-    this.executeGet() {
-        xhr.open('GET', properties.url, properties.mode)
-        xhr.send();
-    }
-    
-    this.executePost() {
-        xhr.open('POST', properties.url, properties.mode)
-        xhr.send(fd);
-    }
-    
-    
     
 }
 

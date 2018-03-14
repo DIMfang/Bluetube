@@ -12,13 +12,22 @@ function getValues() {
 }
 
 function login(){
-  let inputs = getValues();
-  xhr.preparedXHR('POST', './Login', (data)=> {
-    console.log(data);
-    if(data.status == 13) {
-      // Redireccionar a otra pagina
-      window.location.replace("./logout.html");
-    }
-  });
-  xhr.execute(inputs);
+	let inputs = getValues();
+	let configs = {
+		method: 'POST',
+		headers: {
+		  'Content-type':'application/x-www-form-urlencoded'
+		},
+		body: JSON.stringify(inputs),
+		credentials: 'same-origin',
+	}
+	fetch('./Login', configs)
+	.then(response => response.json()).then(data => {
+		console.log(data);
+	}).catch(error => {
+		console.log(error);
+	})
 }
+
+
+

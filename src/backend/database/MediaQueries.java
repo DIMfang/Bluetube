@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Calendar;
+
 
 import org.json.JSONObject;
 
@@ -25,25 +27,19 @@ public class MediaQueries {
 		this.props = Props.getInstance();
 	}
 	
-	@SuppressWarnings("unused")
-	private void executeQuery(String query, Object... values) throws SQLException {
-		this.pst = this.con.prepareStatement(this.props.getQuery(query));
-		for(int i = 0; i < values.length; i++) {
-			this.pst.setObject(i + 1, values[i]);
-		}
-		this.rs = this.pst.executeQuery();
-	}
-	
 	public boolean newVideo(JSONObject mediaData) throws SQLException {
+		Calendar c = Calendar.getInstance();
+		java.util.Date currentDate = c.getTime();
+		java.sql.Date date = new java.sql.Date(currentDate.getTime());
 		this.pst = con.prepareStatement(this.props.getQuery("insertMedia"));
-		this.pst.setString(1, mediaData.getString("id_user"));
+		this.pst.setInt(1, mediaData.getInt("id_user"));
 		this.pst.setString(2, mediaData.getString("media_url"));
 		this.pst.setString(3, mediaData.getString("media_name"));
 		this.pst.setString(4, mediaData.getString("media_filename"));
 		this.pst.setString(5, mediaData.getString("media_des"));
-		this.pst.setString(6, mediaData.getString("created_at"));
+		this.pst.setDate(6, date);
 		int result = this.pst.executeUpdate();
 		return (result == 1) ? true : false;
 	}
-
+	
 }
