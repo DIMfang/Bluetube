@@ -42,4 +42,16 @@ public class MediaQueries {
 		return (result == 1) ? true : false;
 	}
 	
+	public void closeResources() {
+		try {
+			if(this.rs != null)
+				this.rs.close();
+			if(this.pst != null)
+				this.pst.close();
+		}catch(SQLException e) {
+			System.out.println("Problema al cerrar los recursos");
+			e.printStackTrace();
+		}
+	}
+
 }
