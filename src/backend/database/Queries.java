@@ -47,6 +47,18 @@ public class Queries {
 		executeQuery("findUsername", username);
 		return this.rs.next();
 	}
+	// Function to check if a video exists in the DB, if it does, returns it's URL.
+	public boolean checkVideo(String name) throws SQLException {
+		executeQuery("searchMedia", name);
+		return this.rs.next();
+	}
+	
+	//Function to retrieve an existing videos' URL.
+	public String getVideo(String name) throws SQLException{
+		executeQuery("searchMedia", name);
+		this.rs.next();
+		return rs.getString("media_url");
+	}
 	
 	// Function to verify if the email is already registered
 	public boolean checkEmail(String email) throws SQLException {
