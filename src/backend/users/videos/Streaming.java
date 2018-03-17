@@ -56,12 +56,13 @@ public class Streaming extends HttpServlet {
 			while ((bytesRead = in.read(bytes)) != -1) {
 				out.write(bytes, 0, bytesRead);
 			}
-			System.out.println("enviando");
-			//do the following in a finally block:
 			in.close();
-			out.close();	
+			System.out.println("enviando");
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
+			queries.closeResources();
+			out.close();
 		}
 	}
 
