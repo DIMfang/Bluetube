@@ -22,8 +22,10 @@ function login(){
 		credentials: 'same-origin',
 	}
 	fetch('./Login', configs)
-	.then(response => response.json()).then(data => {
+	.then(response => response.json())
+	.then(data => {
 		console.log(data);
+		document.location.href= "./Logout/";
 	}).catch(error => {
 		console.log(error);
 	})

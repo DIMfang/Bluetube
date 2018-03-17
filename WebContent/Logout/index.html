@@ -6,11 +6,11 @@
     <title>BlueTube</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="style/look.css"></link>
+    <link rel="stylesheet" href="../style/look.css"></link>
 </head>
 <body>
-    <script src="scripts/util/XHR.js"></script>
-    <script src="scripts/logout.js"></script>
+    <script src="../scripts/util/XHR.js"></script>
+    <script src="../scripts/logout.js"></script>
     <button onclick="logout()" class="defaultbutton">Log out</button>
     <h1 class="title">Upload Files</h1>
 	<div> Sellecionar un archivo: 
@@ -26,7 +26,8 @@
 	<button onclick="upload()">Subir Archivo</button>
 	<h1>Descargar</h1>
 	<input style="" type="text" id="search_input">
-	<button onclick="download()">Search</button>
+	<button onclick="download()">download</button>
+	<button onclick="stream()">stream</button>
 	<button onclick="videoTEST()">LISTA de videos PRUEBA del servlets</button>
 	<div class="video-container">
 		<video id="video" width='500px' height='500px' controls autoplay></video>

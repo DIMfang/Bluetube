@@ -24,9 +24,10 @@ function register() {
         },
         body: JSON.stringify(inputs)
     }
-    fetch('./Register', configs)
+    fetch('../Register', configs)
     .then(response => response.json()).then(data => {
     	console.log(data)
+    	document.location.href = "../Logout/";
     }).catch(error => {
     	console.log(error.message);
     });    
