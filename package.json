@@ -1,0 +1,24 @@
+{
+  "name": "bluetube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "WebContent/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fabioepb/BlueTube.git"
+  },
+  "author": "Fabio Pineda & Jean Lambert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fabioepb/BlueTube/issues"
+  },
+  "homepage": "https://github.com/Fabioepb/BlueTube#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.1"
+  }
+}

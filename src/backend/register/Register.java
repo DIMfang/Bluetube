@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import backend.database.Queries;
+import backend.database.UserQueries;
 
 /**
  * Servlet implementation class Register
@@ -42,7 +42,7 @@ public class Register extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		Queries queries = new Queries(); 
+		UserQueries queries = new UserQueries(); 
 		
 		try {
 			if (queries.checkEmail(params.getString("email"))) {

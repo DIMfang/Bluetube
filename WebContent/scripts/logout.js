@@ -22,24 +22,24 @@ function logout() {
 
 }
 
-function setVideo(path) {
-	document.getElementById("video").src = "./Streaming?path=" + path;
+function setVideo() {
+	document.getElementById("video").src = "./Streaming";
 }
 
 function download(){
-	let configs = {
-			method: 'GET',
-			credentials: 'same-origin',
-			
-	}
-	fetch('./Download?search=' + document.getElementById("search_input").value, configs)
-	.then(response => response.json())
-	.then(data => {
-		console.log(data);
-		setVideo(data.path);
-	})
-	
+	console.log('5');
+	var url = "./Download?search=" + document.getElementById("search_input").value;
+	var downloadWindow = window.open(url);
+//	let configs = {
+//		method: 'GET',
+//		credentials: 'same-origin',			
+//	}
+//	fetch('./Download?search=' + document.getElementById("search_input").value, configs)
+//	.then(response => {
+//		
+//	});
 }
+
 function upload() { 
 	const fd = new FormData();
 	fd.append('file', document.getElementById('file').files[0]);

@@ -14,9 +14,7 @@
     <button onclick="logout()" class="defaultbutton">Log out</button>
     <h1 class="title">Upload Files</h1>
 	<div> Sellecionar un archivo: 
-		<input type="file" id="file"/> 
-		<div>Subir un archivo</div>
-		<button onclick="upload()">Subir Archivo</button>		
+		<input type="file" id="file"/> 		
 		<h3 id="uploadStatus"></h3>
 	</div>
 	<div>
@@ -25,10 +23,13 @@
 	<h1> Descripcion: </h1>
 	<input type="text" id="media_des"> 
 	</div>
+	<button onclick="upload()">Subir Archivo</button>
+	<h1>Descargar</h1>
+	<input style="" type="text" id="search_input">
+	<button onclick="download()">Search</button>
 	<div class="video-container">
 		<video id="video" width='500px' height='500px' controls autoplay></video>
 	</div>
-	<input type="text" id="search_input">
-	<button onclick="download()">Search</button>
+	
 </body>
 </html>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import backend.database.Queries;
+import backend.database.UserQueries;
 
 
 /**
@@ -42,7 +42,7 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Queries queries = new Queries();
+		UserQueries queries = new UserQueries();
 		PrintWriter out = response.getWriter();
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 		JSONObject userData = new JSONObject();
@@ -52,7 +52,7 @@ public class Login extends HttpServlet {
 			try {
 				userData = queries.getUserData(params);
 				if(userData.length() > 0) {
-					message.put("status", 14).put("description", "Sucess");
+					message.put("status", 200).put("description", "Sucess");
 					storeValue(session, userData);
 				} else {
 					message.put("status", 409).put("description", "Invalid username or password");

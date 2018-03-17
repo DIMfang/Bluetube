@@ -1,6 +1,7 @@
 package backend.database;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -23,8 +24,34 @@ public class MediaQueries {
 	private Props props;
 	
 	public MediaQueries() {
-		this.con = DBConnection.getConnection();
 		this.props = Props.getInstance();
+		try {
+			Class.forName(this.props.getDB("driver"));
+			this.con = DriverManager.getConnection(props.getDB("url"), props.getDB("user"), props.getDB("password"));
+		} catch(ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void executeQuery(String query, Object... values) throws SQLException {
+		this.pst = this.con.prepareStatement(this.props.getQuery(query));
+		for(int i = 0; i < values.length; i++) {
+			this.pst.setObject(i + 1, values[i]);
+		}
+		this.rs = this.pst.executeQuery();
+	}
+		
+	// Function to check if a video exists in the DB, if it does, returns it's URL.
+	public boolean checkVideo(String name) throws SQLException {
+		executeQuery("searchMedia", name);
+		return this.rs.next();
+	}
+	
+	//Function to retrieve an existing videos' URL.
+	public String getVideo(String name) throws SQLException{
+		executeQuery("searchMedia", name);
+		this.rs.next();
+		return rs.getString("media_filename");
 	}
 	
 	public boolean newVideo(JSONObject mediaData) throws SQLException {
@@ -44,6 +71,8 @@ public class MediaQueries {
 	
 	public void closeResources() {
 		try {
+			if(this.con != null )
+				this.con.close();
 			if(this.rs != null)
 				this.rs.close();
 			if(this.pst != null)
