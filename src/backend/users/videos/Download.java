@@ -2,6 +2,7 @@ package backend.users.videos;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,40 +40,35 @@ public class Download extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		JSONObject userData = (JSONObject) session.getAttribute("session");
-		JSONObject message = new JSONObject();
-//		PrintWriter outtext = response.getWriter();
 		MediaQueries queries = new MediaQueries();
-		String mediaName = request.getParameter("search");
-		String path = "C:\\Bluetube\\users-videos";
-		response.setContentType("file");
-		
 		OutputStream out = response.getOutputStream();
+		String mediaName = request.getParameter("search");
+		response.setContentType("file");		
 		
-				
 		try {
 			if(!session.isNew()) {
-//				File folder = new File(path + "\\" + userData.getString("email"));
-//				if(folder.exists()) {
-//					if(queries.checkVideo(mediaName)) {
-						String filename = queries.getVideo(mediaName);	
-						response.setHeader("Content-disposition", "attachment; filename=" + filename);					
-						File video = new File(path + "\\" + userData.getString("email") + "\\" + filename);
-						FileInputStream in = new FileInputStream(video);
-						byte[] buffer = new byte[1024];
-						int length;
-						while ((length = in.read(buffer)) > 0){
-					           out.write(buffer, 0, length);
-					    }
-						in.close();
-						out.flush();
+				JSONObject mediaData = queries.getVideo(mediaName);	
+				System.out.println(mediaData.toString());
+				System.out.println(userData.toString());
+				response.setHeader("Content-disposition", "attachment; filename=" + mediaData.getString("fileName"));					
+				File video = new File(mediaData.getString("url"));
+				FileInputStream in = new FileInputStream(video);
+				byte[] buffer = new byte[1024];
+				int length;
+				while ((length = in.read(buffer)) > 0) {
+					out.write(buffer, 0, length);
+				}
+				in.close();
 			} else {
-				message.put("status", 403).put("description", "Access denied");
+				// Manejar que no tenga cuenta... 
 			}
-		} catch(Exception e) {
-			message.put("status", 500).put("description", "The System failed to read the uploaded file from disk");
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			queries.closeResources();
+			out.flush();
+//			out.close();
 		}
-		
-//		 outtext.println(message);
 		
 	}
 

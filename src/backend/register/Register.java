@@ -63,6 +63,8 @@ public class Register extends HttpServlet {
 			}	
 		} catch(SQLException e) {
 			e.printStackTrace();
+		} finally {
+			queries.closeResources();
 		}
 		
 		out.println(message.toString());

@@ -60,17 +60,20 @@ public class Login extends HttpServlet {
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
+			} finally {
+				queries.closeResources();
 			}
+			
 		} else {
 			message.put("status", 403).put("description", "Access denied");
 		}
-		
 		out.println(message.toString());
 	}	
 	
 	private void storeValue(HttpSession session, JSONObject json) {
 		if(json == null) {
 			session.setAttribute("session", "");
+			System.out.println("El json es NULL (Login)");
 		} else {
 			session.setAttribute("session", json);
 		}

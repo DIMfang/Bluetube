@@ -40,18 +40,24 @@ public class MediaQueries {
 		}
 		this.rs = this.pst.executeQuery();
 	}
-		
-	// Function to check if a video exists in the DB, if it does, returns it's URL.
-	public boolean checkVideo(String name) throws SQLException {
-		executeQuery("searchMedia", name);
-		return this.rs.next();
-	}
 	
-	//Function to retrieve an existing videos' URL.
-	public String getVideo(String name) throws SQLException{
-		executeQuery("searchMedia", name);
-		this.rs.next();
-		return rs.getString("media_filename");
+	public JSONObject getVideoList(String mediaName) throws SQLException {
+		JSONObject mediaData = new JSONObject();
+		executeQuery("searchVideos", "%" + mediaName + "%");
+		while(this.rs.next()) {
+			mediaData.put(rs.getString("media_id"), rs.getString("media_name"));
+		}
+		return mediaData;
+	}
+		
+	//Function to retrieve an existing videos' URL and file name.
+	public JSONObject getVideo(String name) throws SQLException {
+		JSONObject mediaData = new JSONObject();
+		executeQuery("downloadMedia", name);
+		if(this.rs.next()) {
+			return mediaData.put("url", rs.getString("media_url")).put("fileName", rs.getString("media_filename"));
+		}
+		return null;
 	}
 	
 	public boolean newVideo(JSONObject mediaData) throws SQLException {
@@ -77,7 +83,7 @@ public class MediaQueries {
 				this.rs.close();
 			if(this.pst != null)
 				this.pst.close();
-		}catch(SQLException e) {
+		} catch(SQLException e) {
 			System.out.println("Problema al cerrar los recursos");
 			e.printStackTrace();
 		}

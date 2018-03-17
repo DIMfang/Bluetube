@@ -88,13 +88,13 @@ public class Upload extends HttpServlet {
 			message.put("status", 500).put("description", "The System failed to read the uploaded file from disk");
 			e.printStackTrace();
 		} finally {
+			mq.closeResources();
 			if(fileContent != null) 
 				fileContent.close();
 			if(os != null) {
 				os.flush();
 				os.close();				
-			}
-				
+			}			
 		}
 		out.println(message);
 	}

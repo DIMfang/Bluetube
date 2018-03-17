@@ -27,9 +27,29 @@
 	<h1>Descargar</h1>
 	<input style="" type="text" id="search_input">
 	<button onclick="download()">Search</button>
+	<button onclick="videoTEST()">LISTA de videos PRUEBA del servlets</button>
 	<div class="video-container">
 		<video id="video" width='500px' height='500px' controls autoplay></video>
 	</div>
+	<script>
+	function videoTEST() {
+		let configs = {
+		  		method: 'GET',
+		  		headers: {
+		  			'Content-type':'application/x-www-form-urlencoded'
+		  		},
+		  		credentials: 'same-origin'
+		  	}
+		  	fetch('./VideoList', configs)
+		  	.then(response => response.json())
+		  	.then(data => {
+		  		console.log(data); 
+		  	}).catch(error => {
+		  		console.log(error.message);
+		  	})
+	}
+
+	</script>
 	
 </body>
 </html>
