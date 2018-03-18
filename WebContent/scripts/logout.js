@@ -11,11 +11,11 @@ function logout() {
   		},
   		credentials: 'same-origin'
   	}
-  	fetch('./Logout', configs)
+  	fetch('../Logout', configs)
   	.then(response => response.json())
   	.then(data => {
-  		// window.location.replace("./index.html");
   		console.log(data); 
+  		window.location.replace("../index.html");
   	}).catch(error => {
   		console.log(error.message);
   	})
@@ -28,7 +28,7 @@ function setVideo() {
 
 function download(){
 	console.log('5');
-	var url = "./Download?search=" + document.getElementById("search_input").value;
+	var url = "../Download?search=" + document.getElementById("search_input").value;
 	var downloadWindow = window.open(url);
 //	let configs = {
 //		method: 'GET',
@@ -38,6 +38,10 @@ function download(){
 //	.then(response => {
 //		
 //	});
+}
+
+function stream(){
+	document.getElementById("video").src = "../Streaming?search=" + document.getElementById("search_input").value;
 }
 
 function upload() { 
@@ -53,7 +57,7 @@ function upload() {
 		credentials: 'same-origin',
 		body: fd	
 	}
-	fetch('./Upload', configs)
+	fetch('../Upload', configs)
 	.then(response => response.json())
 	.then(data => {
 		console.log(data);
