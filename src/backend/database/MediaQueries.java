@@ -89,7 +89,7 @@ public class MediaQueries {
 				this.rs.close();
 			if(this.pst != null)
 				this.pst.close();
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Problema al cerrar los recursos");
 			e.printStackTrace();
 		}

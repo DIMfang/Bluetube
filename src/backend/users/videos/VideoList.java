@@ -38,9 +38,10 @@ public class VideoList extends HttpServlet {
 		MediaQueries mq = new MediaQueries();
 		JSONArray videos = new JSONArray(); 
 		PrintWriter out = response.getWriter();
+		String mediaName = request.getParameter("key");
 		
 		try {
-			videos = mq.getVideoList("i");
+			videos = mq.getVideoList(mediaName);
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

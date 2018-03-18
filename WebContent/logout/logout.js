@@ -1,8 +1,3 @@
-
-function doFetch(url, configs, callBack) {
-    
-}
-
 function logout() {
   	let configs = {
   		method: 'GET',
@@ -14,8 +9,10 @@ function logout() {
   	fetch('../Logout', configs)
   	.then(response => response.json())
   	.then(data => {
+  		if(data.status == 200) {
+  			window.location.replace("../index.html");
+  		}
   		console.log(data); 
-  		window.location.replace("../index.html");
   	}).catch(error => {
   		console.log(error.message);
   	})

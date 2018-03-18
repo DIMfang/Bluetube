@@ -1,4 +1,3 @@
-// import myXHR from '/util/XHR.js';
 
 function $(id) {
     return document.getElementById(id);
@@ -27,7 +26,9 @@ function register() {
     fetch('../Register', configs)
     .then(response => response.json()).then(data => {
     	console.log(data)
-    	document.location.href = "../Logout/";
+    	if(data.status == 200) {
+    		document.location.href = "../login/";
+    	}
     }).catch(error => {
     	console.log(error.message);
     });    

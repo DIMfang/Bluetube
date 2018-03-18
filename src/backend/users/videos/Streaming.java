@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -38,26 +37,23 @@ public class Streaming extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletOutputStream out = response.getOutputStream();
-		HttpSession session = request.getSession();
-		JSONObject userData = (JSONObject) session.getAttribute("session");
 		MediaQueries queries = new MediaQueries();
 		String mediaName = request.getParameter("search");
-		System.out.println(mediaName);
 		
 		try {
+			
 			JSONObject filedata = queries.getVideo(mediaName);	
 			InputStream in = new FileInputStream (filedata.getString("url"));
-			String Type = "video/mp4";
+			String type = "video/mp4";
 			byte[] bytes = new byte[1024];
 			int bytesRead;
 			
-			response.setContentType(Type);
-			
+			response.setContentType(type);
 			while ((bytesRead = in.read(bytes)) != -1) {
 				out.write(bytes, 0, bytesRead);
 			}
 			in.close();
-			System.out.println("enviando");
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

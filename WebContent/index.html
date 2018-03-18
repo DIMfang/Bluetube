@@ -20,67 +20,53 @@
                 <nav class="navbar navbar-expand navbar-light bg-faded">
                     <a class="navbar-brand" href="#">Bluetube</a>
                     <form class="form-inline my-2 my-lg-0">
-                        <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search" href="x">
+                        <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
                         <button onclick="onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
                     </form>
                 </nav>
             </div>
         </div>
-<<<<<<< HEAD
         <div class="row">
             <div class="col-12">
                 <div class="list-group" id="list-videos" role="tablist">
                     <!-- Video links -->
                 </div>
             </div>
-=======
-        <div class="maincontainer">
-          <div class="infodiv">
-            <b>Username</b>
-            <br>
-            <input id="username" name="username">
-            <br>
-            <b>Password</b>
-            <br>
-            <input id="password" type="password" name="password">
-            <br>
-            <br>
-            <button onclick="login()" class="defaultbutton">Login</button>             
-          </div>
-        </div>
-        <div class="footerdiv">
-          <b><a href="./Register/" style="color: black;">Don't have an account? Create one!</a></b>
->>>>>>> 25c35043a1933bd90887214f18bf81253b262290
         </div>
     </div>
 	<script>
 		$ = (id) => {
 			return document.getElementById(id);
-		}
+		}				
 		onSearch = () => {
-			let videos = $('input-search').value;
+			let listGroup = $('list-videos');
+            while(listGroup.firstChild) {
+            	listGroup.removeChild(listGroup.firstChild);
+            }            
+			
+            let url = './VideoList?key=' + $('input-search').value;
 			configs = {
-                method: 'GET', 
+                method: 'GET',
                 headers: {
 		  			'Content-type':'application/x-www-form-urlencoded'
 		  		},
-		  		credentials: 'same-origin'
+		  		credentials: 'same-origin',
             }
-            fetch('./VideoList', configs)
+			
+            fetch(url, configs)
             .then(response => response.json())
             .then(videos => {
-            	videos.forEach(e=> {
-    				let a = document.createElement("A");
-    				let t = document.createTextNode(e.media_name);
-                    a.setAttribute("class", "list-group-item list-group-item-action");
-                    a.setAttribute('href', './Download?search=' + e.media_name);
-    	            a.appendChild(t);
-    				$('list-videos').append(a);
-    			})
+            	videos.forEach(e=> {    				            	
+            		let aNode = document.createElement('a');
+    				let textNode = document.createTextNode(e.media_name);    				                    
+    				aNode.setAttribute('class', 'list-group-item list-group-item-action');
+                    aNode.setAttribute('href', './Download?search=' + e.media_name);
+    	            aNode.appendChild(textNode);    	            
+    	            listGroup.append(aNode);    			
+            	});    			
             }).catch(error => {
                 console.log(error);
-            }) 
-           
+            });            
         }
 	</script>
 </body>

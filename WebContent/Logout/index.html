@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="../style/look.css"></link>
 </head>
 <body>
-    <script src="../scripts/util/XHR.js"></script>
-    <script src="../scripts/logout.js"></script>
+    <script src="logout.js"></script>
     <button onclick="logout()" class="defaultbutton">Log out</button>
     <h1 class="title">Upload Files</h1>
 	<div> Sellecionar un archivo: 
@@ -28,7 +27,6 @@
 	<input style="" type="text" id="search_input">
 	<button onclick="download()">download</button>
 	<button onclick="stream()">stream</button>
-	<button onclick="videoTEST()">LISTA de videos PRUEBA del servlets</button>
 	<div class="video-container">
 		<video id="video" width='500px' height='500px' controls autoplay></video>
 	</div>
@@ -41,7 +39,7 @@
 		  		},
 		  		credentials: 'same-origin'
 		  	}
-		  	fetch('./VideoList', configs)
+		  	fetch('../VideoList', configs)
 		  	.then(response => response.json())
 		  	.then(data => {
 		  		console.log(data); 
