@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import backend.database.MediaQueries;
 
@@ -35,14 +35,12 @@ public class VideoList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("hola");
 		MediaQueries mq = new MediaQueries();
-		JSONObject videos = new JSONObject(); 
+		JSONArray videos = new JSONArray(); 
 		PrintWriter out = response.getWriter();
 		
 		try {
-			videos = mq.getVideoList("a");
-			System.out.println(videos.toString());
+			videos = mq.getVideoList("i");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

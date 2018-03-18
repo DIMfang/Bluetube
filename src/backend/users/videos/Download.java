@@ -39,7 +39,7 @@ public class Download extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		JSONObject userData = (JSONObject) session.getAttribute("session");
+//		JSONObject userData = (JSONObject) session.getAttribute("session");
 		MediaQueries queries = new MediaQueries();
 		OutputStream out = response.getOutputStream();
 		String mediaName = request.getParameter("search");
@@ -48,8 +48,6 @@ public class Download extends HttpServlet {
 		try {
 			if(!session.isNew()) {
 				JSONObject mediaData = queries.getVideo(mediaName);	
-				System.out.println(mediaData.toString());
-				System.out.println(userData.toString());
 				response.setHeader("Content-disposition", "attachment; filename=" + mediaData.getString("fileName"));					
 				File video = new File(mediaData.getString("url"));
 				FileInputStream in = new FileInputStream(video);

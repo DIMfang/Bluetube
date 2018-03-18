@@ -8,7 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import backend.util.properties.Props;
@@ -41,11 +41,17 @@ public class MediaQueries {
 		this.rs = this.pst.executeQuery();
 	}
 	
-	public JSONObject getVideoList(String mediaName) throws SQLException {
-		JSONObject mediaData = new JSONObject();
+	public JSONArray getVideoList(String mediaName) throws SQLException {
+		JSONArray mediaData = new JSONArray();
+		
 		executeQuery("searchVideos", "%" + mediaName + "%");
 		while(this.rs.next()) {
-			mediaData.put(rs.getString("media_id"), rs.getString("media_name"));
+			JSONObject row = new JSONObject();
+			this.rsmd = rs.getMetaData();
+			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
+				row.put(rsmd.getColumnLabel(i), rs.getObject(i));
+			}
+			mediaData.put(row);
 		}
 		return mediaData;
 	}
