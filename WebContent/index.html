@@ -20,7 +20,7 @@
                 <nav class="navbar navbar-expand navbar-light bg-faded">
                     <a class="navbar-brand" href="#">Bluetube</a>
                     <form class="form-inline my-2 my-lg-0">
-                        <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search" href="x">
                         <button onclick="onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
                     </form>
                 </nav>
@@ -28,8 +28,8 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div id="list-videos" class="list-group">
-                
+                <div class="list-group" id="list-videos" role="tablist">
+                    <!-- Video links -->
                 </div>
             </div>
         </div>
@@ -39,25 +39,29 @@
 			return document.getElementById(id);
 		}
 		onSearch = () => {
-			// let videos = $('input-search').value;
-			// configs = {
-            //     method: 'GET', 
-            //     headers: {
-		  	// 		'Content-type':'application/x-www-form-urlencoded'
-		  	// 	},
-		  	// 	credentials: 'same-origin'
-            // }
-            let x = [1,2,3];
-			console.log(4);
-			
-			x.forEach(e=> {
-				let a = document.createElement("A");
-				let t = document.createTextNode("This is the link " + e);
-	            a.appendChild(t);
-				$('list-videos').append(a);
-			})
-			
-			
+			let videos = $('input-search').value;
+			configs = {
+                method: 'GET', 
+                headers: {
+		  			'Content-type':'application/x-www-form-urlencoded'
+		  		},
+		  		credentials: 'same-origin'
+            }
+            fetch('./VideoList', configs)
+            .then(response => response.json())
+            .then(videos => {
+            	videos.forEach(e=> {
+    				let a = document.createElement("A");
+    				let t = document.createTextNode(e.media_name);
+                    a.setAttribute("class", "list-group-item list-group-item-action");
+                    a.setAttribute('href', './Download?search=' + e.media_name);
+    	            a.appendChild(t);
+    				$('list-videos').append(a);
+    			})
+            }).catch(error => {
+                console.log(error);
+            }) 
+           
         }
 	</script>
 </body>

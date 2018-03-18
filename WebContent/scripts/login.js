@@ -1,5 +1,3 @@
-var xhr = new myXHR();
-
 function $(id) {
   return document.getElementById(id);
 }
@@ -21,8 +19,9 @@ function login(){
 		body: JSON.stringify(inputs),
 		credentials: 'same-origin',
 	}
-	fetch('./Login', configs)
-	.then(response => response.json()).then(data => {
+	fetch('../Login', configs)
+	.then(response => response.json())
+	.then(data => {
 		console.log(data);
 	}).catch(error => {
 		console.log(error);
