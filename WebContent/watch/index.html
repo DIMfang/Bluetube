@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Watch</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+
+    <div class="container-fluid">
+    
+    <div class="video-container">
+		<video id="video" controls autoplay></video>
+		<button onClick="onClick()" id="download-video">download the video</button>
+	</div>
+	
+    </div>
+    <script>
+        $ = (id) => {
+            return document.getElementById(id);
+        }
+        onClick = () => {
+        	var url = "../Download" + document.location.search;
+        	var downloadWindow = window.open(url);
+        }
+        $("video").src = "../Streaming" + document.location.search;
+        console.log(document.location);
+    </script>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>

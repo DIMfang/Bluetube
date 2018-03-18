@@ -38,12 +38,13 @@ public class Streaming extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletOutputStream out = response.getOutputStream();
 		MediaQueries queries = new MediaQueries();
-		String mediaName = request.getParameter("search");
+		String mediaId = request.getParameter("key");
+		int id = Integer.parseInt(mediaId);
 		
 		try {
 			
-			JSONObject filedata = queries.getVideo(mediaName);	
-			InputStream in = new FileInputStream (filedata.getString("url"));
+			JSONObject filedata = queries.getMedia(id);
+			InputStream in = new FileInputStream (filedata.getString("url"));			
 			String type = "video/mp4";
 			byte[] bytes = new byte[1024];
 			int bytesRead;

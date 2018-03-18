@@ -19,7 +19,7 @@
             <div class="col-12">
                 <nav class="navbar navbar-expand navbar-light bg-faded">
                     <a class="navbar-brand" href="#">Bluetube</a>
-                    <form class="form-inline my-2 my-lg-0">
+                    <form action="/VideoList?" class="form-inline my-2 my-lg-0">
                         <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
                         <button onclick="onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
                     </form>
@@ -28,8 +28,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="list-group" id="list-videos" role="tablist">
-                    <!-- Video links -->
+                <div class="list-group" id="list-videos" role="tablist">                    
                 </div>
             </div>
         </div>
@@ -38,9 +37,12 @@
 		$ = (id) => {
 			return document.getElementById(id);
 		}				
+		
 		onSearch = () => {
+		
 			let listGroup = $('list-videos');
-            while(listGroup.firstChild) {
+            
+			while(listGroup.firstChild) {
             	listGroup.removeChild(listGroup.firstChild);
             }            
 			
@@ -56,11 +58,12 @@
             fetch(url, configs)
             .then(response => response.json())
             .then(videos => {
+            	
             	videos.forEach(e=> {    				            	
             		let aNode = document.createElement('a');
     				let textNode = document.createTextNode(e.media_name);    				                    
     				aNode.setAttribute('class', 'list-group-item list-group-item-action');
-                    aNode.setAttribute('href', './Download?search=' + e.media_name);
+                    aNode.setAttribute('href', './watch?key=' + e.media_id);                    
     	            aNode.appendChild(textNode);    	            
     	            listGroup.append(aNode);    			
             	});    			

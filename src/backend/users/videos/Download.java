@@ -40,13 +40,14 @@ public class Download extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		MediaQueries queries = new MediaQueries();
-		String mediaName = request.getParameter("search");
+		String reqId = request.getParameter("key");
+		int mediaId = Integer.parseInt(reqId);
 		response.setContentType("file");
 		OutputStream out = response.getOutputStream();
 
 		try {
 			if(!session.isNew()) {
-				JSONObject mediaData = queries.getVideo(mediaName);	
+				JSONObject mediaData = queries.getMedia(mediaId);	
 				response.setHeader("Content-disposition", "attachment; filename=" + mediaData.getString("fileName"));					
 				File video = new File(mediaData.getString("url"));
 				FileInputStream in = new FileInputStream(video);

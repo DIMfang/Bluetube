@@ -24,7 +24,6 @@ function setVideo() {
 }
 
 function download(){
-	console.log('5');
 	var url = "../Download?search=" + document.getElementById("search_input").value;
 	var downloadWindow = window.open(url);
 //	let configs = {

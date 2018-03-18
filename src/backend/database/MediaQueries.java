@@ -55,11 +55,11 @@ public class MediaQueries {
 		}
 		return mediaData;
 	}
-		
+	
 	//Function to retrieve an existing videos' URL and file name.
-	public JSONObject getVideo(String name) throws SQLException {
+	public JSONObject getMedia(int id) throws SQLException {
 		JSONObject mediaData = new JSONObject();
-		executeQuery("downloadMedia", name);
+		executeQuery("downloadMedia", id);
 		if(this.rs.next()) {
 			return mediaData.put("url", rs.getString("media_url")).put("fileName", rs.getString("media_filename"));
 		}
