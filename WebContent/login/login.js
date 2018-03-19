@@ -25,7 +25,7 @@ function login(){
 	.then(data => {
 		console.log(data);
 		if(data.status == 200) {
-			document.location.href= "../logout/";
+			document.location.href= "../";
 		}
 	}).catch(error => {
 		console.log(error);

@@ -14,6 +14,7 @@
     <div class="video-container">
 		<video id="video" controls autoplay></video>
 		<button onClick="onClick()" id="download-video">download the video</button>
+		<button onClick="Like();" id="download-video">LIKE</button>
 	</div>
 	
     </div>
@@ -27,6 +28,27 @@
         }
         $("video").src = "../Streaming" + document.location.search;
         console.log(document.location);
+        
+        Like = () => {
+        	helper = document.location.search.split("=");
+            data = {
+            	mediaid: helper[1]
+            }
+            
+        	let configs = {
+        		method: 'POST',
+        		headers: {
+        		  'Content-type':'application/x-www-form-urlencoded'
+        		},
+            	body: JSON.stringify(data)
+        	}
+            
+            fetch("../Like", configs)
+            .then(response => response.json())
+            .then(data =>{
+            	console.log(data);
+            })
+        }
     </script>
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>

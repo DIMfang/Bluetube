@@ -41,6 +41,14 @@ public class MediaQueries {
 		this.rs = this.pst.executeQuery();
 	}
 	
+	public boolean likeVideo(Integer id, Integer media_id) throws SQLException{
+		this.pst = con.prepareStatement(this.props.getQuery("videoLike"));
+		this.pst.setInt(1, id);
+		this.pst.setInt(2, media_id);
+		int result = this.pst.executeUpdate();
+		return (result == 1) ? true : false;
+	}
+	
 	public JSONArray getVideoList(String mediaName) throws SQLException {
 		JSONArray mediaData = new JSONArray();
 		

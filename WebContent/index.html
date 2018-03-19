@@ -22,6 +22,8 @@
                     <form action="/VideoList?" class="form-inline my-2 my-lg-0">
                         <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
                         <button onclick="onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                        <button type="button" onClick="toLogin()" class="btn btn-outline-success my-3 my-sm-1">Login</button>
+                        <button type="button" onClick="toprofile()" class="btn btn-outline-success my-3 my-sm-1">Profile</button>
                     </form>
                 </nav>
             </div>
@@ -38,6 +40,13 @@
 			return document.getElementById(id);
 		}				
 		
+		toLogin = () =>{
+			document.location.href= "./login/";
+		}
+		
+		toprofile = () =>{
+			document.location.href= "./Logout/";
+		}
 		onSearch = () => {
 		
 			let listGroup = $('list-videos');
