@@ -1,4 +1,4 @@
-package backend.users.videos;
+package backend.users.actions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,7 +35,10 @@ public class Like extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession();
+		JSONObject userData = (JSONObject) session.getAttribute("session");
+		out.print(userData.toString());
 	}
 
 	/**
@@ -47,18 +50,22 @@ public class Like extends HttpServlet {
 		MediaQueries mq = new MediaQueries();
 		HttpSession session = request.getSession();
 		JSONObject userData = (JSONObject) session.getAttribute("session");
-		JSONObject params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		try {
-			System.out.println(Integer.parseInt(params.getString("mediaid")));
-			System.out.println(userData.getString("id_user"));
-			mq.likeVideo(15, Integer.parseInt(params.getString("mediaid")) );
-			message.put("status", 200).put("description", "You have liked this video");
-		} catch(SQLException E) {
-			E.printStackTrace();
-			message.put("status", 403).put("description", "This user already likes this video");
-		} catch(Exception e) {
-			e.printStackTrace();
-			message.put("status", 403).put("description", "Like could not be processed");
+		JSONObject params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));		
+		int id = Integer.parseInt(params.getString("media_id"));
+		if(!session.isNew()) {
+			try {
+				mq.likeVideo(userData.getInt("id_user"), id);
+				message.put("status", 200).put("description", "You have liked this video");
+			} catch(SQLException E) {
+				E.printStackTrace();
+				message.put("status", 403).put("description", "This user already likes this video");
+			} catch(Exception e) {
+				e.printStackTrace();
+				message.put("status", 403).put("description", "Like could not be processed");
+			}			
+		} else {
+			message.put("status", 403).put("description", "session not started");
+			session.invalidate();
 		}
 		out.println(message);
 	}

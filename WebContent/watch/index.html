@@ -8,38 +8,54 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
 <body>
-
-    <div class="container-fluid">
     
-    <div class="video-container">
-		<video id="video" controls autoplay></video>
-		<button onClick="onClick()" id="download-video">download the video</button>
-		<button onClick="Like();" id="download-video">LIKE</button>
-	</div>
-	
+    <div class="container-fluid">    
+    <div class="row mt-4">
+        <div class="col-7">
+            <div class="">
+                <video style="width:500px; height:300px" id="video" controls autoplay></video>                
+            </div>
+        </div>
+        <div class="col-5">
+             	<button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
+        		<button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>  
+        </div>
+    </div>
+    <div class="row"></div>
+        <label for="">Comment</label>
+		<div class="input-group-append">
+          <textarea class="input-group" id="comment" rows="1"></textarea>
+          <button onClick="doComment()" class="btn">Comment</button>
+        </div>
+        
     </div>
     <script>
-        $ = (id) => {
-            return document.getElementById(id);
-        }
-        onClick = () => {
+	    $ = (id) => {
+	        return document.getElementById(id);
+	    }
+    	const mediaId = () => {
+    		let ID = document.location.search.split('=')
+    		return ID[1];
+    	}    	        
+        // Streaming the video
+        $("video").src = "../Streaming" + document.location.search;
+               
+        // Function to download the video        
+        downloadMedia = () => {
         	var url = "../Download" + document.location.search;
         	var downloadWindow = window.open(url);
         }
-        $("video").src = "../Streaming" + document.location.search;
-        console.log(document.location);
-        
-        Like = () => {
-        	helper = document.location.search.split("=");
-            data = {
-            	mediaid: helper[1]
-            }
-            
+        // Do like
+        Like = () => {       
+            let data = {
+            	media_id: mediaId()
+            }            
         	let configs = {
         		method: 'POST',
         		headers: {
         		  'Content-type':'application/x-www-form-urlencoded'
         		},
+        		credentials: 'same-origin',
             	body: JSON.stringify(data)
         	}
             
@@ -47,8 +63,37 @@
             .then(response => response.json())
             .then(data =>{
             	console.log(data);
+            }).catch(error => {
+            	console.log(error.message);
             })
         }
+        // Do dislike
+        
+        // Do comment
+        doComment = () => {
+			let commentText = document.getElementById('comment').value;
+           	/* let mediaId = document.location.search.split('=') */
+            let data = {
+            	media_id: mediaId(),
+            	comment_text: commentText
+            }
+            let configs = {
+            	method: 'POST',
+            	header: {
+            		'Content-type':'application/x-www-form-urlencoded'
+            	},
+            	credentials: 'same-origin',
+            	body: JSON.stringify(data)
+            }
+           	fetch('../Comments', configs)
+           	.then(response => response.json())
+           	.then(data=> {
+           		console.log(data);
+           	}).catch(error => {
+           		console.log(error.message);
+           	});           	
+        }
+        
     </script>
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>

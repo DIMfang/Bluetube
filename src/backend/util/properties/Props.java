@@ -9,7 +9,7 @@ public class Props {
 	
 	private static Props propsInstance = null;
 	private ArrayList<String> arrayOfFiles = new ArrayList<String>();
-	private HashMap<String, Properties> props = new HashMap<String, Properties>();
+	private static HashMap<String, Properties> props = new HashMap<String, Properties>();
 	
 	private Props() {
 		try {
@@ -22,12 +22,12 @@ public class Props {
 				props.put(fileName[0], prop);
 			}
 			
-		}catch(IOException e){
+		} catch(IOException e) {
 			System.out.println(e.toString());
 		}
 	}
 	
-	public static Props getInstance() {
+	public static void getInstance() {
 		if(propsInstance == null) {
 			synchronized (Props.class) {
 				if(propsInstance == null) {
@@ -35,21 +35,20 @@ public class Props {
 				}
 			}
 		}
-		return propsInstance;
 	}
 		
 	// Getters
-	public String getProperty(String key, String prop) {
-		return this.props.get(key).getProperty(prop);
+	public static String getProperty(String key, String prop) {
+		return props.get(key).getProperty(prop);
 	}
-	public String getDB(String prop) {
-		return this.props.get("db").getProperty(prop);
+	public static String getDB(String prop) {
+		return props.get("db").getProperty(prop);
 	}
-	public String getQuery(String prop) {
-		return this.props.get("queries").getProperty(prop);
+	public static String getQuery(String prop) {
+		return props.get("queries").getProperty(prop);
 	}
-	public String getMessage(String prop) {
-		return this.props.get("messages").getProperty(prop);
+	public static String getMessage(String prop) {
+		return props.get("messages").getProperty(prop);
 	}
 	
 }

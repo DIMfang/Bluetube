@@ -45,7 +45,7 @@
 		}
 		
 		toprofile = () =>{
-			document.location.href= "./Logout/";
+			document.location.href= "./logout/";
 		}
 		onSearch = () => {
 		
@@ -66,9 +66,8 @@
 			
             fetch(url, configs)
             .then(response => response.json())
-            .then(videos => {
-            	
-            	videos.forEach(e=> {    				            	
+            .then(videos => {            	
+            	videos.forEach(e => {    				            	
             		let aNode = document.createElement('a');
     				let textNode = document.createTextNode(e.media_name);    				                    
     				aNode.setAttribute('class', 'list-group-item list-group-item-action');

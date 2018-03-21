@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-xl-12 pt-1 d-flex justify-content-center">
                         <small id="helpId" class="form-text text-muted">Already have an account?</small>
-                        <a style="font-size: smaller" id="helpId" class="form-text text-primary pl-1" href="/Register">Log in</a>
+                        <a style="font-size: smaller" id="helpId" class="form-text text-primary pl-1" href="../register">Log in</a>
                         
                     </div>
                 </div>
@@ -120,8 +120,7 @@
     <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="register.js"></script>
-    <script>
-        // $('.dropdown-togle').dropdown('dispose');
+    <script>   
         $ = id => {
             return document.getElementById(id);
         }
@@ -134,18 +133,7 @@
                 } else {
                     rej(false);
                 }
-            });
-        }
-        getUserData = () => {
-  
-        }
-        onSumbit = () => {
-            getEmail($('input-email').value).then(email => {
-                console.log(valid);
-            }).catch(invalid => {
-                alert(invalid);
-            })
-        }
+            });s
     </script>
 
   </body>

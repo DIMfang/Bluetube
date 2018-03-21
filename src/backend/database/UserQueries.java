@@ -18,20 +18,18 @@ public class UserQueries {
 	private PreparedStatement pst; 
 	private ResultSet rs; 
 	private ResultSetMetaData rsmd;
-	private Props props; 
 	
-	public UserQueries() {
-		this.props = Props.getInstance();
+	public UserQueries() {		
 		try {
-			Class.forName(this.props.getDB("driver"));
-			this.con = DriverManager.getConnection(props.getDB("url"), props.getDB("user"), props.getDB("password"));
+			Class.forName(Props.getDB("driver"));
+			this.con = DriverManager.getConnection(Props.getDB("url"), Props.getDB("user"), Props.getDB("password"));
 		} catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void executeQuery(String query, Object... values) throws SQLException {
-		this.pst = this.con.prepareStatement(this.props.getQuery(query));
+		this.pst = this.con.prepareStatement(Props.getQuery(query));
 		for(int i = 0; i < values.length; i++) {
 			this.pst.setObject(i + 1, values[i]);
 		}
@@ -74,7 +72,7 @@ public class UserQueries {
 	// Function to add a new user
 	public boolean newUser(JSONObject userData) throws SQLException {
 		String encryptedPass = Encrypt.HashPassword(userData.getString("password"));
-		this.pst = this.con.prepareStatement(props.getQuery("insertUser"));
+		this.pst = this.con.prepareStatement(Props.getQuery("insertUser"));
 		this.pst.setString(1, userData.getString("name"));
 		this.pst.setString(2, userData.getString("lastname"));
 		this.pst.setString(3, userData.getString("username"));

@@ -1,4 +1,4 @@
-package backend.register;
+package backend.users;
 
 import java.io.IOException;
 import java.io.PrintWriter;
