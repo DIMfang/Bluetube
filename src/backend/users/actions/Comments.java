@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
-import backend.database.MediaQueries;
+import backend.database.ActionQueries;
 
 /**
  * Servlet implementation class Comments
@@ -45,7 +45,7 @@ public class Comments extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(); 
-		MediaQueries mq = new MediaQueries(); 
+		ActionQueries mq = new ActionQueries(); 
 		JSONObject message = new JSONObject();		
 		JSONObject commentData = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 		JSONObject userData = (JSONObject) session.getAttribute("session");

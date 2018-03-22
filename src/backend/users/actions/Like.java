@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
-import backend.database.MediaQueries;
+
+import backend.database.ActionQueries;
 
 /**
  * Servlet implementation class Like
@@ -47,7 +48,7 @@ public class Like extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		JSONObject message = new JSONObject();
-		MediaQueries mq = new MediaQueries();
+		ActionQueries mq = new ActionQueries();
 		HttpSession session = request.getSession();
 		JSONObject userData = (JSONObject) session.getAttribute("session");
 		JSONObject params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));		

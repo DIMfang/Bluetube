@@ -10,36 +10,68 @@
 <body>
     
     <div class="container-fluid">    
-    <div class="row mt-4">
-        <div class="col-7">
-            <div class="">
-                <video style="width:500px; height:300px" id="video" controls autoplay></video>                
+        <div class="row mt-4">
+            <div class="col-7">
+                <div class="">
+                    <video style="width:500px; height:300px" id="video" controls autoplay></video>                
+                </div>
+            </div>
+            <div class="col-5">
+                    <button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
+                    <button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>  
             </div>
         </div>
-        <div class="col-5">
-             	<button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
-        		<button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>  
+        <div class="row">
+            <div class="col-12">
+	            <label for="">Comment</label>
+	            <div class="input-group-append">
+		            <textarea class="input-group" id="comment" rows="1"></textarea>
+		            <button onClick="doComment()" class="btn">Comment</button>
+	            </div>
+            </div>
         </div>
-    </div>
-    <div class="row"></div>
-        <label for="">Comment</label>
-		<div class="input-group-append">
-          <textarea class="input-group" id="comment" rows="1"></textarea>
-          <button onClick="doComment()" class="btn">Comment</button>
-        </div>
-        
+        <div class="row">
+            <div class="col-12">
+                <ul class="list-group" id="comments-box">
+                </ul>
+            </div>
+        </div>        
     </div>
     <script>
 	    $ = (id) => {
 	        return document.getElementById(id);
-	    }
-    	const mediaId = () => {
-    		let ID = document.location.search.split('=')
-    		return ID[1];
-    	}    	        
+	    }    	        
         // Streaming the video
         $("video").src = "../Streaming" + document.location.search;
-               
+        
+        // Comments
+        let commentBox = $('comments-box');
+        let url = '../CommentList' + document.location.search;
+		let configs = {
+            method: 'GET',
+            headers: {
+				'Content-type':'application/x-www-form-urlencoded'
+		  	},
+			credentials: 'same-origin',
+        }
+        fetch(url, configs).then(response => response.json())
+        .then(comments => {
+            comments.forEach(comment => {
+                let aNode = document.createElement('li');
+                let textNode = document.createTextNode(comment.comment_text);
+                aNode.setAttribute('class', 'list-group-item');
+                aNode.appendChild(textNode);
+                commentBox.append(aNode);
+            });
+        }).catch(error => {
+            console.log(error.message);
+        })
+        
+        // ============================= ACTIONS ===============================
+        const mediaId = () => {
+    		let ID = document.location.search.split('=')
+    		return ID[1];
+    	}
         // Function to download the video        
         downloadMedia = () => {
         	var url = "../Download" + document.location.search;
@@ -71,8 +103,7 @@
         
         // Do comment
         doComment = () => {
-			let commentText = document.getElementById('comment').value;
-           	/* let mediaId = document.location.search.split('=') */
+			let commentText = document.getElementById('comment').value;           
             let data = {
             	media_id: mediaId(),
             	comment_text: commentText

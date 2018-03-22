@@ -1,7 +1,6 @@
-package backend.users.videos;
+package backend.users.actions;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
@@ -13,19 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-import backend.database.MediaQueries;
+import backend.database.ActionQueries;
 
 /**
- * Servlet implementation class VideosList
+ * Servlet implementation class CommentList
  */
-@WebServlet("/VideoList")
-public class VideoList extends HttpServlet {
+@WebServlet("/CommentList")
+public class CommentList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VideoList() {
+    public CommentList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,21 +32,21 @@ public class VideoList extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		MediaQueries mq = new MediaQueries();
-		JSONArray videos = new JSONArray(); 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		ActionQueries aq = new ActionQueries();
+		int mediaId = Integer.parseInt(request.getParameter("key"));
 		PrintWriter out = response.getWriter();
-		String mediaName = request.getParameter("query");
+		JSONArray comments = new JSONArray();
 		
 		try {
-			videos = mq.getVideoList(mediaName);
+			comments = aq.getCommentList(mediaId);
 		} catch(SQLException e) {
+			// Could not loaded the comments
 			e.printStackTrace();
 		} finally {
-			mq.closeResources();
+			aq.closeResources();
 		}
-		out.println(videos.toString());
+		out.println(comments.toString());
 	}
 
 	/**
