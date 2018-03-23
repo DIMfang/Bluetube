@@ -62,6 +62,14 @@ public class MediaQueries {
 		return null;
 	}
 	
+	public Object getLike(int id_user, int media_id) throws SQLException{
+		executeQuery("searchLike", id_user, media_id);
+		if(this.rs.next()) {
+			return this.rs.getBoolean("like_state");
+		}
+		return null;
+	}
+	
 	public boolean newVideo(JSONObject mediaData) throws SQLException {
 		Calendar c = Calendar.getInstance();
 		java.util.Date currentDate = c.getTime();

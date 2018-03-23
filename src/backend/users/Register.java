@@ -46,18 +46,17 @@ public class Register extends HttpServlet {
 		
 		try {
 			if (queries.checkEmail(params.getString("email"))) {
-				message.put("status", 409).put("description", "The email is already registered");
-				
+				// Cambiar status de username o del email
+				message.put("status", 409).put("description", "The email is already registered");				
 			} else if (queries.checkUsername(params.getString("username"))) {
+				// Cambiar status de username o del email
 				message.put("status", 409).put("description", "The username is already in use");
-			} else {		
-				if(queries.newUser(params)) {
-					message.put("status", 200).put("description", "Congratulations!");
-				} else {
-					message.put("status", 503).put("description", "Unknown problem, try again");
-				}
+			} else {
+				queries.newUser(params);
+				message.put("status", 200).put("description", "Congratulations!");				
 			}	
 		} catch(SQLException e) {
+			message.put("status", 503).put("description", "Unknown problem, try again");
 			e.printStackTrace();
 		} finally {
 			queries.closeResources();

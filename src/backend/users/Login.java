@@ -52,30 +52,34 @@ public class Login extends HttpServlet {
 			try {
 				userData = queries.getUserData(params);
 				if(userData.length() > 0) {
+					// Sucess
 					message.put("status", 200).put("description", "Sucess");
 					storeValue(session, userData);
 				} else {
+					// Invalid username or password
 					message.put("status", 409).put("description", "Invalid username or password");
 					session.invalidate();
 				}
 			} catch(SQLException e) {
+				message.put("status", 503).put("description", "Unknown problem, try again");
 				e.printStackTrace();
+				session.invalidate();
 			} finally {
 				queries.closeResources();
 			}
 			
 		} else {
+			// Acess denied
 			message.put("status", 403).put("description", "Access denied");
 		}
 		out.println(message.toString());
 	}	
 	
-	private void storeValue(HttpSession session, JSONObject json) {
-		if(json == null) {
-			session.setAttribute("session", "");
-			System.out.println("El json es NULL (Login)");
+	private void storeValue(HttpSession session, JSONObject object) {
+		if(object == null) {
+			session.setAttribute("session", "");	
 		} else {
-			session.setAttribute("session", json);
+			session.setAttribute("session", object);
 		}
 	}
 	

@@ -26,8 +26,7 @@ public class ActionQueries {
 		} catch(ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 	private void executeQuery(String query, Object... values) throws SQLException {
 		this.pst = this.con.prepareStatement(Props.getQuery(query));
 		for(int i = 0; i < values.length; i++) {
@@ -35,10 +34,23 @@ public class ActionQueries {
 		}
 		this.rs = this.pst.executeQuery();
 	}
+	private int executeUpdate(String query, Object... values) throws SQLException {
+		this.pst = this.con.prepareStatement(Props.getQuery(query));
+		for(int i = 0; i < values.length; i++) {
+			this.pst.setObject(i+1, values[i]);
+		}
+		return this.pst.executeUpdate();
+	}
 	
+	// COMMENT'S QUERIES
+	public boolean newComment(JSONObject commentData) throws SQLException {
+		java.util.Date date = new java.util.Date();
+		java.sql.Timestamp time = new java.sql.Timestamp(date.getTime());
+		int result = executeUpdate("newComment", commentData.getInt("media_id"), commentData.getInt("id_user"), time, commentData.getString("comment_text"));
+		return (result == 1) ? true : false;
+	}
 	public JSONArray getCommentList(int mediaId) throws SQLException {
-		JSONArray commentData = new JSONArray();
-		
+		JSONArray commentData = new JSONArray();	
 		executeQuery("searchComments", mediaId); 
 		while(this.rs.next()) {
 			JSONObject row = new JSONObject();
@@ -51,25 +63,25 @@ public class ActionQueries {
 		return commentData;
 	}
 	
-	public boolean likeVideo(Integer id, Integer media_id) throws SQLException {
-		this.pst = con.prepareStatement(Props.getQuery("videoLike"));
-		this.pst.setInt(1, id);
-		this.pst.setInt(2, media_id);
-		int result = pst.executeUpdate();
-//		int result = executeUpdate("videoLike", id, media_id);
+	// LIKE/DISLIKE'S QUERIES
+	public boolean likeVideo(int userId, int mediaId) throws SQLException {
+		int result = executeUpdate("videoLike", userId, mediaId);
+		return (result == 1) ? true : false;
+	}	
+	public boolean dislikeVideo(int userId, int mediaId) throws SQLException {
+		int result = executeUpdate("videoDislike", userId, mediaId);
 		return (result == 1) ? true : false;
 	}
-	
-	public boolean newComment(JSONObject commentData) throws SQLException {
-		java.util.Date date = new java.util.Date();
-		java.sql.Timestamp time = new java.sql.Timestamp(date.getTime());
-		this.pst = this.con.prepareStatement(Props.getQuery("newComment"));
-		this.pst.setInt(1, commentData.getInt("media_id"));
-		this.pst.setInt(2, commentData.getInt("id_user")); 
-		this.pst.setTimestamp(3, time);
-		this.pst.setString(4, commentData.getString("comment_text"));		
-		int result = pst.executeUpdate();
+	public boolean changeState(boolean likeState, int userId, int mediaId) throws SQLException {
+		int result = executeUpdate("changeState", likeState, userId, mediaId);
 		return (result == 1) ? true : false;
+	}
+	public Boolean isLike(int userId, int mediaId) throws SQLException {
+		executeQuery("isLike", userId, mediaId);
+		if(rs.next()) {
+			return rs.getBoolean("like_state");
+		}
+		return null;
 	}
 	
 	public void closeResources() {

@@ -18,7 +18,8 @@
             </div>
             <div class="col-5">
                     <button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
-                    <button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>  
+                    <button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>
+                    <button class="btn btn-outline-primary" onClick="Dislike();" id="download-video">DISLIKE</button>  
             </div>
         </div>
         <div class="row">
@@ -40,32 +41,47 @@
     <script>
 	    $ = (id) => {
 	        return document.getElementById(id);
-	    }    	        
+	    }
+        
         // Streaming the video
         $("video").src = "../Streaming" + document.location.search;
-        
-        // Comments
-        let commentBox = $('comments-box');
-        let url = '../CommentList' + document.location.search;
-		let configs = {
-            method: 'GET',
-            headers: {
-				'Content-type':'application/x-www-form-urlencoded'
-		  	},
-			credentials: 'same-origin',
+        window.onload = () => {
+            console.log('Bye bye');
         }
-        fetch(url, configs).then(response => response.json())
-        .then(comments => {
-            comments.forEach(comment => {
-                let aNode = document.createElement('li');
-                let textNode = document.createTextNode(comment.comment_text);
-                aNode.setAttribute('class', 'list-group-item');
-                aNode.appendChild(textNode);
-                commentBox.append(aNode);
-            });
-        }).catch(error => {
-            console.log(error.message);
-        })
+        // Comments
+        commentsBox = () => {        	
+        	let commentBox = $('comments-box');
+        	while(commentBox.firstChild) {
+        		commentBox.removeChild(commentBox.firstChild);
+            }
+        	let url = '../Comments' + document.location.search;
+    		let configs = {
+                method: 'GET',
+                headers: {
+    				'Content-type':'application/x-www-form-urlencoded'
+    		  	},
+    			credentials: 'same-origin',
+            }
+            fetch(url, configs).then(response => response.json())
+            .then(res => {
+                if(res.status == 200) {
+                    res.comments.forEach(comment => {
+                        let aNode = document.createElement('li');
+                        let textNode = document.createTextNode(`${comment.username}: ${comment.comment_text}`);
+                        aNode.setAttribute('class', 'list-group-item');
+                        aNode.appendChild(textNode);
+                        commentBox.append(aNode);
+                    });
+                } else {
+                    console.log('1');
+                    console.log(res);
+                }
+            }).catch(error => {
+                console.log('2');
+                console.log(error.message);
+            })	
+        }
+        commentsBox();
         
         // ============================= ACTIONS ===============================
         const mediaId = () => {
@@ -100,9 +116,29 @@
             })
         }
         // Do dislike
-        
+        Dislike = () => {       
+            let data = {
+            	media_id: mediaId()
+            }            
+        	let configs = {
+        		method: 'POST',
+        		headers: {
+        		  'Content-type':'application/x-www-form-urlencoded'
+        		},
+        		credentials: 'same-origin',
+            	body: JSON.stringify(data)
+        	}
+            
+            fetch("../Dislike", configs)
+            .then(response => response.json())
+            .then(data =>{
+            	console.log(data);
+            }).catch(error => {
+            	console.log(error.message);
+            })
+        }
         // Do comment
-        doComment = () => {
+        doComment = () => {        	
 			let commentText = document.getElementById('comment').value;           
             let data = {
             	media_id: mediaId(),
@@ -119,10 +155,12 @@
            	fetch('../Comments', configs)
            	.then(response => response.json())
            	.then(data=> {
-           		console.log(data);
+           		console.log(data);           	
            	}).catch(error => {
            		console.log(error.message);
-           	});           	
+           	});           
+            
+            commentsBox();
         }
         
     </script>

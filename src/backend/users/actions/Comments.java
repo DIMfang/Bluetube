@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import backend.database.ActionQueries;
@@ -35,8 +36,22 @@ public class Comments extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		ActionQueries aq = new ActionQueries();
+		int mediaId = Integer.parseInt(request.getParameter("key"));
+		PrintWriter out = response.getWriter();
+		JSONArray comments = new JSONArray();
+		JSONObject message = new JSONObject();
+		
+		try {
+			comments = aq.getCommentList(mediaId);
+			message.put("status", 200).put("comments", comments);
+		} catch(SQLException e) {
+			message.put("status", 403).put("description", "database error");
+			e.printStackTrace();
+		} finally {
+			aq.closeResources();
+		}
+		out.println(message.toString());
 	}
 
 	/**
@@ -56,6 +71,8 @@ public class Comments extends HttpServlet {
 				message.put("status", 200).put("description", "Success");
 			} catch(SQLException e) {		
 				e.printStackTrace();
+			} finally {
+				mq.closeResources();
 			}
 		} else {		
 			message.put("status", 403).put("description", "session not started");

@@ -17,16 +17,16 @@ import org.json.JSONObject;
 import backend.database.ActionQueries;
 
 /**
- * Servlet implementation class Like
+ * Servlet implementation class Dislike
  */
-@WebServlet("/Like")
-public class Like extends HttpServlet {
+@WebServlet("/Dislike")
+public class Dislike extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Like() {
+    public Dislike() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,10 +36,7 @@ public class Like extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-		JSONObject userData = (JSONObject) session.getAttribute("session");
-		out.print(userData.toString());
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -48,7 +45,7 @@ public class Like extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();		
-		ActionQueries aq = new ActionQueries();		
+		ActionQueries aq = new ActionQueries();
 		JSONObject message = new JSONObject();
 		JSONObject userData = (JSONObject) session.getAttribute("session");
 		JSONObject params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));		
@@ -58,19 +55,18 @@ public class Like extends HttpServlet {
 			int userId = userData.getInt("id_user");
 			try {
 				Boolean isBool = aq.isLike(userId, mediaId);
-				if(isBool == null) {  
-					aq.likeVideo(userId, mediaId);
-					message.put("status", 200).put("description", "Like");
-				} else if(isBool.equals(true)) {
-					// Ya hizo un like
-					message.put("status", 200).put("description", "This user already likes this video");
+				if(isBool == null) {
+					aq.dislikeVideo(userId, mediaId);	
+					message.put("status", 200).put("description", "Dislike");
+				} else if(isBool.equals(false)) {
+					// Ya hizo un dislike
+					message.put("status", 403).put("description", "This user already dislikes this video");	
 				} else {
-					// Hizo un dislike -> Se cambia a like
-					aq.changeState(true, userId, mediaId);
-					message.put("status", 200).put("description", "Changing dislike");					
-				}
+					aq.changeState(false, userId, mediaId);
+					message.put("status", 200).put("description", "Changing dislike");
+				}				
 			} catch(SQLException e) {
-				message.put("status", 503).put("description", "Unknown problem, try again");
+				message.put("status", 200).put("description", "Changing dislike");
 				e.printStackTrace();				
 			} finally {
 				aq.closeResources();
@@ -81,5 +77,5 @@ public class Like extends HttpServlet {
 		}
 		out.println(message);
 	}
-	//	message.put("status", 403).put("description", "Like could not be processed");
+
 }
