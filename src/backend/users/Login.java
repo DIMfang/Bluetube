@@ -53,7 +53,7 @@ public class Login extends HttpServlet {
 				userData = queries.getUserData(params);
 				if(userData.length() > 0) {
 					// Sucess
-					message.put("status", 200).put("description", "Sucess");
+					message.put("status", 200).put("userData", userData); // Sucess
 					storeValue(session, userData);
 				} else {
 					// Invalid username or password

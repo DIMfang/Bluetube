@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <title>Document</title>
-    
+
 </head>
+
 <body>
-    
+
     <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
-    <div class="container-fuild"> 
+    <div class="container-fuild">
         <div class="row">
             <div class="col-12">
                 <nav class="navbar navbar-expand navbar-light bg-faded">
@@ -30,55 +32,50 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="list-group" id="list-videos" role="tablist">                    
+                <div class="list-group" id="list-videos" role="tablist">
                 </div>
             </div>
         </div>
     </div>
-	<script>
-		$ = (id) => {
-			return document.getElementById(id);
-		}				
-		
-		toLogin = () =>{
-			document.location.href= "./login/";
-		}
-		
-		toprofile = () =>{
-			document.location.href= "./logout/";
-		}
-		onSearch = () => {
-		
-			let listGroup = $('list-videos');
-            
-			while(listGroup.firstChild) {
-            	listGroup.removeChild(listGroup.firstChild);
-            }            
-			
+    <script>
+        $ = (id) => {
+            return document.getElementById(id);
+        }
+        toLogin = () => {
+            document.location.href = "./login/";
+        }
+        toprofile = () => {
+            document.location.href = "./logout/";
+        }
+        onSearch = () => {
+            let listGroup = $('list-videos');
+            while (listGroup.firstChild) {
+                listGroup.removeChild(listGroup.firstChild);
+            }
             let url = './VideoList?query=' + $('input-search').value;
-			configs = {
+            configs = {
                 method: 'GET',
                 headers: {
-		  			'Content-type':'application/x-www-form-urlencoded'
-		  		},
-		  		credentials: 'same-origin',
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
             }
-			
             fetch(url, configs)
-            .then(response => response.json())
-            .then(videos => {            	
-            	videos.forEach(e => {    				            	
-            		let aNode = document.createElement('a');
-    				let textNode = document.createTextNode(e.media_name);    				                    
-    				aNode.setAttribute('class', 'list-group-item list-group-item-action');
-                    aNode.setAttribute('href', './watch?key=' + e.media_id);                    
-    	            aNode.appendChild(textNode);    	            
-    	            listGroup.append(aNode);    			
-            	});    			
-            }).catch(error => {
-                console.log(error);
-            });            
+                .then(response => response.json())
+                .then(videos => {
+                    videos.forEach(e => {
+                        let aNode = document.createElement('a');
+                        let textNode = document.createTextNode(e.media_name);
+                        aNode.setAttribute('class', 'list-group-item list-group-item-action');
+                        aNode.setAttribute('href', './watch?key=' + e.media_id);
+                        aNode.appendChild(textNode);
+                        listGroup.append(aNode);
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
         }
-	</script>
+    </script>
 </body>
+
 </html>

@@ -1,23 +1,3 @@
-function logout() {
-  	let configs = {
-  		method: 'GET',
-  		headers: {
-  			'Content-type':'application/x-www-form-urlencoded'
-  		},
-  		credentials: 'same-origin'
-  	}
-  	fetch('../Logout', configs)
-  	.then(response => response.json())
-  	.then(data => {
-  		if(data.status == 200) {
-  			window.location.replace("../index.html");
-  		}
-  		console.log(data); 
-  	}).catch(error => {
-  		console.log(error.message);
-  	})
-
-}
 
 function setVideo() {
 	document.getElementById("video").src = "./Streaming";
