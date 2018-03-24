@@ -79,7 +79,7 @@
             </div>
             <div class="input-group mt-2 px-2 mx-0 row">
                 <div class="col-xl-12 d-flex justify-content-center">
-                    <button type="sumbit" class="btn btn-outline-primary btn-block">SIGN UP</button>
+                    <button type="submit" class="btn btn-outline-primary btn-block">SIGN UP</button>
                 </div>
                 <div class="col-xl-12 pt-1 d-flex justify-content-center">
                     <small id="helpId" class="form-text text-muted">Already have an account?</small>
@@ -99,14 +99,14 @@
             'use strict';
             window.addEventListener('load', () => {
                 let form = $('form');
-                form.addEventListener('click', (e) => {
+                form.addEventListener('submit', (e) => {
                     e.preventDefault();
                     if (form.checkValidity() == false) {
-                        e.stopPropagation();
+                        e.stopPropagation();                        
                     } else {
                         register();
                     }
-                    form.classList.add('was-validated');                    
+                    form.classList.add('was-validated');
                 });
             }, false);
         }
