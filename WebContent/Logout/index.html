@@ -6,11 +6,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>BlueTube</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../style/look.css"></link>
 </head>
 
 <body>
+	<nav-bar inref="../login" upref="../register" href="../"></nav-bar>
+
 	<script src="logout.js"></script>
 	<button onclick="logout()" class="defaultbutton">Log out</button>
 	<h1 class="title">Upload Files</h1>
@@ -73,7 +75,10 @@
 				})
 		}
 	</script>
-
+	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
+	<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../util/navbar.js"></script>
 </body>
 
 </html>

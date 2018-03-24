@@ -3,29 +3,6 @@ function $(id) {
     return document.getElementById(id);
 } 
 
-class NavBar extends HTMLElement {
-    constructor() {
-        super();
-    }
-    connectedCallback() {
-        this.innerHTML = `
-        <nav style="background-color: #001c37" class="navbar navbar-dark border-bot-1 border-primary navbar-expand-sm|md|lg|-xl navbar-dark|light bar">
-            <a class="navbar-brand" href="">Bluetube</a>
-            <a class="navbar-brand" style="font-size:15px; color:white"> LOGIN </a>
-        </nav> `
-        this.userStatus();
-    }
-    userStatus() {
-        console.log(this.getStatus.textContent);
-        this.getStatus.textContent = 'SIGN UP';
-        this.getStatus.setAttribute('href', '#');
-    }
-    get getStatus() {
-        return this.querySelectorAll('a')[1];
-    }
-}
-customElements.define('nav-bar', NavBar);
-
 function getValues() {
     return {
         username: $('username').value,
