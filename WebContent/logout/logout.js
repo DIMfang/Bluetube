@@ -1,4 +1,8 @@
 function logout() {
+	if(localStorage) {
+		localStorage.clear();
+		console.log('LOCAL STORAGE CLEAR');
+	}
   	let configs = {
   		method: 'GET',
   		headers: {

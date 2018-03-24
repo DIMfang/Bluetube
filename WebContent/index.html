@@ -39,7 +39,7 @@
 		$ = (id) => {
 			return document.getElementById(id);
 		}				
-		
+		console.log(JSON.parse(localStorage.getItem('session')))
 		toLogin = () =>{
 			document.location.href= "./login/";
 		}
