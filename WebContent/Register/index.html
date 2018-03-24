@@ -1,141 +1,125 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Bluetube</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">    
-    <style>        
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
         .bar {
-            height: 75px;
+            height: 60px;
         }
     </style>
-
 </head>
-  <body>
-    <div class="container-fluid mx-0 px-0">
-    <!-- style="background-color: #1a5abb;"  -->
+<body>
     <nav class="navbar navbar-dark bg-primary border-bot-1 border-primary navbar-expand-sm|md|lg|-xl navbar-dark|light bar">
-        <a style="font-size:30px;" class="navbar-brand" href="">Bluetube</a>
+        <a class="navbar-brand" href="">Bluetube</a>
+        <a id="log" style="font-size:15px; color:white;" class="navbar-brand" href="#"> LOGIN </a>
     </nav>
-    
-    <!-- <div class="container d-flex justify-content-center">
-        <a class="navbar-brand" href="#">
-            <img src="img/bluetubeIcon.jpg" width="350" height="125" alt="">
-        </a>
-    </div> -->
-    
-    
-    <div class="container d-flex justify-content-center">
-        
-        <!-- border-primary -->
-        <div class="container-fuild">
-            <div class="row mx-0 justify-content-center mt-5 mb-4 align-items-center ">
+
+    <div class="container-fluid d-flex flex-column align-items-center">
+
+        <div class="row mx-0 mt-5 mb-4">
+            <div class="col-12">
                 <h4 class="font-weight-light display"> Sign up </h4>
-                <!-- <h4 class="font-weight-dark text-primary display pl-2">Bluetube</h4> -->
+            </div>
+        </div>
+
+
+        <form id="form" style="width:525px" class="row mx-0 form-group needs-validation" novalidate>
+
+            <!-- First name and last name -->
+            <div class="input-group row px-4 mx-0 d-flex justify-content-center">
+                <div class="col-6 px-0 pr-2">
+                    <input type="text" class="form-control" id="firstname" placeholder="First Name" required>
+                </div>
+                <div class="col-6 px-0 pl-2">
+                    <input type="text" class="form-control" id="lastname" placeholder="Last Name" required>
+                </div>
             </div>
 
-            
-            <form>
-                <!-- First name and last name -->
-                <div class="input-group row px-4 mx-0">
-                    <!-- <label for="inputName" class="col-sm-1-12 col-form-label"></label> -->
-                    <div class="col-6 px-0 pr-2">
-                        <input type="text" class="form-control" name="inputName" id="firstname" placeholder="First Name">
-                    </div>
-                    <div class="col-6 px-0 pl-2">
-                        <input type="text" class="form-control" name="inputName" id="lastname" placeholder="Last Name">
-                    </div>
-                </div>
-                
-                <!-- Email Adress -->
-                <div class="input-group mt-3 mx-0 px-4  row">
-                    <input type="email" class="form-control" name="" id="email" aria-describedby="" placeholder="Email Adress">
-                    <div class="dropdown input-group-append">
-                        
-                        <button style="width: 150px" class="btn btn-primary dropdown-toggle" 
-                                type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"> @gmail.com
+            <!-- Email Adress -->
+            <div class="row input-group mt-3 mx-0 px-4">
+                <input type="email" class="form-control" id="email" aria-describedby="" placeholder="Email Adress" required>
+                <!-- <div class="dropdown input-group-append">
+                        <button style="width: 150px" class="btn btn-primary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"> @gmail.com
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropwdownMenuButton">
-                            <a class="dropdown-item" href="#">@gmail.com</a>
-                            <!-- <h6 class="dropdown-header">Section header</h6> -->
+                            <a class="dropdown-item" href="#">@gmail.com</a>                           
                             <a class="dropdown-item" href="#">@hotmail.com</a>
                         </div>
-                    </div>
-                  <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                    </div> -->
+                <div class="invalid-feedback">
+                    Please enter a correct email adress
                 </div>
-
-                <!-- Username -->
-                <div class="input-group mt-3 mx-0 px-4 row">
-                    <input type="text" class="form-control"
-                        name="" id="username" aria-describedby="helpId" placeholder="Username" required>                
+                <div class="valid-feedback">
+                    Looks good!
                 </div>
+            </div>
 
-                <!-- Passwords -->
-                <div class="input-group mt-3 mx-0 px-4 row">
-                    <div class="col-6 px-0 pr-2">
-                        <input type="password" class="form-control" name="" id="password" aria-describedby="helpId" placeholder="Password">
-                    </div>
-                    <div class="col-6 px-0 pl-2">
-                        <input type="password" class="form-control" name="" id="confirm-password" aria-describedby="helpId" placeholder="Confirm password">
-                    </div>
+            <!-- Username -->
+            <div class="input-group mt-3 mx-0 px-4 row">
+                <input type="text" class="form-control" id="username" aria-describedby="helpId" placeholder="Username" required>
+                <div class="valid-feedback">
+                    Looks good!
                 </div>
+            </div>
 
-                <!-- <div class="btn-group-toggle mt-3 mx-0 px-4 justify-content-center row">
-                    <label class="btn btn-primary mx-4">
-                        <input type="radio" name="options" id="option-admin" autocomplete="off"> Admin
-                    </label>
-                    <label class="btn btn-primary mx-4">
-                        <input type="radio" name="options" id="option-user" autocomplete="off"> User
-                    </label>
-                </div> -->
-
-                <!-- Sign up -->
-                <div class="mt-4 mx-0 row px-4 justify-content-center">
-                    <small class="notice">By clicking on Sign up, you agree to
-                        <a href="" target="_blank">Bluetube's terms and conditions</a> 
-                        <!-- and <a href="" target="_blank">privacy policy</a> -->
-                    </small>
+            <!-- Passwords -->
+            <div class="input-group mt-3 mx-0 px-4 row">
+                <div class="col-6 px-0 pr-2">
+                    <input type="password" class="form-control" id="password" aria-describedby="helpId" placeholder="Password" required>
                 </div>
-                <div class="input-group mt-2 px-2 mx-0 row">
-                    <div class="col-xl-12 d-flex justify-content-center">                
-                        <button type="button" onClick="register()" class="btn btn-outline-primary btn-block">SIGN UP</button>
-                    </div>
-                    <div class="col-xl-12 pt-1 d-flex justify-content-center">
-                        <small id="helpId" class="form-text text-muted">Already have an account?</small>
-                        <a style="font-size: smaller" id="helpId" class="form-text text-primary pl-1" href="../register">Log in</a>
-                        
-                    </div>
+                <div class="col-6 px-0 pl-2">
+                    <input type="password" class="form-control" id="confirm-password" aria-describedby="helpId" placeholder="Confirm password"
+                        required>
                 </div>
-            </form>
+            </div>
 
-
-
-        </div>
+            <!-- Sign up -->
+            <div class="col-xl-12 mt-4 mx-0 row px-4 justify-content-center">
+                <small class="notice">By clicking on Sign up, you agree to
+                    <a href="" target="">Bluetube's terms and conditions</a>
+                </small>
+            </div>
+            <div class="input-group mt-2 px-2 mx-0 row">
+                <div class="col-xl-12 d-flex justify-content-center">
+                    <button type="sumbit" class="btn btn-outline-primary btn-block">SIGN UP</button>
+                </div>
+                <div class="col-xl-12 pt-1 d-flex justify-content-center">
+                    <small id="helpId" class="form-text text-muted">Already have an account?</small>
+                    <a style="font-size: smaller" id="helpId" class="form-text text-primary pl-1" href="/Register">Log in</a>
+                </div>
+            </div>
+        </form>
     </div>
-    </div>
-    
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="register.js"></script>
-    <script>   
+    <script>    
         $ = id => {
             return document.getElementById(id);
+        }; {
+            'use strict';
+            window.addEventListener('load', () => {
+                let form = $('form');
+                form.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (form.checkValidity() == false) {
+                        e.stopPropagation();
+                    } else {
+                        register();
+                    }
+                    form.classList.add('was-validated');                    
+                });
+            }, false);
         }
-        getEmail = (email) => {
-            return new Promise((res, rej) => {
-                // /\w+@\w+\.+[a-z]/
-                let regExp = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
-                if(regExp.test(email)) {
-                    res(email);
-                } else {
-                    rej(false);
-                }
-            });
+        if (1) {
+            // $('log'). = 'asd';
         }
     </script>
-
-  </body>
+</body>
 </html>
