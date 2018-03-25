@@ -6,51 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <title>Document</title>
+    <title>Bluetube</title>
 
 </head>
 
 <body>
     <nav-bar inref="./login" upref="./register" href="#"></nav-bar>
-    <div class="container-fluid d-flex">
-        <div class="container-fuild">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar navbar-expand navbar-light bg-faded">
-                        <a class="navbar-brand" href="#">Bluetube</a>
-                        <form action="/VideoList?" class="form-inline my-2 my-lg-0">
-                            <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
-                            <button onclick="onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
-                            <button type="button" onClick="toLogin()" class="btn btn-outline-success my-3 my-sm-1">Login</button>
-                            <button type="button" onClick="toprofile()" class="btn btn-outline-success my-3 my-sm-1">Profile</button>
-                        </form>
-                    </nav>
-                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline my-2 my-lg-0">
+                    <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button onclick="onSearch()" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                    <button type="button" onClick="toprofile()" class="btn btn-outline-success my-3 my-sm-1">Profile</button>
+                </form>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="list-group" id="list-videos" role="tablist">
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="list-group" id="list-videos" role="tablist">
                 </div>
             </div>
         </div>
     </div>
     <script>
-        $ = (id) => {
-            return document.getElementById(id);
-        }
-        toLogin = () => {
-            document.location.href = "./login/";
-        }
         toprofile = () => {
             document.location.href = "./logout/";
         }
         onSearch = () => {
-            let listGroup = $('list-videos');
+            let listGroup = document.getElementById('list-videos');
             while (listGroup.firstChild) {
                 listGroup.removeChild(listGroup.firstChild);
             }
-            let url = './VideoList?query=' + $('input-search').value;
+            let url = './VideoList?query=' + document.getElementById('input-search').value;
+            console.log($('input-search').value)
             configs = {
                 method: 'GET',
                 headers: {
@@ -62,7 +51,7 @@
                 .then(response => response.json())
                 .then(videos => {
                     console.log(videos);
-                    videos.forEach(e => {                        
+                    videos.forEach(e => {
                         let aNode = document.createElement('a');
                         let textNode = document.createTextNode(e.media_name);
                         aNode.setAttribute('class', 'list-group-item list-group-item-action');

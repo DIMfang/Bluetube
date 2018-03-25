@@ -63,7 +63,7 @@ public class Dislike extends HttpServlet {
 					message.put("status", 403).put("description", "This user already dislikes this video");	
 				} else {
 					aq.changeState(false, userId, mediaId);
-					message.put("status", 200).put("description", "Changing dislike");
+					message.put("status", 200).put("description", "Changing to dislike");
 				}				
 			} catch(SQLException e) {
 				message.put("status", 200).put("description", "Changing dislike");

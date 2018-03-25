@@ -67,7 +67,7 @@ public class Like extends HttpServlet {
 				} else {
 					// Hizo un dislike -> Se cambia a like
 					aq.changeState(true, userId, mediaId);
-					message.put("status", 200).put("description", "Changing dislike");					
+					message.put("status", 200).put("description", "Changing to like");					
 				}
 			} catch(SQLException e) {
 				message.put("status", 503).put("description", "Unknown problem, try again");
