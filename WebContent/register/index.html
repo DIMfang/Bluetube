@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Bluetube</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <style>
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid d-flex flex-column align-items-center">
+
+        <div class="row mx-0 mt-5 mb-4">
+            <div class="col-12">
+                <h4 class="font-weight-light display"> Sign up </h4>
+            </div>
+        </div>
+
+
+        <form id="form" style="width:525px" class="row mx-0 form-group needs-validation" novalidate>
+
+            <!-- First name and last name -->
+            <div class="input-group row px-4 mx-0 d-flex justify-content-center">
+                <div class="col-6 px-0 pr-2">
+                    <input type="text" class="form-control" id="firstname" placeholder="First Name" required>
+                </div>
+                <div class="col-6 px-0 pl-2">
+                    <input type="text" class="form-control" id="lastname" placeholder="Last Name" required>
+                </div>
+            </div>
+
+            <!-- Email Adress -->
+            <div class="row input-group mt-3 mx-0 px-4">
+                <input type="email" class="form-control" id="email" aria-describedby="" placeholder="Email Adress" required>
+                <!-- <div class="dropdown input-group-append">
+                        <button style="width: 150px" class="btn btn-primary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"> @gmail.com
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropwdownMenuButton">
+                            <a class="dropdown-item" href="#">@gmail.com</a>                           
+                            <a class="dropdown-item" href="#">@hotmail.com</a>
+                        </div>
+                    </div> -->
+                <div class="invalid-feedback">
+                    Please enter a correct email adress
+                </div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <!-- Username -->
+            <div class="input-group mt-3 mx-0 px-4 row">
+                <input type="text" class="form-control" id="username" aria-describedby="helpId" placeholder="Username" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <!-- Passwords -->
+            <div class="input-group mt-3 mx-0 px-4 row">
+                <div class="col-6 px-0 pr-2">
+                    <input type="password" class="form-control" id="password" aria-describedby="helpId" placeholder="Password" required>
+                </div>
+                <div class="col-6 px-0 pl-2">
+                    <input type="password" class="form-control" id="confirm-password" aria-describedby="helpId" placeholder="Confirm password"
+                        required>
+                </div>
+            </div>
+
+            <!-- Sign up -->
+            <div class="col-xl-12 mt-4 mx-0 row px-4 justify-content-center">
+                <small class="notice">By clicking on Sign up, you agree to
+                    <a href="" target="">Bluetube's terms and conditions</a>
+                </small>
+            </div>
+            <div class="input-group mt-2 px-2 mx-0 row">
+                <div class="col-xl-12 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-outline-primary btn-block">SIGN UP</button>
+                </div>
+                <div class="col-xl-12 pt-1 d-flex justify-content-center">
+                    <small id="helpId" class="form-text text-muted">Already have an account?</small>
+                    <a style="font-size: smaller" id="helpId" class="form-text text-primary pl-1" href="/Register">Log in</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="register.js"></script>
+    <script>    
+        $ = id => {
+            return document.getElementById(id);
+        }; {
+            'use strict';
+            window.addEventListener('load', () => {
+                let form = $('form');
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (form.checkValidity() == false) {
+                        e.stopPropagation();                        
+                    } else {
+                        register();
+                    }
+                    form.classList.add('was-validated');
+                });
+            }, false);
+        }
+    </script>
+</body>
+</html>
