@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>BlueTube</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" media="screen" />
+	<style>
+		li{
+			padding-right: 1px;
+		}
+	</style>
+</head>
+
+<body>
+	<script src="logout.js"></script>
+	<nav-bar inref="../login" upref="../register" href="../"></nav-bar>
+	<div class='container' style="padding-top: 10px;">
+		<ul class='nav nav-tabs' style='padding-bottom: 1px;'>
+			<li class='active'><button type="button" class="btn btn-primary" data-toggle="tab" href="#Profile">Profile</button></li>
+			<li><button type="button" class="btn btn-primary" data-toggle="tab" href="#menu1">Upload</button></li>
+			<li><button type="button" class="btn btn-primary" data-toggle="tab" href="#menu2">Stream</button></li>
+		</ul>
+	
+		<div class="tab-content">
+				<div id="Profile" class="tab-pane fade in active">
+				<h2>Profile</h2>
+				<h4 class="font-weight-light display"> In this seccion, you can view your general channel's statistics.</h4>
+				</div>
+				<div id="menu1" class="tab-pane fade">
+					<div>
+						<h2>Upload</h2>
+						<h4 class="font-weight-light display"> In this seccion, you can upload new videos to your channel. </h4>
+						<br>
+						<h4 class="font-weight-light display"> Video name </h4>
+						<input type="text"
+							class="form-control" name="" id="media_name" aria-describedby="helpId" placeholder="Media name" style="width: 50%">
+						<br>
+						<div class="form-group">
+							<h4 class="font-weight-light display"> Description </h4>
+							<textarea class="form-control" name="" id="media_des" rows="3"></textarea>
+						</div>
+					</div>
+					<div> <h4 class="font-weight-light display">Select a file:</h4>
+						<div class="form-group">
+						  <input type="file"
+							class="form-control" name="" id="file" aria-describedby="helpId" placeholder="dsadsadsad">
+						  <small id="helpId" class="form-text text-muted">The submitted file must be MP4.</small>
+						</div>
+						<h3 id="uploadStatus"></h3>
+					</div>
+					<br><br>
+					<div style="text-align: center;">
+						<button type="button" class="btn btn-outline-primary" style="width: 50%" onclick="upload()">Upload Video</button>
+					</div>
+				</div>
+				<div id="menu2" class="tab-pane fade">
+					<h2>Stream</h2>
+					<h4 class="font-weight-light display"> In this section, you can watch your own videos. </h4>
+					<div class="video-container" style="text-align:center;">
+						<video id="video" width='900px' height='500px' controls autoplay style='box-shadow: 0 1px 5px rgba(83, 105, 199, 0.12), 0 1px 15px rgba(65, 94, 190, 0.5);'></video>
+					</div>
+					<br>
+					<div class="form-group">
+							<input type="text"
+								class="form-control" name="" id="search_input" aria-describedby="helpId" placeholder="Video name">
+					</div>
+					<div style="text-align: center;">
+							<button type="button" class="btn btn-outline-primary" style="width: 50%" onclick="stream()">Stream</button>
+					</div>
+				</div>
+			</div>
+	</div>
+	<script>
+		logout = () => {
+			let configs = {
+				method: 'GET',
+				headers: {
+					'Content-type': 'application/x-www-form-urlencoded'
+				},
+				credentials: 'same-origin'
+			}
+			fetch('../Logout', configs)
+				.then(response => response.json())
+				.then(data => {
+					if (data.status == 200) {
+						if (localStorage.getItem('session')) {
+							localStorage.clear();
+						}
+						window.location.replace("../index.html");						
+					}
+					console.log(data);
+				}).catch(error => {
+					console.log(error.message);
+				})
+		}
+		
+		videoTEST = () => {
+			let configs = {
+				method: 'GET',
+				headers: {
+					'Content-type': 'application/x-www-form-urlencoded'
+				},
+				credentials: 'same-origin'
+			}
+			fetch('../VideoList', configs)
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+				}).catch(error => {
+					console.log(error.message);
+				})
+		}
+	</script>
+	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
+	<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../util/navbar.js"></script>
+</body>
+
+</html>

@@ -44,8 +44,8 @@ class NavBar extends HTMLElement {
     } // #001c37 #0d3a60 #03275A
     connectedCallback() {
         this.innerHTML = `
-        <nav style="background-color:#0D397F; height:60px;" 
-        class="navbar navbar-expand navbar-dark bg-dark justify-content-between">
+        <nav style="background-color:#4286f4; height:60px;" 
+        class="navbar navbar-expand navbar-dark justify-content-between">
             <a class="navbar-brand">Bluetube</a>
             <div class="navbar-nav">
                 <a class="nav-item nav-link"></a>
