@@ -43,8 +43,13 @@ class NavBar extends HTMLElement {
     } // #001c37 #0d3a60 #03275A
     connectedCallback() {
         this.innerHTML = `
+<<<<<<< HEAD
         <nav style="background-color:#0D397F; height:60px;" 
         class="navbar navbar-expand navbar-dark bg-dark sticky-top justify-content-between">
+=======
+        <nav style="background-color:#4286f4; height:60px;" 
+        class="navbar navbar-expand navbar-dark justify-content-between">
+>>>>>>> 6717ab53012bebf0f4c63361da6fa27bd4ead71f
             <a class="navbar-brand">Bluetube</a>
             <form class="form-inline">
                 <input id="input-search" class="form-control mr-2 h-75" type="text" placeholder="Search">
