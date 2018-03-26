@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
 	<style>
 		li{
 			padding-right: 1px;
@@ -27,8 +28,40 @@
 	
 		<div class="tab-content">
 				<div id="Profile" class="tab-pane fade in active">
-				<h2>Profile</h2>
-				<h4 class="font-weight-light display"> In this seccion, you can view your general channel's statistics.</h4>
+					<h2>Profile</h2>
+					<h4 class="font-weight-light display"> In this seccion, you can view your general channel's statistics.</h4>
+					<div class="container-fluid" style='box-shadow: 0 1px 5px rgba(83, 105, 199, 0.12), 0 1px 15px rgba(65, 94, 190, 0.5);'>
+						<div class="container-fluid" style="border-bottom: 1px solid rgb(189, 189, 189)" >
+							<h3 class="d-inline">Welcome to your profile,</h3>
+							<h3 id='channelname' class="d-inline">hola</h3>
+						</div>
+						<br>
+						<div style="text-align:center">
+							<div class="d-inline-block" style="width: 49.5%; border-right: 1px solid rgb(189, 189, 189)" style="text-align:left">
+								<span class="fas fa-eye"></span>
+								<h4 class="font-weight-light display d-inline">Channel views:</h4>
+								<h4 class="font-weight-light display d-inline" id="channel-views">0</h4>
+								<br><br>
+								<i class="fas fa-thumbs-up"></i>
+								<h4 class="font-weight-light display d-inline">Video Likes:</h4>
+								<h4 class="font-weight-light display d-inline" id="channel-likes">0</h4>
+								<br><br>
+								<i class="far fa-thumbs-up"></i>
+								<h4 class="font-weight-light display d-inline">Liked Videos:</h4>
+								<h4 class="font-weight-light display d-inline" id="user-likes">0</h4>
+								<br><br>
+								<i class="far fa-thumbs-down"></i>
+								<h4 class="font-weight-light display d-inline">Disliked Videos:</h4>
+								<h4 class="font-weight-light display d-inline" id="user-dislikes">0</h4>
+							</div>
+							<div class="d-inline-block" style="width: 49.5%; text-align:unset;">
+								<button type="button" class="btn btn-outline-primary" style="width: 70%; margin-bottom: 7px; margin-top:0px;">Change Channel's name</button>
+								<button type="button" class="btn btn-outline-primary" style="width: 70%; margin-bottom: 7px;">Change Password</button>
+								<button type="button" class="btn btn-outline-primary" style="width: 70%">Change Email</button>
+								<button type="button" class="btn btn-outline-danger" style="width: 70%; margin-top: 20px; margin-bottom: 10px;">Delete channel</button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div id="menu1" class="tab-pane fade">
 					<div>
