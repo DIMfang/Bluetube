@@ -1,4 +1,3 @@
-
 LogOut = () => {
     let path = document.location.pathname;
     let url = (path == '/BlueTube/') ? './Logout' : '../Logout';
@@ -45,8 +44,12 @@ class NavBar extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <nav style="background-color:#0D397F; height:60px;" 
-        class="navbar navbar-expand navbar-dark bg-dark justify-content-between">
+        class="navbar navbar-expand navbar-dark bg-dark sticky-top justify-content-between">
             <a class="navbar-brand">Bluetube</a>
+            <form class="form-inline">
+                <input id="input-search" class="form-control mr-2 h-75" type="text" placeholder="Search">
+                <button class="btn btn-outline-primary btn-md" type="button">Search</button>
+            </form>
             <div class="navbar-nav">
                 <a class="nav-item nav-link"></a>
                 <span class="nav-item navbar-text">or</span>
