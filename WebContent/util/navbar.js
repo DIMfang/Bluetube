@@ -43,13 +43,8 @@ class NavBar extends HTMLElement {
     } // #001c37 #0d3a60 #03275A
     connectedCallback() {
         this.innerHTML = `
-<<<<<<< HEAD
-        <nav style="background-color:#0D397F; height:60px;" 
-        class="navbar navbar-expand navbar-dark bg-dark sticky-top justify-content-between">
-=======
         <nav style="background-color:#4286f4; height:60px;" 
         class="navbar navbar-expand navbar-dark justify-content-between">
->>>>>>> 6717ab53012bebf0f4c63361da6fa27bd4ead71f
             <a class="navbar-brand">Bluetube</a>
             <form class="form-inline">
                 <input id="input-search" class="form-control mr-2 h-75" type="text" placeholder="Search">
@@ -74,9 +69,7 @@ class NavBar extends HTMLElement {
         }
     }
     isIn() {
-        let state = this.state,
-            sign = this.signup,
-            span = this.span;
+        let state = this.state, sign = this.signup, span = this.span;
         state.textContent = 'LOGOUT';
         state.setAttribute('href', '');
         state.onclick = LogOut;
@@ -84,8 +77,7 @@ class NavBar extends HTMLElement {
         span.style.display = 'none';
     }
     isOut() {
-        let state = this.state,
-            sign = this.signup;
+        let state = this.state, sign = this.signup;
         state.textContent = 'LOGIN';
         state.setAttribute('href', this.urls.login);
         sign.setAttribute('href', this.urls.signup);

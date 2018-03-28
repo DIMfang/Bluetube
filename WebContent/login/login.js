@@ -23,6 +23,7 @@ function login() {
     fetch('../Login', configs)
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             if (data.status == 200) {
                 localStorage.setItem('session', JSON.stringify(data.userData));
                 document.location.href = "../";
