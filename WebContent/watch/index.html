@@ -6,9 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Watch</title>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 </head>
 <body>
-    <nav-bar inref="../login" upref="../register" href="../"></nav-bar>
+    <nav-bar inref="../login" upref="../register" pref="../profile" href="../"></nav-bar>
     <div class="container-fluid">    
         <div class="row mt-4">
             <div class="col-7">
@@ -42,11 +43,10 @@
 	    $ = (id) => {
 	        return document.getElementById(id);
 	    }
-        
         // Streaming the video
         $("video").src = "../Streaming" + document.location.search;
         window.onload = () => {
-            console.log('Bye bye');
+            
         }
         // Comments
         commentsBox = () => {        	
@@ -73,11 +73,9 @@
                         commentBox.append(aNode);
                     });
                 } else {
-                    console.log('1');
                     console.log(res);
                 }
             }).catch(error => {
-                console.log('2');
                 console.log(error.message);
             })	
         }

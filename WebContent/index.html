@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav-bar inref="./login" upref="./register" href="#"></nav-bar>
+    <nav-bar inref="./login" upref="./register" pref="./profile" href="#"></nav-bar>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -31,7 +31,7 @@
     </div>
     <script>
         toprofile = () => {
-            document.location.href = "./logout/";
+            document.location.href = "./profile/";
         }
         onSearch = () => {
             let listGroup = document.getElementById('list-videos');

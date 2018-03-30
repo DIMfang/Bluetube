@@ -30,7 +30,7 @@ LogOut = () => {
 class NavBar extends HTMLElement {
     constructor() {
         super();
-        ['inref', 'upref', 'href'].forEach(type => {
+        ['inref', 'upref', 'href', 'pref'].forEach(type => {
             if (!this.hasAttribute(type)) {
                 this.setAttribute(type, '#');
             }
@@ -43,23 +43,16 @@ class NavBar extends HTMLElement {
     } // #001c37 #0d3a60 #03275A
     connectedCallback() {
         this.innerHTML = `
-        <nav style="background-color:#4286f4; height:60px;" 
+        <nav style="background-color:#4286f4; height:60px;"
         class="navbar navbar-expand navbar-dark justify-content-between">
-            <a class="navbar-brand">Bluetube</a>
-            <form class="form-inline">
-                <input id="input-search" class="form-control mr-2 h-75" type="text" placeholder="Search">
-                <button class="btn btn-outline-primary btn-md" type="button">Search</button>
-            </form>
-            <div class="navbar-nav">
-                <a class="nav-item nav-link"></a>
-                <span class="nav-item navbar-text">or</span>
-                <a id="id1" class="nav-item nav-link">SIGN UP</a>
+            <a class="navbar-brand">Bluetube</a>            
+            <div class="navbar-nav">  
             </div>
             </nav>
         `
         this.brand.setAttribute('href', this.urls.brand);
         this.userState();
-    }
+    } 
     userState() {
         let userData = this.userData;
         if (userData) {
@@ -69,30 +62,30 @@ class NavBar extends HTMLElement {
         }
     }
     isIn() {
-        let state = this.state, sign = this.signup, span = this.span;
-        state.textContent = 'LOGOUT';
-        state.setAttribute('href', '');
-        state.onclick = LogOut;
-        sign.style.display = 'none';
-        span.style.display = 'none';
+        this.stateContainer.innerHTML = `
+            <div class="btn-group">    
+                <a style="border:0; box-shadow: none; background-color:#4286f4; border-color:#4286f4;" class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="img-fluid" src="../img/ic_person_white_48dp_1x.png" width="30" height="30" alt="">    
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" onclick="LogOut()" href="">Logout</a>
+                </div>
+            </div>
+        `
     }
     isOut() {
-        let state = this.state, sign = this.signup;
-        state.textContent = 'LOGIN';
-        state.setAttribute('href', this.urls.login);
-        sign.setAttribute('href', this.urls.signup);
+        this.stateContainer.innerHTML = `
+            <a class="nav-item nav-link" href="${this.urls.login}">LOGIN</a>
+            <span class="nav-item navbar-text">or</span>
+            <a id="id1" class="nav-item nav-link" href="${this.urls.signup}">SIGN UP</a>
+        `
+    }
+    get stateContainer() {
+        return this.querySelector('div');
     }
     get brand() {
         return this.querySelectorAll('a')[0];
-    }
-    get state() {
-        return this.querySelectorAll('a')[1];
-    }
-    get signup() {
-        return this.querySelectorAll('a')[2];
-    }
-    get span() {
-        return this.querySelector('span');
     }
     get userData() {
         return JSON.parse(localStorage.getItem('session'));
