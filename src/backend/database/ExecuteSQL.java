@@ -35,5 +35,11 @@ public abstract class ExecuteSQL {
 		}
 		return this.pst.executeUpdate();
 	}
+	protected void closeMainResource() throws SQLException {
+		if(this != null) 
+			this.con.close();
+		if(this.pst != null) 
+			this.pst.close();
+	}
 	
 }

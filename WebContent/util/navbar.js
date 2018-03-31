@@ -22,7 +22,6 @@ LogOut = () => {
                 }
             }
         }).catch(error => {
-            console.log('ERROR en el catch');
             console.log(error.message);
         })
 }
@@ -42,8 +41,10 @@ class NavBar extends HTMLElement {
             brand: this.getAttribute('href'),
             login: this.getAttribute('inref'),
             signup: this.getAttribute('upref'),
+            profile: this.getAttribute('pref'),
             profileImg: this.getAttribute('profile-img') 
         }
+        console.log(this.urls.profileImg)
     } // #001c37 #0d3a60 #03275A
     connectedCallback() {
         this.innerHTML = `
@@ -69,10 +70,10 @@ class NavBar extends HTMLElement {
         this.stateContainer.innerHTML = `
             <div class="btn-group">    
                 <a style="border:0; box-shadow: none; background-color:#4286f4; border-color:#4286f4;" class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="img-fluid" src="" width="30" height="30" alt="">    
+                    <img class="img-fluid" src="${this.urls.profileImg}" width="30" height="30" alt="">    
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="${this.urls.profile}">Profile</a>
                     <a class="dropdown-item" onclick="LogOut()" href="">Logout</a>
                 </div>
             </div>

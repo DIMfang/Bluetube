@@ -1,8 +1,5 @@
 package backend.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -10,38 +7,15 @@ import java.sql.SQLException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import backend.util.properties.Props;
 
-public class ActionQueries {
+public class ActionQueries extends ExecuteSQL {
 	
-	private Connection con;
-	private PreparedStatement pst;
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	
 	public ActionQueries() {		
-		try {
-			Class.forName(Props.getDB("driver"));
-			this.con = DriverManager.getConnection(Props.getDB("url"), Props.getDB("user"), Props.getDB("password"));
-		} catch(ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+		super();
 	}	
-	private void executeQuery(String query, Object... values) throws SQLException {
-		this.pst = this.con.prepareStatement(Props.getQuery(query));
-		for(int i = 0; i < values.length; i++) {
-			this.pst.setObject(i + 1, values[i]);
-		}
-		this.rs = this.pst.executeQuery();
-	}
-	private int executeUpdate(String query, Object... values) throws SQLException {
-		this.pst = this.con.prepareStatement(Props.getQuery(query));
-		for(int i = 0; i < values.length; i++) {
-			this.pst.setObject(i+1, values[i]);
-		}
-		return this.pst.executeUpdate();
-	}
-	
 	// COMMENT'S QUERIES
 	public boolean newComment(JSONObject commentData) throws SQLException {
 		java.util.Date date = new java.util.Date();
@@ -51,7 +25,7 @@ public class ActionQueries {
 	}
 	public JSONArray getCommentList(int mediaId) throws SQLException {
 		JSONArray commentData = new JSONArray();	
-		executeQuery("searchComments", mediaId); 
+		rs = executeQuery("searchComments", mediaId); 
 		while(this.rs.next()) {
 			JSONObject row = new JSONObject();
 			this.rsmd = this.rs.getMetaData();
@@ -62,7 +36,6 @@ public class ActionQueries {
 		}
 		return commentData;
 	}
-	
 	// LIKE/DISLIKE'S QUERIES
 	public boolean likeVideo(int userId, int mediaId) throws SQLException {
 		int result = executeUpdate("videoLike", userId, mediaId);
@@ -77,7 +50,7 @@ public class ActionQueries {
 		return (result == 1) ? true : false;
 	}
 	public Boolean isLike(int userId, int mediaId) throws SQLException {
-		executeQuery("isLike", userId, mediaId);
+		rs = executeQuery("isLike", userId, mediaId);
 		if(rs.next()) {
 			return rs.getBoolean("like_state");
 		}
@@ -86,12 +59,9 @@ public class ActionQueries {
 	
 	public void closeResources() {
 		try {
-			if(this.con != null )
-				this.con.close();
+			closeMainResource();
 			if(this.rs != null)
 				this.rs.close();
-			if(this.pst != null)
-				this.pst.close();
 		} catch (SQLException e) {
 			System.out.println("Problema al cerrar los recursos");
 			e.printStackTrace();

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav-bar inref="./login" upref="./register" pref="./profile" href="#"></nav-bar>
+    <nav-bar inref="./login" upref="./register" pref="./profile" href="#" profile-img="./img/ic_person_white_48dp_1x.png"></nav-bar>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -39,7 +39,6 @@
                 listGroup.removeChild(listGroup.firstChild);
             }
             let url = './VideoList?query=' + document.getElementById('input-search').value;
-            console.log($('input-search').value)
             configs = {
                 method: 'GET',
                 headers: {
@@ -50,7 +49,6 @@
             fetch(url, configs)
                 .then(response => response.json())
                 .then(videos => {
-                    console.log(videos);
                     videos.forEach(e => {
                         let aNode = document.createElement('a');
                         let textNode = document.createTextNode(e.media_name);

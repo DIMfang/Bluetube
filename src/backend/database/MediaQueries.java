@@ -1,8 +1,5 @@
 package backend.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -11,35 +8,19 @@ import java.util.Calendar;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import backend.util.properties.Props;
 
-public class MediaQueries {
+public class MediaQueries extends ExecuteSQL {
 	
-	private Connection con;
-	private PreparedStatement pst;
 	private ResultSet rs;
 	private ResultSetMetaData rsmd;
 	
 	public MediaQueries() {		
-		try {
-			Class.forName(Props.getDB("driver"));
-			this.con = DriverManager.getConnection(Props.getDB("url"), Props.getDB("user"), Props.getDB("password"));
-		} catch(ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void executeQuery(String query, Object... values) throws SQLException {
-		this.pst = this.con.prepareStatement(Props.getQuery(query));
-		for(int i = 0; i < values.length; i++) {
-			this.pst.setObject(i + 1, values[i]);
-		}
-		this.rs = this.pst.executeQuery();
+		super();
 	}
 	
 	public JSONArray getVideoList(String mediaName) throws SQLException {
 		JSONArray mediaData = new JSONArray();		
-		executeQuery("searchVideos", "%" + mediaName + "%");
+		this.rs = executeQuery("searchVideos", "%" + mediaName + "%");
 		while(this.rs.next()) {
 			JSONObject row = new JSONObject();
 			this.rsmd = this.rs.getMetaData();
@@ -54,7 +35,7 @@ public class MediaQueries {
 	// Function to retrieve an existing videos' URL and file name.
 	public JSONObject getMedia(int mediaId) throws SQLException {
 		JSONObject mediaData = new JSONObject();
-		executeQuery("downloadMedia", mediaId);
+		this.rs = executeQuery("downloadMedia", mediaId);
 		if(this.rs.next()) {
 			return mediaData.put("url", rs.getString("media_url")).put("fileName", rs.getString("media_filename"));
 		}
@@ -64,7 +45,7 @@ public class MediaQueries {
 	// Function to retrieve how many likes and dislikes a video has
 	public JSONObject getMediaLikes(int mediaId) throws SQLException {
 		JSONObject likes = new JSONObject();
-		executeQuery("countLikes", mediaId, mediaId);
+		this.rs = executeQuery("countLikes", mediaId, mediaId);
 		if(this.rs.next()) {
 			return likes.put("likes", rs.getInt("likes")).put("dislikes", rs.getInt("dislikes"));
 		}
@@ -75,26 +56,17 @@ public class MediaQueries {
 		Calendar c = Calendar.getInstance();
 		java.util.Date currentDate = c.getTime();
 		java.sql.Date date = new java.sql.Date(currentDate.getTime());
-		this.pst = con.prepareStatement(Props.getQuery("insertMedia"));
-		this.pst.setInt(1, mediaData.getInt("id_user"));
-		this.pst.setString(2, mediaData.getString("media_url"));
-		this.pst.setString(3, mediaData.getString("media_name"));
-		this.pst.setString(4, mediaData.getString("media_filename"));
-		this.pst.setString(5, mediaData.getString("media_des"));
-		this.pst.setDate(6, date);
-		int result = this.pst.executeUpdate();
+		int result = executeUpdate("insertMedia", mediaData.getInt("id_user"), mediaData.getString("media_url"), mediaData.getString("media_name"), 
+				mediaData.getString("media_filename"), mediaData.getString("media_des"), date);
 		return (result == 1) ? true : false;
 	}
 	
 	
 	public void closeResources() {
 		try {
-			if(this.con != null )
-				this.con.close();
+			closeMainResource();
 			if(this.rs != null)
 				this.rs.close();
-			if(this.pst != null)
-				this.pst.close();
 		} catch (SQLException e) {
 			System.out.println("Problema al cerrar los recursos");
 			e.printStackTrace();
