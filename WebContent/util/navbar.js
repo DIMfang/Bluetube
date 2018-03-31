@@ -35,10 +35,14 @@ class NavBar extends HTMLElement {
                 this.setAttribute(type, '#');
             }
         })
+        if(!this.hasAttribute('profile-img')) {
+            this.setAttribute('profile-img', '../img/ic_person_white_48dp_1x.png');
+        }
         this.urls = {
             brand: this.getAttribute('href'),
             login: this.getAttribute('inref'),
             signup: this.getAttribute('upref'),
+            profileImg: this.getAttribute('profile-img') 
         }
     } // #001c37 #0d3a60 #03275A
     connectedCallback() {
@@ -65,7 +69,7 @@ class NavBar extends HTMLElement {
         this.stateContainer.innerHTML = `
             <div class="btn-group">    
                 <a style="border:0; box-shadow: none; background-color:#4286f4; border-color:#4286f4;" class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="img-fluid" src="../img/ic_person_white_48dp_1x.png" width="30" height="30" alt="">    
+                    <img class="img-fluid" src="" width="30" height="30" alt="">    
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Profile</a>

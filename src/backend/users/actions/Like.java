@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import backend.database.ActionQueries;
+import backend.database.MediaQueries;
 
 /**
  * Servlet implementation class Like
@@ -37,9 +38,19 @@ public class Like extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-		JSONObject userData = (JSONObject) session.getAttribute("session");
-		out.print(userData.toString());
+		MediaQueries mq = new MediaQueries();
+		JSONObject message = new JSONObject();
+		int mediaId = Integer.parseInt(request.getParameter("key"));
+		try {
+			JSONObject likes = mq.getMediaLikes(mediaId);
+			message.put("status", 200).put("count", likes);
+		} catch(SQLException e) {
+			message.put("status", 503);
+			e.printStackTrace();
+		} finally {
+			mq.closeResources();
+		}
+		out.println(message);
 	}
 
 	/**

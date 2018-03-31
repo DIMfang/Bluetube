@@ -38,8 +38,7 @@ public class MediaQueries {
 	}
 	
 	public JSONArray getVideoList(String mediaName) throws SQLException {
-		JSONArray mediaData = new JSONArray();
-		
+		JSONArray mediaData = new JSONArray();		
 		executeQuery("searchVideos", "%" + mediaName + "%");
 		while(this.rs.next()) {
 			JSONObject row = new JSONObject();
@@ -52,20 +51,22 @@ public class MediaQueries {
 		return mediaData;
 	}
 	
-	//Function to retrieve an existing videos' URL and file name.
-	public JSONObject getMedia(int id) throws SQLException {
+	// Function to retrieve an existing videos' URL and file name.
+	public JSONObject getMedia(int mediaId) throws SQLException {
 		JSONObject mediaData = new JSONObject();
-		executeQuery("downloadMedia", id);
+		executeQuery("downloadMedia", mediaId);
 		if(this.rs.next()) {
 			return mediaData.put("url", rs.getString("media_url")).put("fileName", rs.getString("media_filename"));
 		}
 		return null;
 	}
 	
-	public Object getLike(int id_user, int media_id) throws SQLException{
-		executeQuery("searchLike", id_user, media_id);
+	// Function to retrieve how many likes and dislikes a video has
+	public JSONObject getMediaLikes(int mediaId) throws SQLException {
+		JSONObject likes = new JSONObject();
+		executeQuery("countLikes", mediaId, mediaId);
 		if(this.rs.next()) {
-			return this.rs.getBoolean("like_state");
+			return likes.put("likes", rs.getInt("likes")).put("dislikes", rs.getInt("dislikes"));
 		}
 		return null;
 	}

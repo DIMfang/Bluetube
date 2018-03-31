@@ -9,7 +9,7 @@
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 </head>
 <body>
-    <nav-bar inref="../login" upref="../register" pref="../profile" href="../"></nav-bar>
+    <nav-bar profile-img="./img/ic_person_white_48dp_1x.png" inref="../login" upref="../register" pref="../profile" href="../"></nav-bar>
     <div class="container-fluid">    
         <div class="row mt-4">
             <div class="col-7">
@@ -40,21 +40,20 @@
         </div>        
     </div>
     <script>
-	    $ = (id) => {
+    	const key = document.location.search;	
+    	$ = (id) => {
 	        return document.getElementById(id);
 	    }
-        // Streaming the video
-        $("video").src = "../Streaming" + document.location.search;
-        window.onload = () => {
-            
-        }
+	    // Streaming the video
+        $("video").src = "../Streaming" + key;
+        
         // Comments
-        commentsBox = () => {        	
+        function commentsBox(mediaKey) {        	
         	let commentBox = $('comments-box');
         	while(commentBox.firstChild) {
         		commentBox.removeChild(commentBox.firstChild);
             }
-        	let url = '../Comments' + document.location.search;
+        	let url = '../Comments' + mediaKey;
     		let configs = {
                 method: 'GET',
                 headers: {
@@ -79,8 +78,30 @@
                 console.log(error.message);
             })	
         }
-        commentsBox();
-        
+        function likesDislikes(mediaKey) {
+        	let url = '../Like' + key;
+    		let configs = {
+                method: 'GET',
+                headers: {
+    				'Content-type':'application/x-www-form-urlencoded'
+    		  	},
+    			credentials: 'same-origin',
+            }
+            fetch(url, configs)
+            .then(response => response.json())
+            .then(data => {
+                if(data.status == 200) {
+                    // Do something with the likes and dislikes
+                }
+                console.log(data);
+            }).catch(error => {
+                console.log(error.message);
+            })
+        }
+        // Init
+        commentsBox(key);
+       	likesDislikes(key);
+       	
         // ============================= ACTIONS ===============================
         const mediaId = () => {
     		let ID = document.location.search.split('=')
@@ -92,7 +113,7 @@
         	var downloadWindow = window.open(url);
         }
         // Do like
-        Like = () => {       
+        function Like() {       
             let data = {
             	media_id: mediaId()
             }            
@@ -114,7 +135,7 @@
             })
         }
         // Do dislike
-        Dislike = () => {       
+        function Dislike() {       
             let data = {
             	media_id: mediaId()
             }            
@@ -136,7 +157,7 @@
             })
         }
         // Do comment
-        doComment = () => {        	
+        function doComment (){        	
 			let commentText = document.getElementById('comment').value;           
             let data = {
             	media_id: mediaId(),
