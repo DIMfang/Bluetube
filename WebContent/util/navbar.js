@@ -1,4 +1,4 @@
-LogOut = () => {
+function LogOut() {
     let path = document.location.pathname;
     let url = (path == '/BlueTube/') ? './Logout' : '../Logout';
     let configs = {
@@ -8,20 +8,17 @@ LogOut = () => {
         },
         credentials: 'same-origin'
     }
+    // TODO: No se ejecuta tras cambio del contexto, y a veces en otros momentos
     fetch(url, configs)
         .then(response => response.json())
-        .then(data => {
-            if (data.status == 200) {
-                if (localStorage.getItem('session')) {
-                    localStorage.clear();
-                }
-                if (path == '/BlueTube/') {
-                    window.location.reload();
-                } else {
-                    window.location.replace("../");
-                }
+        .then(data => {        
+        	localStorage.clear();
+        	if (data.status == 200) {            	
+                if (path != '/BlueTube/') {
+                	window.location.replace("../");
+                } 
             }
-        }).catch(error => {
+        }).catch(error => {        	
             console.log(error.message);
         })
 }
@@ -44,8 +41,7 @@ class NavBar extends HTMLElement {
             profile: this.getAttribute('pref'),
             profileImg: this.getAttribute('profile-img') 
         }
-        console.log(this.urls.profileImg)
-    } // #001c37 #0d3a60 #03275A
+    } 
     connectedCallback() {
         this.innerHTML = `
         <nav style="background-color:#4286f4; height:60px;"

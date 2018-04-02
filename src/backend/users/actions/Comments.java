@@ -62,9 +62,9 @@ public class Comments extends HttpServlet {
 		HttpSession session = request.getSession(); 
 		ActionQueries mq = new ActionQueries(); 
 		JSONObject message = new JSONObject();		
-		JSONObject commentData = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		JSONObject userData = (JSONObject) session.getAttribute("session");
-		if(!session.isNew()) {	
+		JSONObject commentData = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));		
+		if(!session.isNew()) {
+			JSONObject userData = (JSONObject) session.getAttribute("session");
 			try {
 				commentData.put("id_user", userData.getInt("id_user"));
 				mq.newComment(commentData);
