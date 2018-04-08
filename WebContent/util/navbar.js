@@ -14,9 +14,7 @@ function LogOut() {
         .then(data => {        
         	localStorage.clear();
         	if (data.status == 200) {            	
-                if (path != '/BlueTube/') {
-                	window.location.replace("../");
-                } 
+                window.location.reload();
             }
         }).catch(error => {        	
             console.log(error.message);

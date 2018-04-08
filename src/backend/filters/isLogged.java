@@ -16,10 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 /**
  * Servlet Filter implementation class isLogged
  */
-@WebFilter("/*")
+@WebFilter(urlPatterns = {"/Comments", "/Like", "/Dislike", "/Login", "/Upload"})
 public class isLogged implements Filter {
 
     /**
@@ -42,7 +44,23 @@ public class isLogged implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-
+		HttpSession session = req.getSession(false); 
+		System.out.println("4");
+		if(session == null) {
+			// Invitado
+			res.setHeader("Authorization", "Invited");			
+		} else {
+			try {
+				JSONObject userData = (JSONObject) session.getAttribute("session");
+				String authType = userData.getString("type_des");
+				res.setHeader("Authorization", authType);			
+				System.out.println(authType + "1");
+			} catch(Exception e) {
+				session.invalidate();
+				res.setHeader("Authorization", "Invited");				
+			}
+		}
+		
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}
