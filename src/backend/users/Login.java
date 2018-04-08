@@ -47,7 +47,6 @@ public class Login extends HttpServlet {
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 		JSONObject userData = new JSONObject();
 		HttpSession session = request.getSession();
-		
 		if(session.isNew()) {
 			try {
 				userData = queries.getUserData(params);

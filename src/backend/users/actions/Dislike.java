@@ -47,13 +47,13 @@ public class Dislike extends HttpServlet {
 		PrintWriter out = response.getWriter();		
 		ActionQueries aq = new ActionQueries();
 		JSONObject message = new JSONObject();
-		JSONObject userData = (JSONObject) session.getAttribute("session");
 		JSONObject params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));		
 		int mediaId = Integer.parseInt(params.getString("media_id"));
 		
 		if(!session.isNew()) {
-			int userId = userData.getInt("id_user");
+			JSONObject userData = (JSONObject) session.getAttribute("session");			
 			try {
+				int userId = userData.getInt("id_user");
 				Boolean isBool = aq.isLike(userId, mediaId);
 				if(isBool == null) {
 					aq.dislikeVideo(userId, mediaId);	

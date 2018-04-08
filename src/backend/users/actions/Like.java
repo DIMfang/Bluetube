@@ -61,13 +61,13 @@ public class Like extends HttpServlet {
 		PrintWriter out = response.getWriter();		
 		ActionQueries aq = new ActionQueries();		
 		JSONObject message = new JSONObject();
-		JSONObject userData = (JSONObject) session.getAttribute("session");
 		JSONObject params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));		
 		int mediaId = Integer.parseInt(params.getString("media_id"));
 		
 		if(!session.isNew()) {
-			int userId = userData.getInt("id_user");
+			JSONObject userData = (JSONObject) session.getAttribute("session");
 			try {
+				int userId = userData.getInt("id_user");
 				Boolean isBool = aq.isLike(userId, mediaId);
 				if(isBool == null) {  
 					aq.likeVideo(userId, mediaId);
@@ -80,7 +80,7 @@ public class Like extends HttpServlet {
 					aq.changeState(true, userId, mediaId);
 					message.put("status", 200).put("description", "Changing to like");					
 				}
-			} catch(SQLException e) {
+			} catch(SQLException | NullPointerException e) {
 				message.put("status", 503).put("description", "Unknown problem, try again");
 				e.printStackTrace();				
 			} finally {
