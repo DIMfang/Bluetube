@@ -37,13 +37,12 @@ public class Streaming extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletOutputStream out = response.getOutputStream();
-		MediaQueries queries = new MediaQueries();
-		String mediaId = request.getParameter("key");
-		int id = Integer.parseInt(mediaId);
+		MediaQueries mq = new MediaQueries();
+		int mediaId = Integer.parseInt(request.getParameter("key"));
 		
 		try {
-			
-			JSONObject filedata = queries.getMedia(id);
+			mq.addView(mediaId); // TEMPORALMENTE
+			JSONObject filedata = mq.getMedia(mediaId); 
 			InputStream in = new FileInputStream (filedata.getString("url"));			
 			String type = "video/mp4";
 			byte[] bytes = new byte[1024];
@@ -58,7 +57,7 @@ public class Streaming extends HttpServlet {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			queries.closeResources();
+			mq.closeResources();
 			out.close();
 		}
 	}

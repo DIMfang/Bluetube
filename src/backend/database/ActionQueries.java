@@ -56,7 +56,6 @@ public class ActionQueries extends ExecuteSQL {
 		}
 		return null;
 	}
-	
 	public void closeResources() {
 		try {
 			closeMainResource();

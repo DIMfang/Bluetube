@@ -43,11 +43,11 @@ public class MediaQueries extends ExecuteSQL {
 	}
 	
 	// Function to retrieve how many likes and dislikes a video has
-	public JSONObject getMediaLikes(int mediaId) throws SQLException {
+	public JSONObject getMediaData(int mediaId) throws SQLException {
 		JSONObject likes = new JSONObject();
-		this.rs = executeQuery("countLikes", mediaId, mediaId);
+		this.rs = executeQuery("mediaData", mediaId, mediaId, mediaId);
 		if(this.rs.next()) {
-			return likes.put("likes", rs.getInt("likes")).put("dislikes", rs.getInt("dislikes"));
+			return likes.put("likes", rs.getInt("likes")).put("dislikes", rs.getInt("dislikes")).put("views", rs.getInt("views"));
 		}
 		return null;
 	}
@@ -58,6 +58,10 @@ public class MediaQueries extends ExecuteSQL {
 		java.sql.Date date = new java.sql.Date(currentDate.getTime());
 		int result = executeUpdate("insertMedia", mediaData.getInt("id_user"), mediaData.getString("media_url"), mediaData.getString("media_name"), 
 				mediaData.getString("media_filename"), mediaData.getString("media_des"), date);
+		return (result == 1) ? true : false;
+	}
+	public boolean addView(int mediaId) throws SQLException {
+		int result = executeUpdate("addView", mediaId);
 		return (result == 1) ? true : false;
 	}
 	

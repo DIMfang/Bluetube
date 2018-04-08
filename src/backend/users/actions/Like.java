@@ -42,7 +42,7 @@ public class Like extends HttpServlet {
 		JSONObject message = new JSONObject();
 		int mediaId = Integer.parseInt(request.getParameter("key"));
 		try {
-			JSONObject likes = mq.getMediaLikes(mediaId);
+			JSONObject likes = mq.getMediaData(mediaId);
 			message.put("status", 200).put("count", likes);
 		} catch(SQLException e) {
 			message.put("status", 503);

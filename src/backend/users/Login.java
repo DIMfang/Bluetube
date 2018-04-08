@@ -70,7 +70,7 @@ public class Login extends HttpServlet {
 			
 		} else {
 			// Acess denied
-			message.put("status", 403).put("description", "Access denied");
+			message.put("status", 403).put("description", "Access denied");			
 		}
 		out.println(message.toString());
 	}	
