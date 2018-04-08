@@ -108,6 +108,8 @@
 			</div>
 	</div>
 	<script>
+		let sesion = JSON.parse(localStorage.getItem("session"));
+		document.getElementById("channelname").innerHTML = sesion.username;
 		logout = () => {
 			let configs = {
 				method: 'GET',
