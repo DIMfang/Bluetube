@@ -10,8 +10,22 @@
 	<link rel="stylesheet" type="text/css" media="screen" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
 	<style>
-		li{
-			padding-right: 1px;
+		h3{
+			font-size: 2.5vmin;
+		}
+
+		h4{
+			font-size: 2.3vmin;
+		}
+		h2{
+			font-size: 3.5vmin;
+		}
+
+		.btn{
+			font-size: 2.3vmin;
+		}
+		.nav-tabs{
+			font-size: 2.5vmin;
 		}
 	</style>
 </head>
@@ -19,25 +33,25 @@
 <body>
 	<script src="logout.js"></script>
 	<nav-bar inref="../login" upref="../register" href="../"></nav-bar>
-	<div class='container' style="padding-top: 10px;">
-		<ul class='nav nav-tabs' style='padding-bottom: 1px;'>
-			<li class='active'><button type="button" class="btn btn-primary" data-toggle="tab" href="#Profile">Profile</button></li>
-			<li><button type="button" class="btn btn-primary" data-toggle="tab" href="#menu1">Upload</button></li>
-			<li><button type="button" class="btn btn-primary" data-toggle="tab" href="#menu2">Stream</button></li>
+	<div class='container bg-light pb-2 mt-2' style="padding-top: 10px;">
+		<ul class='nav nav-tabs ' role="tablist">
+			<li class="nav-item"><a class="nav-link active" href="#Profile" data-toggle="tab">Profile</a></li>
+			<li class="nav-item"><a class="nav-link" href="#menu1" data-toggle="tab">Upload</a></li>
+			<li class="nav-item"><a class="nav-link" href="#menu2" data-toggle="tab">Stream</a></li>
 		</ul>
 	
 		<div class="tab-content">
-				<div id="Profile" class="tab-pane fade in active">
+				<div id="Profile" class="tab-pane fade show active mb-2">
 					<h2>Profile</h2>
-					<h4 class="font-weight-light display"> In this seccion, you can view your general channel's statistics.</h4>
-					<div class="container-fluid" style='box-shadow: 0 1px 5px rgba(83, 105, 199, 0.12), 0 1px 15px rgba(65, 94, 190, 0.5);'>
+					<h4 class="font-weight-light display"> In this section, you can view your general channel's statistics.</h4>
+					<div class="container-fluid" style='box-shadow: 0 1px 5px rgba(101, 101, 102, 0.12), 0 1px 15px rgba(32, 32, 32, 0.3);'>
 						<div class="container-fluid" style="border-bottom: 1px solid rgb(189, 189, 189)" >
 							<h3 class="d-inline">Welcome to your profile,</h3>
 							<h3 id='channelname' class="d-inline">hola</h3>
 						</div>
 						<br>
-						<div style="text-align:center">
-							<div class="d-inline-block" style="width: 49.5%; border-right: 1px solid rgb(189, 189, 189)" style="text-align:left">
+						<div class="row pb-2">
+							<div class="col-6" style="border-right: 1px solid rgb(189, 189, 189); text-align:left">
 								<span class="fas fa-eye"></span>
 								<h4 class="font-weight-light display d-inline">Channel views:</h4>
 								<h4 class="font-weight-light display d-inline" id="channel-views">0</h4>
@@ -54,11 +68,11 @@
 								<h4 class="font-weight-light display d-inline">Disliked Videos:</h4>
 								<h4 class="font-weight-light display d-inline" id="user-dislikes">0</h4>
 							</div>
-							<div class="d-inline-block" style="width: 49.5%; text-align:unset;">
-								<button type="button" class="btn btn-outline-primary" style="width: 70%; margin-bottom: 7px; margin-top:0px;">Change Channel's name</button>
-								<button type="button" class="btn btn-outline-primary" style="width: 70%; margin-bottom: 7px;">Change Password</button>
-								<button type="button" class="btn btn-outline-primary" style="width: 70%">Change Email</button>
-								<button type="button" class="btn btn-outline-danger" style="width: 70%; margin-top: 20px; margin-bottom: 10px;">Delete channel</button>
+							<div class="col-6" style="text-align:center;">
+								<button type="button" class="btn btn-outline-primary mb-2 d-inline w-75">Change Channel name</button>
+								<button type="button" class="btn btn-outline-primary mb-2 d-inline w-75">Change Password</button>
+								<button type="button" class="btn btn-outline-primary mb-4 d-inline w-75">Change Email</button>
+								<button type="button" class="btn btn-outline-danger mb-2 d-inline w-75">Delete channel</button>
 							</div>
 						</div>
 					</div>
@@ -66,7 +80,7 @@
 				<div id="menu1" class="tab-pane fade">
 					<div>
 						<h2>Upload</h2>
-						<h4 class="font-weight-light display"> In this seccion, you can upload new videos to your channel. </h4>
+						<h4 class="font-weight-light display"> In this section, you can upload new videos to your channel. </h4>
 						<br>
 						<h4 class="font-weight-light display"> Video name </h4>
 						<input type="text"
@@ -93,8 +107,8 @@
 				<div id="menu2" class="tab-pane fade">
 					<h2>Stream</h2>
 					<h4 class="font-weight-light display"> In this section, you can watch your own videos. </h4>
-					<div class="video-container" style="text-align:center;">
-						<video id="video" width='900px' height='500px' controls autoplay style='box-shadow: 0 1px 5px rgba(83, 105, 199, 0.12), 0 1px 15px rgba(65, 94, 190, 0.5);'></video>
+					<div class="video-container embed-responsive embed-responsive-16by9" style="text-align:center;">
+						<video id="video" controls autoplay style='box-shadow: 0 1px 5px rgba(101, 101, 102, 0.12), 0 1px 15px rgba(32, 32, 32, 0.3);'></video>
 					</div>
 					<br>
 					<div class="form-group">
