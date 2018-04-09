@@ -45,7 +45,7 @@ public class MediaQueries extends ExecuteSQL {
 	// Function to retrieve how many likes and dislikes a video has
 	public JSONObject getMediaData(int mediaId) throws SQLException {
 		JSONObject likes = new JSONObject();
-		this.rs = executeQuery("mediaData", mediaId, mediaId, mediaId);
+		this.rs = executeQuery("mediaData", mediaId, mediaId);
 		if(this.rs.next()) {
 			return likes.put("likes", rs.getInt("likes")).put("dislikes", rs.getInt("dislikes")).put("views", rs.getInt("views"));
 		}
