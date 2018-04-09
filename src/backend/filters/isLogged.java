@@ -44,7 +44,6 @@ public class isLogged implements Filter {
 		HttpSession session = req.getSession(false); 
 		System.out.println("4");
 		if(session == null) {
-			// Invitado
 			res.setHeader("Authorization", "Invited");			
 		} else {
 			try {
@@ -54,7 +53,7 @@ public class isLogged implements Filter {
 				System.out.println(authType + "1");
 			} catch(Exception e) {
 				session.invalidate();
-				res.setHeader("Authorization", "Invited");				
+				res.setStatus(401);
 			}
 		}
 		
