@@ -1,17 +1,14 @@
 package backend.database;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 public class ActionQueries extends ExecuteSQL {
 	
 	private ResultSet rs;
-	private ResultSetMetaData rsmd;
 	
 	public ActionQueries() {		
 		super();
@@ -22,19 +19,6 @@ public class ActionQueries extends ExecuteSQL {
 		java.sql.Timestamp time = new java.sql.Timestamp(date.getTime());
 		int result = executeUpdate("newComment", commentData.getInt("media_id"), commentData.getInt("id_user"), time, commentData.getString("comment_text"));
 		return (result == 1) ? true : false;
-	}
-	public JSONArray getCommentList(int mediaId) throws SQLException {
-		JSONArray commentData = new JSONArray();	
-		rs = executeQuery("searchComments", mediaId); 
-		while(this.rs.next()) {
-			JSONObject row = new JSONObject();
-			this.rsmd = this.rs.getMetaData();
-			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
-				row.put(this.rsmd.getColumnLabel(i), this.rs.getObject(i));
-			}
-			commentData.put(row);			
-		}
-		return commentData;
 	}
 	// LIKE/DISLIKE'S QUERIES
 	public boolean likeVideo(int userId, int mediaId) throws SQLException {

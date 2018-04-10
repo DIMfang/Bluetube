@@ -51,6 +51,19 @@ public class MediaQueries extends ExecuteSQL {
 		}
 		return null;
 	}
+	public JSONArray getMediaComments(int mediaId) throws SQLException {
+		JSONArray commentData = new JSONArray();	
+		rs = executeQuery("searchComments", mediaId); 
+		while(this.rs.next()) {
+			JSONObject row = new JSONObject();
+			this.rsmd = this.rs.getMetaData();
+			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
+				row.put(this.rsmd.getColumnLabel(i), this.rs.getObject(i));
+			}
+			commentData.put(row);			
+		}
+		return commentData;
+	}
 	
 	public boolean newVideo(JSONObject mediaData) throws SQLException {
 		Calendar c = Calendar.getInstance();

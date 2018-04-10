@@ -13,9 +13,7 @@ function LogOut() {
         .then(response => response.json())
         .then(data => {        
         	localStorage.clear();
-        	if (data.status == 200) {            	
                 window.location.reload();
-            }
         }).catch(error => {        	
             console.log(error.message);
         })
