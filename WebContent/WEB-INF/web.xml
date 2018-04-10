@@ -9,20 +9,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-    
-<!--
-    
-<filter-mapping>
-   <filter-name>ProfileAccess</filter-name>
-   <url-pattern>/profile/index.html</url-pattern>
-</filter-mapping>
-<filter-mapping>
-   <filter-name>isLogged</filter-name>
-   <url-pattern>/Comments</url-pattern>
-    <url-pattern>/Like</url-pattern>
-    <url-pattern>/Dislike</url-pattern>
-    <url-pattern>/Login</url-pattern>
-    <url-pattern>/Upload</url-pattern>
-</filter-mapping>
-<filter-mapping>-->
 </web-app>

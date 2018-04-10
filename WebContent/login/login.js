@@ -23,9 +23,11 @@ function login() {
     fetch('../Login', configs)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            let userData = data.userData;
             if (data.status == 200) {
-                localStorage.setItem('session', JSON.stringify(data.userData));
+                delete userData['type_des'];
+                delete userData['id_user']
+                localStorage.setItem('session', JSON.stringify(userData));
                 document.location.href = "../";
             }
         }).catch(error => {

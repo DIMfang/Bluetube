@@ -12,8 +12,8 @@ function LogOut() {
     fetch(url, configs)
         .then(response => response.json())
         .then(data => {        
-        	localStorage.clear();
-                window.location.reload();
+            localStorage.clear();             
+        	window.location.reload();    
         }).catch(error => {        	
             console.log(error.message);
         })

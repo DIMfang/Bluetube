@@ -52,15 +52,15 @@ public class Login extends HttpServlet {
 				userData = queries.getUserData(params);
 				if(userData.length() > 0) {
 					// Sucess
-					message.put("status", 200).put("userData", userData); // Sucess
 					storeValue(session, userData);
+					message.put("status", 200).put("userData", userData); // Sucess					
 				} else {
 					// Invalid username or password
-					message.put("status", 409).put("description", "Invalid username or password");
+					message.put("status", 409).put("response", "Invalid username or password");
 					session.invalidate();
 				}
 			} catch(SQLException e) {
-				message.put("status", 503).put("description", "Unknown problem, try again");
+				message.put("status", 503).put("response", "Unknown problem, try again");
 				e.printStackTrace();
 				session.invalidate();
 			} finally {

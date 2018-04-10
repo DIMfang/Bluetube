@@ -55,7 +55,7 @@ public class Streaming extends HttpServlet {
 			in.close();
 			
 		} catch(Exception e) {
-			e.printStackTrace();
+			
 		} finally {
 			mq.closeResources();
 			out.close();

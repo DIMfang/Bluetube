@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +9,29 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 </head>
+
 <body>
     <nav-bar inref="../login" upref="../register" pref="../profile" href="../"></nav-bar>
-    <div class="container-fluid">    
+    <div class="container-fluid">
         <div class="row mt-4">
             <div class="col-7">
                 <div class="">
-                    <video style="width:500px; height:300px" id="video" controls autoplay></video>                
+                    <video style="width:500px; height:300px" id="video" controls autoplay></video>
                 </div>
             </div>
             <div class="col-5">
-                    <button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
-                    <button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>
-                    <button class="btn btn-outline-primary" onClick="Dislike();" id="download-video">DISLIKE</button>  
+                <button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
+                <button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>
+                <button class="btn btn-outline-primary" onClick="Dislike();" id="download-video">DISLIKE</button>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-	            <label for="">Comment</label>
-	            <div class="input-group-append">
-		            <textarea class="input-group" id="comment" rows="1"></textarea>
-		            <button onClick="doComment()" class="btn">Comment</button>
-	            </div>
+                <label for="">Comment</label>
+                <div class="input-group-append">
+                    <textarea class="input-group" id="comment" rows="1"></textarea>
+                    <button onClick="doComment()" class="btn">Comment</button>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -37,155 +39,148 @@
                 <ul class="list-group" id="comments-box">
                 </ul>
             </div>
-        </div>        
+        </div>
     </div>
     <script>
-    	const key = document.location.search;	
-    	$ = (id) => {
-	        return document.getElementById(id);
-	    }
-	    // Streaming the video
+        $ = (id) => {
+            return document.getElementById(id);
+        }
+        const key = document.location.search; //?Key=N
+        const mediaId = () => {
+            let ID = document.location.search.split('=')
+            return ID[1];
+        } // N
+        // Tipo de usuario 
+        fetch('../Auth', {
+                method: 'GET',
+                header: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
+        }).then(response => response.json())
+        .then(data => {
+            const typeUser = data.type_user;
+        }).catch(error => {
+            typeUser = 'Invited';
+        });            
         $("video").src = "../Streaming" + key;
-        
         // Comments
-        function commentsBox(mediaKey) {        	
-        	let commentBox = $('comments-box');
-        	while(commentBox.firstChild) {
-        		commentBox.removeChild(commentBox.firstChild);
+        function mediaData(mediaKey) {
+            let commentBox = $('comments-box');
+            while (commentBox.firstChild) {
+                commentBox.removeChild(commentBox.firstChild);
             }
-        	let url = '../Comments' + mediaKey;
-    		let configs = {
+            let url = '../Comments' + mediaKey;
+            let configs = {
                 method: 'GET',
                 headers: {
-                    'Content-type':'application/x-www-form-urlencoded',
-    		  	},
-    			credentials: 'same-origin',
+                    'Content-type': 'application/x-www-form-urlencoded',
+                },
+                credentials: 'same-origin',
             }
             fetch(url, configs).then(response => response.json())
-            .then(res => {
-                if(res.status == 200) {
-                    res.comments.forEach(comment => {
-                        let aNode = document.createElement('li');
-                        let textNode = document.createTextNode(`${comment.username}: ${comment.comment_text}`);
-                        aNode.setAttribute('class', 'list-group-item');
-                        aNode.appendChild(textNode);
-                        commentBox.append(aNode);
-                    });
-                } else {
-                    console.log(res);
-                }
-            }).catch(error => {
-                console.log(error.message);
-            })	
-        }
-        function likesDislikes(mediaKey) {
-        	let url = '../Like' + key;
-    		let configs = {
-                method: 'GET',
-                headers: {
-    				'Content-type':'application/x-www-form-urlencoded'
-    		  	},
-    			credentials: 'same-origin',
-            }
-            fetch(url, configs)
-            .then(response => response.json())
-            .then(data => {
-                if(data.status == 200) {
-                    // Do something with the likes and dislikes
-                }
-                console.log(data);
-            }).catch(error => {
-                console.log(error.message);
-            })
+                .then(res => {
+                    if (res.status == 200) {
+                        console.log(res.count);
+                        res.comments.forEach(comment => {
+                            let aNode = document.createElement('li');
+                            let textNode = document.createTextNode(
+                                `${comment.username}: ${comment.comment_text}`);
+                            aNode.setAttribute('class', 'list-group-item');
+                            aNode.appendChild(textNode);
+                            commentBox.append(aNode);
+                        });
+                    } else {
+                        console.log(res);
+                    }
+                }).catch(error => {
+                    console.log(error.message);
+                })
         }
         // Init
-        commentsBox(key);
-       	likesDislikes(key);
-       	
-        // ============================= ACTIONS ===============================
-        const mediaId = () => {
-    		let ID = document.location.search.split('=')
-    		return ID[1];
-    	}
+        mediaData(key);
+        // ============================= ACTIONS ===============================        
         // Function to download the video        
         downloadMedia = () => {
-        	var url = "../Download" + document.location.search;
-        	var downloadWindow = window.open(url);
+            var url = "../Download" + document.location.search;
+            var downloadWindow = window.open(url);
         }
         // Do like
-        function Like() {       
+        function doLike() {
             let data = {
-            	media_id: mediaId()
-            }            
-        	let configs = {
-        		method: 'POST',
-        		headers: {
-        		  'Content-type':'application/x-www-form-urlencoded'
-        		},
-        		credentials: 'same-origin',
-            	body: JSON.stringify(data)
-        	}
-            
-            fetch("../Like", configs)
-            .then(response => response.json())
-            .then(data =>{
-            	console.log(data);
-            }).catch(error => {
-            	console.log(error.message);
-            })
-        }
-        // Do dislike
-        function Dislike() {       
-            let data = {
-            	media_id: mediaId()
-            }            
-        	let configs = {
-        		method: 'POST',
-        		headers: {
-        		  'Content-type':'application/x-www-form-urlencoded'
-        		},
-        		credentials: 'same-origin',
-            	body: JSON.stringify(data)
-        	}
-            
-            fetch("../Dislike", configs)
-            .then(response => response.json())
-            .then(data =>{
-            	console.log(data);
-            }).catch(error => {
-            	console.log(error.message);
-            })
-        }
-        // Do comment
-        function doComment (){        	
-			let commentText = document.getElementById('comment').value;           
-            let data = {
-            	media_id: mediaId(),
-            	comment_text: commentText
+                media_id: mediaId()
             }
             let configs = {
-            	method: 'POST',
-            	header: {
-            		'Content-type':'application/x-www-form-urlencoded'
-            	},
-            	credentials: 'same-origin',
-            	body: JSON.stringify(data)
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
             }
-           	fetch('../Comments', configs)
-           	.then(response => response.json())
-           	.then(data=> {
-           		console.log(data);           	
-           	}).catch(error => {
-           		console.log(error.message);
-           	});           
-            
+
+            fetch("../Like", configs)
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    console.log(error.message);
+                })
+        }
+        // Do dislike
+        function doDislike() {
+            let data = {
+                media_id: mediaId()
+            }
+            let configs = {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
+            }
+
+            fetch("../Dislike", configs)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    console.log(error.message);
+                })
+        }
+        // Do comment
+        function doComment() {
+            let commentText = document.getElementById('comment').value;
+            let data = {
+                media_id: mediaId(),
+                comment_text: commentText
+            }
+            let configs = {
+                method: 'POST',
+                header: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
+            }
+            fetch('../Comments', configs)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    console.log(error.message);
+                });
+
             commentsBox();
         }
-        
     </script>
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../util/navbar.js"></script>
 </body>
+
 </html>
