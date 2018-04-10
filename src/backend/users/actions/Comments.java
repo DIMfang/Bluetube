@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import backend.database.ActionQueries;
+import backend.database.MediaQueries;
 
 /**
  * Servlet implementation class Comments
@@ -36,20 +37,19 @@ public class Comments extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ActionQueries aq = new ActionQueries();
+		MediaQueries mq = new MediaQueries();		
 		int mediaId = Integer.parseInt(request.getParameter("key"));
 		PrintWriter out = response.getWriter();
-		JSONArray comments = new JSONArray();
 		JSONObject message = new JSONObject();
-		
 		try {
-			comments = aq.getCommentList(mediaId);
-			message.put("status", 200).put("comments", comments);
+			JSONArray comments = mq.getMediaComments(mediaId);
+			JSONObject likes = mq.getMediaData(mediaId);
+			message.put("status", 200).put("count", likes).put("comments", comments);
 		} catch(SQLException e) {
-			message.put("status", 403).put("description", "database error");
+			message.put("status", 403).put("description", "Unknow problem, try again");
 			e.printStackTrace();
 		} finally {
-			aq.closeResources();
+			mq.closeResources();
 		}
 		out.println(message.toString());
 	}
