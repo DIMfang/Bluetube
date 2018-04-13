@@ -10,105 +10,180 @@
     <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 </head>
 
-<body>
+<body class="">
     <nav-bar inref="../login" upref="../register" pref="../profile" href="../"></nav-bar>
-    <div class="container-fluid">
-        <div class="row mt-4">
+    <div class="container-fluid pt-4">
+        <div class="row">
             <div class="col-7">
+                <video style="width:inherit; height:inherit;" id="video" controls autoplay></video>
+            </div>
+            <div class="col-5 d-flex align-items-start flex-column">
                 <div class="">
-                    <video style="width:500px; height:300px" id="video" controls autoplay></video>
+                    <h2 id="media-name" style="font-size:40px;" class="display-4">Video title</h2>
+                </div>
+                <hr style="width:inherit;" class="my-3">
+                <div class=" d-flex container">
+                    <img class="mr-2" src="../img/icons8_Male_User.ico" alt="Generic placeholder image">
+                    <div class="d-flex flex-column mr-5 justify-content-center">
+                        <p id="media-user" style="font-size:15px;" class="lead mb-0">JeanLambert</p>
+                        <!-- <small id="media-date" class="">2018-25-3</small> -->
+                    </div>
+                    <div class="d-flex ml-auto align-items-center">
+                        <p id="media-views" style="font-size:15px;" class="lead mb-0">102 views</p>
+                    </div>
+                </div>
+
+                <hr style="width:inherit;" class="my-3">
+                <div class="">
+                    <p id="media-description" class="h6">
+                        OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+                    </p>
+                </div>
+                <div class="btn-group btn-group-toggle pl-0 mt-auto mb-2 d-flex container">
+
+                    <button style="border:none; padding:0px;" class="btn btn-outline-primary" onClick="doLike();" id="download-video">
+                        <img style="width:40px; height:40px;" src="../img/icons8-buena-calidad-filled-50.png" alt="">
+                        <span id="like-count" class="badge">201</span>
+                    </button>
+
+                    <button style="border:none; padding:0px;" class="btn btn-outline-danger ml-2" onClick="doDislike();" id="download-video">
+                        <img style="width:40px; height:40px;" src="../img/icons8-mala-calidad-filled-50.png" alt="">
+                        <span id="dislike-count" class="badge">201</span>
+                    </button>
+
+                    <div class="ml-auto d-flex align-items-center mr-4">
+                        <a style="display:none;" id="delete-media" class="btn btn-link m-0 p-0 mr-1" href="#" role="button" href="../Download" data-container="body"
+                            data-toggle="popover" data-placement="left" data-content="Holas">
+                            <img style="width:30px; height:30px;" src="../img/icons8_Delete.ico" alt="">
+                        </a>
+                        <a name="" id="" class="btn btn-link m-0 p-0" href="#" role="button">
+                            <img style="width:30px; height:30px;" src="../img/Download_48px.png" alt="">
+                        </a>
+                    </div>
+                    <!-- <button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">D</button> -->
                 </div>
             </div>
-            <div class="col-5">
-                <button class="btn btn-outline-primary" onClick="downloadMedia()" id="download-video">download the video</button>
-                <button class="btn btn-outline-primary" onClick="Like();" id="download-video">LIKE</button>
-                <button class="btn btn-outline-primary" onClick="Dislike();" id="download-video">DISLIKE</button>
-            </div>
+
         </div>
-        <div class="row">
-            <div class="col-12">
-                <label for="">Comment</label>
-                <div class="input-group-append">
-                    <textarea class="input-group" id="comment" rows="1"></textarea>
-                    <button onClick="doComment()" class="btn">Comment</button>
+
+        <!-- Caja de comentarios -->
+        <div class="row mt-5 ml-2 mr-5">
+            <div class="col-7 d-flex flex-column align-items-start">
+                <textarea style="resize:none; width:inherit; border-top:none; border-left:none; border-right:none;" class="input-group-append"
+                    id="comment" rows="1"></textarea>
+                <div class="ml-auto mt-2 mr-3">
+                    <button style="opacity:1; background-color:white;" class="btn btn-link" onClick="doComment()">CANCEL</button>
+                    <button style="font-size:15px;" class="btn btn-primary" onClick="doComment()">COMMENT</button>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <ul class="list-group" id="comments-box">
-                </ul>
-            </div>
+        <div id="comment-box" class="row mt-5 m-4 d-flex justify-content-center">            
+            <template id="comment-template">
+                <div class="col-8">
+                    <div class="d-flex">
+                        <img src="../img/icons8_Male_User_5.ico" alt="user profile image">
+                        <div class="d-flex flex-column justify-content-center">
+                            <a href="#">
+                                <h6 id="username" class="m-0 mb-1">Ryan Haywood</h6>
+                            </a>
+                            <small id="date" class="text-muted m-0">1 minute ago</small>
+                        </div>
+                    </div>
+                    <div class="mt-2 mb-3">
+                        <p id="text">Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css hmtl js
+                            framework. Codes for developers and web designers</p>
+                        <div class="">
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class=""></i>1
+                            </a>
+                            <a href="#" class="btn btn-default stat-item">
+                                <i class=""></i>2
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
+
+
     <script>
-        $ = (id) => {
+        const $ = (id) => {
             return document.getElementById(id);
         }
-        const key = document.location.search; //?Key=N
-        const mediaId = () => {
-            let ID = document.location.search.split('=')
-            return ID[1];
-        } // N
-        // Tipo de usuario 
+        const key = document.location.search;
+        const mediaId = document.location.search.split('=')[1];
+
+        // User type
         fetch('../Auth', {
                 method: 'GET',
                 header: {
                     'Content-type': 'application/x-www-form-urlencoded'
                 },
                 credentials: 'same-origin',
-        }).then(response => response.json())
-        .then(data => {
-            const typeUser = data.type_user;
-        }).catch(error => {
-            typeUser = 'Invited';
-        });            
-        $("video").src = "../Streaming" + key;
-        // Comments
-        function mediaData(mediaKey) {
-            let commentBox = $('comments-box');
-            while (commentBox.firstChild) {
-                commentBox.removeChild(commentBox.firstChild);
-            }
-            let url = '../Comments' + mediaKey;
-            let configs = {
+            }).then(response => response.json())
+            .then(data => {
+                const typeUser = data.authType;
+                if (typeUser === 'Administrator') {  
+                    // Administrator functions              
+                    $('delete-media').style.display = 'inherit';
+                    $('delete-media').onclick = () => {
+                        
+                    }
+                }
+            }).catch(error => {
+                typeUser = 'Invited';
+            });
+        // Media data
+        fetch('../Comments?key=' + mediaId, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/x-www-form-urlencoded',
                 },
                 credentials: 'same-origin',
-            }
-            fetch(url, configs).then(response => response.json())
-                .then(res => {
-                    if (res.status == 200) {
-                        console.log(res.count);
-                        res.comments.forEach(comment => {
-                            let aNode = document.createElement('li');
-                            let textNode = document.createTextNode(
-                                `${comment.username}: ${comment.comment_text}`);
-                            aNode.setAttribute('class', 'list-group-item');
-                            aNode.appendChild(textNode);
-                            commentBox.append(aNode);
-                        });
-                    } else {
-                        console.log(res);
-                    }
-                }).catch(error => {
-                    console.log(error.message);
-                })
-        }
-        // Init
-        mediaData(key);
+            }).then(response => response.json())
+            .then(res => {
+                const mediaData = res.data,
+                    comments = res.comments;
+                if (res.status == 200) {
+                    $('media-name').innerText = mediaData.name;
+                    $('media-description').innerText = mediaData.description;
+                    $('media-user').innerText = mediaData.username;
+                    $('media-views').innerText = mediaData.views + ' views';
+                    // $('media-date').innerText = mediaData.created;
+                    $('like-count').innerText = mediaData.likes;
+                    $('dislike-count').innerText = mediaData.dislikes;
+                    const template = document.querySelector('#comment-template');
+                    comments.forEach(comment => {
+                        let clone = template.content.cloneNode(true);
+                        let username = clone.querySelectorAll('h6')[0];
+                        let date = clone.querySelectorAll('small')[0];
+                        let text = clone.querySelectorAll('p')[0];
+                        username.innerText = comment.username;
+                        date.innerText = comment.created_at;
+                        text.innerText = comment.comment_text;
+                        template.parentNode.appendChild(clone);
+                    });
+                } else {
+                    console.log(res)
+                }
+            }).catch(error => {
+                console.log(error.message);
+            });
+        // Streaming
+        $("video").src = "../Streaming" + key;
+
+
         // ============================= ACTIONS ===============================        
         // Function to download the video        
-        downloadMedia = () => {
+        function downloadMedia() {
             var url = "../Download" + document.location.search;
             var downloadWindow = window.open(url);
         }
         // Do like
         function doLike() {
             let data = {
-                media_id: mediaId()
+                media_id: mediaId
             }
             let configs = {
                 method: 'POST',
@@ -120,10 +195,9 @@
             }
 
             fetch("../Like", configs)
-                .then(response => {
-                    return response.json()
-                })
+                .then(response => response.json())
                 .then(data => {
+                    // TODO: Hacer algo cuando haya un like
                     console.log(data);
                 }).catch(error => {
                     console.log(error.message);
@@ -132,7 +206,7 @@
         // Do dislike
         function doDislike() {
             let data = {
-                media_id: mediaId()
+                media_id: mediaId
             }
             let configs = {
                 method: 'POST',
@@ -146,6 +220,7 @@
             fetch("../Dislike", configs)
                 .then(response => response.json())
                 .then(data => {
+                    // TODO: Hacer algo cuando haya un dislike
                     console.log(data);
                 }).catch(error => {
                     console.log(error.message);
@@ -155,7 +230,7 @@
         function doComment() {
             let commentText = document.getElementById('comment').value;
             let data = {
-                media_id: mediaId(),
+                media_id: mediaId,
                 comment_text: commentText
             }
             let configs = {
@@ -169,11 +244,11 @@
             fetch('../Comments', configs)
                 .then(response => response.json())
                 .then(data => {
+                    // TODO: Hacer algo cuando se realiza un comentario
                     console.log(data);
                 }).catch(error => {
                     console.log(error.message);
                 });
-
             commentsBox();
         }
     </script>
@@ -181,6 +256,7 @@
     <script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
     <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="../util/navbar.js"></script>
+    <script type="txt/javascript" src="watch.js"></script>
 </body>
 
 </html>

@@ -43,8 +43,8 @@ public class Comments extends HttpServlet {
 		JSONObject message = new JSONObject();
 		try {
 			JSONArray comments = mq.getMediaComments(mediaId);
-			JSONObject likes = mq.getMediaData(mediaId);
-			message.put("status", 200).put("count", likes).put("comments", comments);
+			JSONObject mediaData = mq.getMediaData(mediaId);
+			message.put("status", 200).put("data", mediaData).put("comments", comments);
 		} catch(SQLException e) {
 			message.put("status", 403).put("description", "Unknow problem, try again");
 			e.printStackTrace();
