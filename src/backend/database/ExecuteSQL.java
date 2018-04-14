@@ -21,6 +21,7 @@ public abstract class ExecuteSQL {
 			e.printStackTrace();
 		}
 	}
+	
 	protected ResultSet executeQuery(String query, Object... values) throws SQLException {
 		this.pst = this.con.prepareStatement(Props.getQuery(query));
 		for(int i = 0; i < values.length; i++) {
@@ -35,12 +36,39 @@ public abstract class ExecuteSQL {
 		}
 		return this.pst.executeUpdate();
 	}
+//	protected JSONObject getOne(ResultSet rs) throws SQLException {
+//		JSONObject one = new JSONObject();
+//		if(rs.next()) {
+//			ResultSetMetaData rsmd = rs.getMetaData();
+//			for(int i = 1; i <= rsmd.getColumnCount(); i++) {
+//				one.put(rsmd.getColumnLabel(i), rs.getObject(i));
+//			}
+//		} else {
+//			return null;
+//		}
+//		return one;
+//	}
+//	protected JSONArray getMany(ResultSet rs) throws SQLException {		
+//		JSONArray rows = new JSONArray();
+//		while(rs.next()) {
+//			JSONObject row = new JSONObject();
+//			ResultSetMetaData rsmd = rs.getMetaData();
+//			for(int i = 1; i <= rsmd.getColumnCount(); i++) {
+//				row.put(rsmd.getColumnLabel(i), rs.getObject(i));
+//			}
+//			rows.put(row);
+//		}
+//		return rows;
+//	}
+	// Close connection and preparedStatement
 	protected void closeMainResource() throws SQLException {
 		if(this != null) 
 			this.con.close();
 		if(this.pst != null) 
 			this.pst.close();
 	}
+	
+	// Getters
 	public Connection getConnection() {
 		return this.con;
 	}

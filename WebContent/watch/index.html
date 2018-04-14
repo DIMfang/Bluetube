@@ -42,22 +42,22 @@
                 </div>
                 <div class="btn-group btn-group-toggle pl-0 mt-auto mb-2 d-flex container">
 
-                    <button style="border:none; padding:0px;" class="btn btn-outline-primary" onClick="doLike();" id="download-video">
+                    <button style="border:none; padding:0px;" class="btn btn-outline-primary" onClick="doLike();" id="">
                         <img style="width:40px; height:40px;" src="../img/icons8-buena-calidad-filled-50.png" alt="">
                         <span id="like-count" class="badge">201</span>
                     </button>
 
-                    <button style="border:none; padding:0px;" class="btn btn-outline-danger ml-2" onClick="doDislike();" id="download-video">
+                    <button style="border:none; padding:0px;" class="btn btn-outline-danger ml-2" onClick="doDislike();" id="">
                         <img style="width:40px; height:40px;" src="../img/icons8-mala-calidad-filled-50.png" alt="">
                         <span id="dislike-count" class="badge">201</span>
                     </button>
 
                     <div class="ml-auto d-flex align-items-center mr-4">
-                        <a style="display:none;" id="delete-media" class="btn btn-link m-0 p-0 mr-1" href="#" role="button" href="../Download" data-container="body"
+                        <a style="display:none;" id="delete-media" class="btn btn-link m-0 p-0 mr-1" href="#" role="button" href="" data-container="body"
                             data-toggle="popover" data-placement="left" data-content="Holas">
                             <img style="width:30px; height:30px;" src="../img/icons8_Delete.ico" alt="">
                         </a>
-                        <a name="" id="" class="btn btn-link m-0 p-0" href="#" role="button">
+                        <a name="" id="" class="btn btn-link m-0 p-0" href="#" role="button" onclick="downloadMedia()">
                             <img style="width:30px; height:30px;" src="../img/Download_48px.png" alt="">
                         </a>
                     </div>
@@ -87,8 +87,12 @@
                             <a href="#">
                                 <h6 id="username" class="m-0 mb-1">Ryan Haywood</h6>
                             </a>
-                            <small id="date" class="text-muted m-0">1 minute ago</small>
-                        </div>
+                            <small id="date" class="text-muted m-0">1 minute ago</small>                            
+                        </div>                    
+                        <a style="display:none;"id="delete-media" class="btn btn-link m-0 p-0 mr-1 ml-auto" href="#" role="button" href="" data-container="body"
+                            data-toggle="popover" data-placement="left" data-content="Holas">
+                            <img style="width:30px; height:30px;" src="../img/icons8_Delete.ico" alt="">
+                        </a>
                     </div>
                     <div class="mt-2 mb-3">
                         <p id="text">Bootdey is a gallery of free snippets resources templates and utilities for bootstrap css hmtl js
@@ -114,7 +118,7 @@
         }
         const key = document.location.search;
         const mediaId = document.location.search.split('=')[1];
-
+        var typeUser; 
         // User type
         fetch('../Auth', {
                 method: 'GET',
@@ -124,7 +128,7 @@
                 credentials: 'same-origin',
             }).then(response => response.json())
             .then(data => {
-                const typeUser = data.authType;
+                typeUser = data.authType;
                 if (typeUser === 'Administrator') {  
                     // Administrator functions              
                     $('delete-media').style.display = 'inherit';
@@ -173,7 +177,11 @@
                         let clone = template.content.cloneNode(true);
                         let username = clone.querySelectorAll('h6')[0];
                         let date = clone.querySelectorAll('small')[0];
-                        let text = clone.querySelectorAll('p')[0];
+                        let text = clone.querySelectorAll('p')[0];                        
+                        if(typeUser == 'Administrator') {
+                            let deleteOption = clone.querySelectorAll('a')[1];
+                            deleteOption.style.display = 'inherit';
+                        }
                         username.innerText = comment.username;
                         date.innerText = comment.created_at;
                         text.innerText = comment.comment_text;

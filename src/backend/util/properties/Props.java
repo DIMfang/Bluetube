@@ -47,8 +47,7 @@ public class Props {
 	public static String getQuery(String prop) {
 		return props.get("queries").getProperty(prop);
 	}
-	public static String getMessage(String prop) {
-		return props.get("messages").getProperty(prop);
+	public static Properties getProperties(String fileName) {
+		return props.get(fileName);
 	}
-	
 }

@@ -24,6 +24,8 @@ public class UserQueries extends ExecuteSQL {
 			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
 				userData.put(rsmd.getColumnLabel(i), rs.getObject(i));
 			}
+		} else {
+			return null;
 		}
 		return userData;
 	}
@@ -33,7 +35,6 @@ public class UserQueries extends ExecuteSQL {
 		this.rs = executeQuery("findUsername", username);
 		return this.rs.next();
 	}
-
 	
 	// Function to verify if the email is already registered
 	public boolean checkEmail(String email) throws SQLException {
@@ -44,10 +45,8 @@ public class UserQueries extends ExecuteSQL {
 	// Function to verify is the user exist, and return he's data
 	public JSONObject getUserData(JSONObject user) throws SQLException {	
 		String encryptedPass = Encrypt.HashPassword(user.getString("password"));
-		JSONObject userData = new JSONObject();
-		this.rs = executeQuery("checkLogin", user.get("username"), encryptedPass);
-		userData = getData();
-		return userData;
+		this.rs = executeQuery("checkLogin", user.get("username"), encryptedPass);		
+		return this.getData();
 	}
 	
 	// Function to add a new user

@@ -22,6 +22,11 @@ public class MediaQueries extends ExecuteSQL {
 		super();
 	}
 	
+	public Boolean isUserMedia(int userId, int mediaId) throws SQLException {
+		this.rs = executeQuery("isUserMedia", userId, mediaId);
+		return this.rs.next();
+	}
+	
 	public JSONArray getVideoList(String mediaName) throws SQLException {
 		JSONArray mediaData = new JSONArray();		
 		this.rs = executeQuery("searchVideos", "%" + mediaName + "%");
@@ -35,6 +40,7 @@ public class MediaQueries extends ExecuteSQL {
 		}
 		return mediaData;
 	}
+	
 	
 	// Function to retrieve an existing videos' URL and file name.
 	public JSONObject getMedia(int mediaId) throws SQLException {

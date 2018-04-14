@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class isLogged
  */
-@WebFilter(urlPatterns = {"/Comments", "/Like", "/Dislike", "/Upload"})
+@WebFilter(urlPatterns = {"/Comments", "/Like", "/Dislike", "/Upload", "/DeleteMedia"})
 public class isLogged implements Filter {
 
     /**
