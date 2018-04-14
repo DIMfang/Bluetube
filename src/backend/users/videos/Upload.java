@@ -72,7 +72,7 @@ public class Upload extends HttpServlet {
 			 		os.write(bytes, 0, read);
 				} // COMO SE, SI SE GUARDO CORRECTAMENTE EL ARCHIVO?
 				/* 
-				 * if(new File(path + "\\" + filename).exist() 
+				 * if(new File(path + "\\" + filename).exist())
 				 * */
 				mediaData.put("id_user", userData.getInt("id_user"));
 				mediaData.put("media_url", path);

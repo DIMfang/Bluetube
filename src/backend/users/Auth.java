@@ -39,7 +39,7 @@ public class Auth extends HttpServlet {
 				JSONObject userData = (JSONObject) session.getAttribute("session");
 				authType += "\"" + userData.getString("type_des") + "\"}";				
 			} catch(Exception e) {
-				response.setStatus(401);
+				response.setStatus(401); // Session murio 
 			}
 		} else {
 			authType += "\"Invited\"}"; 

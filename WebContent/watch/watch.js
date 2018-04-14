@@ -6,60 +6,60 @@ const key = document.location.search;
 const mediaId = document.location.search.split('=')[1];
 
 // User type
-fetch('../Auth', {
-    method: 'GET',
-    header: {
-        'Content-type': 'application/x-www-form-urlencoded'
-    },
-    credentials: 'same-origin',
-}).then(response => response.json())
-    .then(data => {
-        const typeUser = data.type_user;
-        if (typeUser === 'Administrator') {
-            console.log('administrator')
-            $('delete-media').style.display = '';
-        }
-    }).catch(error => {
-        typeUser = 'Invited';
-    });
-// Media data
-fetch('../Comments?key=' + mediaId, {
-    method: 'GET',
-    headers: {
-        'Content-type': 'application/x-www-form-urlencoded',
-    },
-    credentials: 'same-origin',
-}).then(response => response.json())
-    .then(res => {
-        const mediaData = res.data,
-            comments = res.comments;
-        if (res.status == 200) {
-            $('media-name').innerText = mediaData.name;
-            $('media-description').innerText = mediaData.description;
-            $('media-user').innerText = mediaData.username;
-            $('media-views').innerText = mediaData.views + ' views';
-            // $('media-date').innerText = mediaData.created;
-            $('like-count').innerText = mediaData.likes;
-            $('dislike-count').innerText = mediaData.dislikes;
-            const template = document.querySelector('#comment-template');
-            comments.forEach(comment => {
-                let clone = template.content.cloneNode(true);
-                let username = clone.querySelectorAll('h6')[0];
-                let date = clone.querySelectorAll('small')[0];
-                let text = clone.querySelectorAll('p')[0];
-                username.innerText = comment.username;
-                date.innerText = comment.created_at;
-                text.innerText = comment.comment_text;
-                template.parentNode.appendChild(clone);
-            });
-        } else {
-            console.log(res)
-        }
-    }).catch(error => {
-        console.log(error.message);
-    });
-// Streaming
-$("video").src = "../Streaming" + key;
+// fetch('../Auth', {
+//     method: 'GET',
+//     header: {
+//         'Content-type': 'application/x-www-form-urlencoded'
+//     },
+//     credentials: 'same-origin',
+// }).then(response => response.json())
+//     .then(data => {
+//         const typeUser = data.type_user;
+//         if (typeUser === 'Administrator') {
+//             console.log('administrator')
+//             $('delete-media').style.display = '';
+//         }
+//     }).catch(error => {
+//         typeUser = 'Invited';
+//     });
+// // Media data
+// fetch('../Comments?key=' + mediaId, {
+//     method: 'GET',
+//     headers: {
+//         'Content-type': 'application/x-www-form-urlencoded',
+//     },
+//     credentials: 'same-origin',
+// }).then(response => response.json())
+//     .then(res => {
+//         const mediaData = res.data,
+//             comments = res.comments;
+//         if (res.status == 200) {
+//             $('media-name').innerText = mediaData.name;
+//             $('media-description').innerText = mediaData.description;
+//             $('media-user').innerText = mediaData.username;
+//             $('media-views').innerText = mediaData.views + ' views';
+//             // $('media-date').innerText = mediaData.created;
+//             $('like-count').innerText = mediaData.likes;
+//             $('dislike-count').innerText = mediaData.dislikes;
+//             const template = document.querySelector('#comment-template');
+//             comments.forEach(comment => {
+//                 let clone = template.content.cloneNode(true);
+//                 let username = clone.querySelectorAll('h6')[0];
+//                 let date = clone.querySelectorAll('small')[0];
+//                 let text = clone.querySelectorAll('p')[0];
+//                 username.innerText = comment.username;
+//                 date.innerText = comment.created_at;
+//                 text.innerText = comment.comment_text;
+//                 template.parentNode.appendChild(clone);
+//             });
+//         } else {
+//             console.log(res)
+//         }
+//     }).catch(error => {
+//         console.log(error.message);
+//     });
+// // Streaming
+// $("video").src = "../Streaming" + key;
 
 
 // ============================= ACTIONS ===============================        

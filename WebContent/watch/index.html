@@ -35,8 +35,9 @@
 
                 <hr style="width:inherit;" class="my-3">
                 <div class="">
-                    <p id="media-description" class="h6">
-                        OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+                    <p style="width:inherit;" id="media-description" class="h6">
+                         Bootdeyisagalleryoffreesnippetsresourcestemplatesandutilitiesforbootstrapcsshmtljsframework. Codes for developers
+                        and web designer
                     </p>
                 </div>
                 <div class="btn-group btn-group-toggle pl-0 mt-auto mb-2 d-flex container">
@@ -128,7 +129,20 @@
                     // Administrator functions              
                     $('delete-media').style.display = 'inherit';
                     $('delete-media').onclick = () => {
-                        
+                        let body = {
+                            mediaId: mediaId
+                        }
+                        fetch('../DeleteMediaAsAdmin', {
+                            method: 'POST',
+                            header: {
+                                'Content-type': 'application/x-www-form-urlencoded'
+                            },
+                            credentials: 'same-origin',
+                            body: JSON.stringify(body),
+                        }).then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
                     }
                 }
             }).catch(error => {
@@ -143,6 +157,7 @@
                 credentials: 'same-origin',
             }).then(response => response.json())
             .then(res => {
+                console.log(res);
                 const mediaData = res.data,
                     comments = res.comments;
                 if (res.status == 200) {

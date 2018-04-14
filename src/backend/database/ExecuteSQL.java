@@ -41,5 +41,11 @@ public abstract class ExecuteSQL {
 		if(this.pst != null) 
 			this.pst.close();
 	}
+	public Connection getConnection() {
+		return this.con;
+	}
+	public PreparedStatement getPreparedStatement() {
+		return this.pst;
+	}
 	
 }

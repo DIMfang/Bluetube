@@ -1,5 +1,7 @@
 package backend.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -7,6 +9,8 @@ import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import backend.util.properties.Props;
 
 
 public class MediaQueries extends ExecuteSQL {
@@ -81,7 +85,37 @@ public class MediaQueries extends ExecuteSQL {
 		int result = executeUpdate("addView", mediaId);
 		return (result == 1) ? true : false;
 	}
-	
+	public String deleteMedia(int mediaId) throws SQLException {
+		this.rs = executeQuery("mediaURL", mediaId);
+		if(this.rs.next()) {
+			PreparedStatement deleteComments = null, deleteLikes = null, deleteMedia = null;
+			Connection con = this.getConnection();
+			try {
+				con.setAutoCommit(false);
+				deleteComments = con.prepareStatement(Props.getQuery("deleteComments"));
+				deleteLikes = con.prepareStatement(Props.getQuery("deleteLikes"));
+				deleteMedia = con.prepareStatement(Props.getQuery("deleteMedia"));
+				deleteComments.setInt(1, mediaId);
+				deleteComments.executeUpdate();
+				deleteLikes.setInt(1, mediaId);
+				deleteLikes.executeUpdate();
+				deleteMedia.setInt(1, mediaId);
+				deleteMedia.executeUpdate();
+				con.commit();
+			} finally {		
+				con.setAutoCommit(true);			
+				if(deleteComments != null) 
+					deleteComments.close();
+				if(deleteLikes != null) 
+					deleteLikes.close();
+				if(deleteComments != null) 
+					deleteLikes.close();								
+			}
+		} else {
+			return null; 
+		}
+		return this.rs.getString("media_url");
+	}
 	
 	public void closeResources() {
 		try {
