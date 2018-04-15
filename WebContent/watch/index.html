@@ -181,6 +181,24 @@
                         if(typeUser == 'Administrator') {
                             let deleteOption = clone.querySelectorAll('a')[1];
                             deleteOption.style.display = 'inherit';
+                            deleteOption.onclick = () =>{
+                            	let body = {
+                            		commentid: comment.comment_id
+                            	}
+                            	fetch("../DeleteComment", {
+                            		method: "POST",
+                            		headers: {
+                            			'Content-type': 'application/x-www-form-urlencoded'
+                            		},
+                            		credentials: "same-origin",
+                            		body: JSON.stringify(body),
+                            	}).then(response => response.json())
+                            	.then(data => {
+                            		console.log(data);
+                            		
+                            		text.innerText = "Este comentario ha sido borrado por un administrador.";
+                            	})
+                            }
                         }
                         username.innerText = comment.username;
                         date.innerText = comment.created_at;
