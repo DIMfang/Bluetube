@@ -20,6 +20,12 @@ public class ActionQueries extends ExecuteSQL {
 		int result = executeUpdate("newComment", commentData.getInt("media_id"), commentData.getInt("id_user"), time, commentData.getString("comment_text"));
 		return (result == 1) ? true : false;
 	}
+		
+	public boolean DeleteComment(int commentid) throws SQLException {
+		int result = executeUpdate("deleteComment", commentid);
+		return (result==1) ? true : false;
+	}
+	
 	// LIKE/DISLIKE'S QUERIES
 	public boolean likeVideo(int userId, int mediaId) throws SQLException {
 		int result = executeUpdate("videoLike", userId, mediaId);
