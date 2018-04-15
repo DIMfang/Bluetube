@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import backend.database.ActionQueries;
 import backend.database.MediaQueries;
 
 /**
@@ -45,15 +46,15 @@ public class DeleteComment extends HttpServlet {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-		MediaQueries mq = new MediaQueries();
+		ActionQueries aq = new ActionQueries();
 		try {
-			mq.DeleteComment(params.getInt("commentid"));
+			aq.DeleteComment(params.getInt("commentid"));
 			message.put("status", 200).put("response", "The comment was deleted.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			message.put("status", 500).put("response", "ERROR.");
 		} finally {
-			mq.closeResources();
+			aq.closeResources();
 		}
 		out.println(message.toString());
 	}
