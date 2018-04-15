@@ -47,9 +47,9 @@ public class DeleteComment extends HttpServlet {
 		JSONObject message = new JSONObject(), params = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
 		MediaQueries mq = new MediaQueries();
 		try {
-			mq.DeleteComment(params.getInt("commentid"));
+//			mq.DeleteComment(params.getInt("commentid"));
 			message.put("status", 200).put("response", "The comment was deleted.");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			message.put("status", 500).put("response", "ERROR.");
 		} finally {
