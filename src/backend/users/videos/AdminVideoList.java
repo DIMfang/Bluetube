@@ -36,8 +36,6 @@ public class AdminVideoList extends HttpServlet {
 		MediaQueries mq = new MediaQueries();
 		JSONArray videos = new JSONArray(); 
 		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-		
 			try {
 				videos = mq.getAllUserVideoList();
 			} catch(SQLException e) {
