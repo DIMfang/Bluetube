@@ -15,32 +15,31 @@
     <div class="container-fluid pt-4">
         <div class="row">
             <div class="col-7">
-                <video style="width:inherit; height:inherit;" id="video" controls autoplay></video>
+                <video style="width:inherit; height:inherit; box-shadow: 0 1px 5px rgba(101, 101, 102, 0.12), 0 1px 15px rgba(32, 32, 32, 0.3)" id="video" controls autoplay></video>
             </div>
-            <div class="col-5 d-flex align-items-start flex-column">
+            <div class="col-5 d-flex align-items-start flex-column bg-light rounded">
                 <div class="">
-                    <h2 id="media-name" style="font-size:40px;" class="display-4">Video title</h2>
+                    <h2 id="media-name" style="font-size:40px;" class="display-4 pt-2">Video title</h2>
                 </div>
                 <hr style="width:inherit;" class="my-3">
-                <div class=" d-flex container">
+                <div class=" d-flex container bg-white rounded">
                     <img class="mr-2" src="../img/icons8_Male_User.ico" alt="Generic placeholder image">
                     <div class="d-flex flex-column mr-5 justify-content-center">
                         <p id="media-user" style="font-size:15px;" class="lead mb-0">JeanLambert</p>
                         <!-- <small id="media-date" class="">2018-25-3</small> -->
                     </div>
                     <div class="d-flex ml-auto align-items-center">
-                        <p id="media-views" style="font-size:15px;" class="lead mb-0">102 views</p>
+                        <p id="media-views" style="font-size:15px;" class="lead mb-0 text-muted">102 views</p>
                     </div>
                 </div>
 
                 <hr style="width:inherit;" class="my-3">
                 <div class="">
                     <p style="width:inherit;" id="media-description" class="h6">
-                         Bootdeyisagalleryoffreesnippetsresourcestemplatesandutilitiesforbootstrapcsshmtljsframework. Codes for developers
-                        and web designer
+                         DEFAULT DESCRIPTION - IF YOU'RE SEEING THIS, AN ERROR OCCURED
                     </p>
                 </div>
-                <div class="btn-group btn-group-toggle pl-0 mt-auto mb-2 d-flex container">
+                <div class="btn-group btn-group-toggle pl-3 pt-1 pb-1 mt-auto mb-2 d-flex container bg-white rounded">
 
                     <button style="border:none; padding:0px;" class="btn btn-outline-primary" onClick="doLike();" id="">
                         <img style="width:40px; height:40px;" src="../img/icons8-buena-calidad-filled-50.png" alt="">
@@ -80,7 +79,7 @@
         </div>
         <div id="comment-box" class="row mt-5 m-4 d-flex justify-content-center">            
             <template id="comment-template">
-                <div class="col-8">
+                <div class="col-8 bg-light">
                     <div class="d-flex">
                         <img src="../img/icons8_Male_User_5.ico" alt="user profile image">
                         <div class="d-flex flex-column justify-content-center">
@@ -106,6 +105,7 @@
                             </a>
                         </div>
                     </div>
+                    <hr style="width:inherit;" class="my-3">
                 </div>
             </template>
         </div>
