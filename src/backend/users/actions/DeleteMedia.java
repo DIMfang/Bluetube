@@ -59,7 +59,7 @@ public class DeleteMedia extends HttpServlet {
 				if(URL != null) {
 					File media = new File(URL);
 					media.delete();
-					message.put("status", 200);
+					message.put("status", 200).put("response", "You have deleted this video");
 				} else {
 					message.put("status", 403).put("response", "Video does not exist");
 				}	

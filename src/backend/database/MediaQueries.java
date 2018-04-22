@@ -41,6 +41,34 @@ public class MediaQueries extends ExecuteSQL {
 		return mediaData;
 	}
 	
+	public JSONArray getUserVideoList(int userId) throws SQLException {
+		JSONArray mediaData = new JSONArray();		
+		this.rs = executeQuery("searchUserVideos", userId);
+		while(this.rs.next()) {
+			JSONObject row = new JSONObject();
+			this.rsmd = this.rs.getMetaData();
+			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
+				row.put(this.rsmd.getColumnLabel(i), this.rs.getObject(i));
+			}
+			mediaData.put(row);
+		}
+		return mediaData;
+	}
+	
+	public JSONArray getAllUserVideoList() throws SQLException {
+		JSONArray mediaData = new JSONArray();		
+		this.rs = executeQuery("searchAllUserVideos");
+		while(this.rs.next()) {
+			JSONObject row = new JSONObject();
+			this.rsmd = this.rs.getMetaData();
+			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
+				row.put(this.rsmd.getColumnLabel(i), this.rs.getObject(i));
+			}
+			mediaData.put(row);
+		}
+		return mediaData;
+	}
+	
 	
 	// Function to retrieve an existing videos' URL and file name.
 	public JSONObject getMedia(int mediaId) throws SQLException {

@@ -107,17 +107,8 @@
 				<div id="menu2" class="tab-pane fade">
 					<h2>Stream</h2>
 					<h4 class="font-weight-light display"> In this section, you can watch your own videos. </h4>
-					<div class="video-container embed-responsive embed-responsive-16by9" style="text-align:center;">
-						<video id="video" controls autoplay style='box-shadow: 0 1px 5px rgba(101, 101, 102, 0.12), 0 1px 15px rgba(32, 32, 32, 0.3);'></video>
-					</div>
-					<br>
-					<div class="form-group">
-							<input type="text"
-								class="form-control" name="" id="search_input" aria-describedby="helpId" placeholder="Video name">
-					</div>
-					<div style="text-align: center;">
-							<button type="button" class="btn btn-outline-primary" style="width: 50%" onclick="stream()">Stream</button>
-					</div>
+                		<div class="list-group" id="list-videos" role="tablist">
+                		</div>
 				</div>
 			</div>
 	</div>
@@ -147,22 +138,65 @@
 				})
 		}
 		
-		videoTEST = () => {
-			let configs = {
-				method: 'GET',
-				headers: {
-					'Content-type': 'application/x-www-form-urlencoded'
-				},
-				credentials: 'same-origin'
-			}
-			fetch('../VideoList', configs)
-				.then(response => response.json())
-				.then(data => {
-					console.log(data);
-				}).catch(error => {
-					console.log(error.message);
-				})
-		}
+
+        
+            let listGroup = document.getElementById('list-videos');
+            while (listGroup.firstChild) {
+                listGroup.removeChild(listGroup.firstChild);
+            }
+            
+            let url = '../UserVideoList';
+            configs = {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
+            }
+            fetch(url, configs)
+                .then(response => response.json())
+                .then(videos => {
+                    watchVideo = (id) =>{
+                    	window.location.replace("../watch?key=" + id);
+                    };
+                    
+                    deleteVideo= (id) =>{
+                        let body = {
+                                mediaId: id
+                            }
+                            fetch('../DeleteMedia', {
+                                method: 'POST',
+                                header: {
+                                    'Content-type': 'application/x-www-form-urlencoded'
+                                },
+                                credentials: 'same-origin',
+                                body: JSON.stringify(body),
+                            }).then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                            })
+                    }
+                    
+                    videos.forEach(e => {
+                        let aNode = document.createElement('a');
+                        let textNode = document.createTextNode(e.media_name);
+                        let divList = document.createElement("div");
+                        let deleteButton = document.createElement("button");
+                        divList.setAttribute('class', 'list-group-item list-group-item-action row d-flex ml-1');
+                        aNode.setAttribute('onclick', 'watchVideo('+e.media_id+');');
+                        aNode.setAttribute("class", "col-10");
+                        deleteButton.setAttribute('class', "btn btn-outline-danger col-1 w-10");
+                        deleteButton.setAttribute('onclick', "deleteVideo("+e.media_id+");");
+                        deleteButton.innerHTML = "Delete";
+                        aNode.appendChild(textNode);
+                        divList.appendChild(aNode);
+                        divList.appendChild(deleteButton);
+                        listGroup.append(divList);
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
+    
 	</script>
 	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
