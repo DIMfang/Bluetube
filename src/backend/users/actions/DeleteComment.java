@@ -2,7 +2,6 @@ package backend.users.actions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import backend.database.ActionQueries;
-import backend.database.MediaQueries;
 
 /**
  * Servlet implementation class DeleteComment
@@ -50,6 +48,7 @@ public class DeleteComment extends HttpServlet {
 		try {
 			aq.DeleteComment(params.getInt("commentid"));
 			message.put("status", 200).put("response", "The comment was deleted.");
+			System.out.println("hola");
 		} catch (Exception e) {
 			e.printStackTrace();
 			message.put("status", 500).put("response", "ERROR.");

@@ -34,7 +34,7 @@
 	<script src="logout.js"></script>
 	<nav-bar inref="../login" upref="../register" href="../"></nav-bar>
 	<div class='container bg-light pb-2 mt-2' style="padding-top: 10px;">
-		<ul class='nav nav-tabs ' role="tablist">
+		<ul class='nav nav-tabs' role="tablist" id="menu-tabs">
 			<li class="nav-item"><a class="nav-link active" href="#Profile" data-toggle="tab">Profile</a></li>
 			<li class="nav-item"><a class="nav-link" href="#menu1" data-toggle="tab">Upload</a></li>
 			<li class="nav-item"><a class="nav-link" href="#menu2" data-toggle="tab">Stream</a></li>
@@ -106,8 +106,14 @@
 				</div>
 				<div id="menu2" class="tab-pane fade">
 					<h2>Stream</h2>
-					<h4 class="font-weight-light display"> In this section, you can watch your own videos. </h4>
+					<h4 class="font-weight-light display"> In this section, you can watch and delete your own videos. </h4>
                 		<div class="list-group" id="list-videos" role="tablist">
+                		</div>
+				</div>
+				<div id="menu3" class="tab-pane fade">
+					<h2>Administration</h2>
+					<h4 class="font-weight-light display"> In this section, you can watch and delete every video on the site. </h4>
+                		<div class="list-group" id="list-videos-admin" role="tablist">
                 		</div>
 				</div>
 			</div>
@@ -196,7 +202,86 @@
                 }).catch(error => {
                     console.log(error);
                 });
-    
+    			
+            //Administration tools
+            // Authentication, asks the server what's the type of user
+            	fetch("../Auth", {
+                method: 'GET',
+                header: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                credentials: 'same-origin',
+            	}).then(response => response.json())
+            	.then(data =>{
+            		typeUser = data.authType;
+                	if (typeUser === 'Administrator') {
+                		//Creates a new tab for admin tools
+                		let liNode = document.createElement("li");
+                		let aNode = document.createElement("a");
+                		let ul = document.getElementById("menu-tabs");
+                		
+                		liNode.setAttribute("class", "nav-item");
+                		aNode.setAttribute("class", "nav-link");
+                		aNode.setAttribute("href", "#menu3");
+                		aNode.setAttribute("data-toggle", "tab");
+                		aNode.innerHTML = "Admin tools";
+                		liNode.appendChild(aNode);
+                		ul.appendChild(liNode);
+                		//Asks the server for the data of every video uploaded
+                		fetch("../AdminVideoList", {
+			                method: 'GET',
+			                headers: {
+			                    'Content-type': 'application/x-www-form-urlencoded'
+			                },
+			                credentials: 'same-origin',
+			            }).then(response => response.json())
+			            	.then(videos =>{
+			                    watchVideo = (id) =>{
+			                    	window.location.replace("../watch?key=" + id);
+			                    };
+			                    
+			                    deleteVideo= (id) =>{
+			                        let body = {
+			                                mediaId: id
+			                            }
+			                            fetch('../DeleteMediaAsAdmin', {
+			                                method: 'POST',
+			                                header: {
+			                                    'Content-type': 'application/x-www-form-urlencoded'
+			                                },
+			                                credentials: 'same-origin',
+			                                body: JSON.stringify(body),
+			                            }).then(response => response.json())
+			                            .then(data => {
+			                                console.log(data);
+			                            })
+			                    }
+			                    
+			                    videos.forEach(video =>{
+			                    	let aNode = document.createElement('a');
+			                        let textNode = document.createTextNode(video.media_name);
+			                        let divList = document.createElement("div");
+			                        let deleteButton = document.createElement("button");
+			                        let listGroupAdmin = document.getElementById("list-videos-admin")
+			                        divList.setAttribute('class', 'list-group-item list-group-item-action row d-flex ml-1');
+			                        aNode.setAttribute('onclick', 'watchVideo('+video.media_id+');');
+			                        aNode.setAttribute("class", "col-10");
+			                        deleteButton.setAttribute('class', "btn btn-outline-danger col-1 w-10");
+			                        deleteButton.setAttribute('onclick', "deleteVideo("+video.media_id+");");
+			                        deleteButton.innerHTML = "Delete";
+			                        aNode.appendChild(textNode);
+			                        divList.appendChild(aNode);
+			                        divList.appendChild(deleteButton);
+			                        listGroupAdmin.append(divList);
+			                    })
+			            	}).catch(error =>{
+			            		console.log(error);
+			            	});
+			        }
+			    }).catch(error =>{
+			    	console.log(error);
+			    })
+            
 	</script>
 	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="../node_modules/popper.js/dist/umd/popper.js"></script>
