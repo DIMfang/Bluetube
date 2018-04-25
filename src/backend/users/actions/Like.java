@@ -60,11 +60,11 @@ public class Like extends HttpServlet {
 					message.put("status", 200).put("description", "Like");
 				} else if(isBool.equals(true)) {
 					// Ya hizo un like
-					message.put("status", 200).put("description", "This user already likes this video");
+					message.put("status", 201).put("description", "This user already likes this video");
 				} else {
 					// Hizo un dislike -> Se cambia a like
 					aq.changeState(true, userId, mediaId);
-					message.put("status", 200).put("description", "Changing to like");					
+					message.put("status", 202).put("description", "Changing to like");					
 				}
 			} catch(SQLException | NullPointerException e) {
 				message.put("status", 503).put("description", "Unknown problem, try again");

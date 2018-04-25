@@ -44,7 +44,7 @@ public class Props {
 	public static String getDB(String prop) {
 		return props.get("db").getProperty(prop);
 	}
-	public static String getQuery(String prop) {
+	public static String getQuery(String prop) {		
 		return props.get("queries").getProperty(prop);
 	}
 	public static Properties getProperties(String fileName) {

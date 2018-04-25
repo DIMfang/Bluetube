@@ -59,7 +59,7 @@ public class Login extends HttpServlet {
 					message.put("status", 409).put("response", "Invalid username or password");
 					session.invalidate();
 				}
-			} catch(SQLException e) {
+			} catch(NullPointerException | SQLException e) {
 				message.put("status", 503).put("response", "Unknown problem, try again");
 				e.printStackTrace();
 				session.invalidate();

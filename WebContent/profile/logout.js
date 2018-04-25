@@ -37,7 +37,9 @@ function upload() {
 	.then(response => response.json())
 	.then(data => {
 		console.log(data);
-		document.getElementById('uploadStatus').textContent = data + '\nFile Uploaded';
+		let status = document.getElementById('uploadStatus');
+		status.textContent = 'Video uploaded success';
+		status.style.color = '#1A7DD7'
 	}).catch(error => {
 		console.log(error.message);
 	})

@@ -32,5 +32,10 @@ function login() {
             }
         }).catch(error => {
             console.log(error);
+            let form = $('form');
+            e.preventDefault();
+            if (form.checkValidity() == false) {
+                e.stopPropagation();
+            }
         });
 }

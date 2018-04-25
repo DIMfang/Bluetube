@@ -238,7 +238,17 @@
             fetch("../Like", configs)
                 .then(response => response.json())
                 .then(data => {
-                    // TODO: Hacer algo cuando haya un like
+                    let dislikes = $('dislike-count');
+                    let likes = $('like-count');
+                    if (data.status == 200) {
+                        let likeCount = parseInt(likes.innerHTML) + 1;
+                        likes.innerHTML = likeCount;
+                    } else if (data.status == 202) {
+                        let likeCount = parseInt(likes.innerHTML) + 1;
+                        likes.innerHTML = likeCount;
+                        let dislikeCount = parseInt(dislikes.innerHTML) - 1;
+                        dislikes.innerHTML = dislikeCount
+                    }
                     console.log(data);
                 }).catch(error => {
                     console.log(error.message);
@@ -260,9 +270,19 @@
 
             fetch("../Dislike", configs)
                 .then(response => response.json())
-                .then(data => {
-                    // TODO: Hacer algo cuando haya un dislike
+                .then(data => {                    
                     console.log(data);
+                    let dislikes = $('dislike-count');
+                    let likes = $('like-count');
+                    if(data.status == 200) {
+                        let dislikeCount = parseInt(dislikes.innerHTML) + 1;
+                        dislikes.innerHTML = dislikeCount;
+                    } else if(data.status == 202) {
+                        let dislikeCount = parseInt(dislikes.innerHTML) + 1;
+                        dislikes.innerHTML = dislikeCount;
+                        let likeCount = parseInt(likes.innerHTML) - 1;
+                        likes.innerHTML = likeCount
+                    }
                 }).catch(error => {
                     console.log(error.message);
                 })
@@ -290,7 +310,6 @@
                 }).catch(error => {
                     console.log(error.message);
                 });
-            commentsBox();
         }
     </script>
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>

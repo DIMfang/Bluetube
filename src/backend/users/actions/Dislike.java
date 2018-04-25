@@ -60,10 +60,10 @@ public class Dislike extends HttpServlet {
 					message.put("status", 200).put("description", "Dislike");
 				} else if(isBool.equals(false)) {
 					// Ya hizo un dislike
-					message.put("status", 403).put("description", "This user already dislikes this video");	
+					message.put("status", 201).put("description", "This user already dislikes this video");	
 				} else {
 					aq.changeState(false, userId, mediaId);
-					message.put("status", 200).put("description", "Changing to dislike");
+					message.put("status", 202).put("description", "Changing to dislike");
 				}				
 			} catch(SQLException e) {
 				message.put("status", 200).put("description", "Changing dislike");

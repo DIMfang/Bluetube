@@ -19,13 +19,11 @@ public class UserQueries extends ExecuteSQL {
 	
 	private JSONObject getData() throws SQLException {
 		JSONObject userData = new JSONObject();
-		if(this.rs.next()) {
+		if(this.rs.next()) {		
 			this.rsmd = rs.getMetaData();
 			for(int i = 1; i <= this.rsmd.getColumnCount(); i++) {
 				userData.put(rsmd.getColumnLabel(i), rs.getObject(i));
 			}
-		} else {
-			return null;
 		}
 		return userData;
 	}
