@@ -48,7 +48,6 @@ public class DeleteComment extends HttpServlet {
 		try {
 			aq.DeleteComment(params.getInt("commentid"));
 			message.put("status", 200).put("response", "The comment was deleted.");
-			System.out.println("hola");
 		} catch (Exception e) {
 			e.printStackTrace();
 			message.put("status", 500).put("response", "ERROR.");

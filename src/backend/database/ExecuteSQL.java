@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import backend.util.properties.PoolManager;
 import backend.util.properties.Props;
 
 public abstract class ExecuteSQL {
@@ -14,12 +15,13 @@ public abstract class ExecuteSQL {
 	private PreparedStatement pst;
 	
 	public ExecuteSQL() {
-		try {
-			Class.forName(Props.getDB("driver"));
-			this.con = DriverManager.getConnection(Props.getDB("url"), Props.getDB("user"), Props.getDB("password"));
-		} catch(ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Class.forName(Props.getDB("driver"));
+//			this.con = DriverManager.getConnection(Props.getDB("url"), Props.getDB("user"), Props.getDB("password"));
+//		} catch(ClassNotFoundException | SQLException e) {
+//			e.printStackTrace();
+//		}
+		con = PoolManager.getConnection();
 	}
 	
 	protected ResultSet executeQuery(String query, Object... values) throws SQLException {
@@ -62,10 +64,11 @@ public abstract class ExecuteSQL {
 //	}
 	// Close connection and preparedStatement
 	protected void closeMainResource() throws SQLException {
-		if(this != null) 
-			this.con.close();
+//		if(this != null) 
+//			this.con.close();
 		if(this.pst != null) 
 			this.pst.close();
+		PoolManager.returnConnection(con);
 	}
 	
 	// Getters

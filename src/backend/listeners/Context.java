@@ -4,6 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import backend.util.properties.PoolManager;
 import backend.util.properties.Props;
 
 /**
@@ -32,6 +33,7 @@ public class Context implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent arg0)  {     	
     	Props.getInstance();
+    	PoolManager.InitializePool("C:\\Users\\jc\\Documents\\Java\\JEE\\BlueTube\\configs\\db.properties");
     }
 	
 }
