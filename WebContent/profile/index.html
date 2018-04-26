@@ -37,7 +37,7 @@
 		<ul class='nav nav-tabs' role="tablist" id="menu-tabs">
 			<li class="nav-item"><a class="nav-link active" href="#Profile" data-toggle="tab">Profile</a></li>
 			<li class="nav-item"><a class="nav-link" href="#menu1" data-toggle="tab">Upload</a></li>
-			<li class="nav-item"><a class="nav-link" href="#menu2" data-toggle="tab">Stream</a></li>
+			<li class="nav-item"><a class="nav-link" href="#menu2" data-toggle="tab">Videos</a></li>
 		</ul>
 	
 		<div class="tab-content">
@@ -121,7 +121,7 @@
 	<script>
 		let sesion = JSON.parse(localStorage.getItem("session"));
 		document.getElementById("channelname").innerHTML = sesion.username;
-		logout = () => {
+		/* logout = () => {
 			let configs = {
 				method: 'GET',
 				headers: {
@@ -143,7 +143,7 @@
 					console.log(error.message);
 				})
 		}
-		
+		 */
 
         
             let listGroup = document.getElementById('list-videos');
