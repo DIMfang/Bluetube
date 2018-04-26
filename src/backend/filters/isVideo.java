@@ -8,11 +8,14 @@ import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  * Servlet Filter implementation class isVideo
@@ -39,19 +42,18 @@ public class isVideo implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		// place your code here
 		HttpServletRequest req = (HttpServletRequest) request;
-		Map<String, String> map = new HashMap<String, String>();
-        Enumeration headerNames = req.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
-            String value = req.getHeader(key);
-            map.put(key, value);
-        }
-
-       System.out.println(map.toString());
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
+		HttpServletResponse res = (HttpServletResponse) response;
+		Part file = req.getPart("file");
+		
+		String fileName = file.getContentType();
+		System.out.println(fileName);
+		if (fileName.startsWith("video/")) {
+			chain.doFilter(request, response);
+		}else {
+			res.setStatus(403);
+		}
+		// pass thes request along the filter chain
 	}
 
 	/**
