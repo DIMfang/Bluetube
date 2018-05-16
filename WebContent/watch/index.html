@@ -72,8 +72,8 @@
                 <textarea style="resize:none; width:inherit; border-top:none; border-left:none; border-right:none;" class="input-group-append"
                     id="comment" rows="1"></textarea>
                 <div class="ml-auto mt-2 mr-3">
-                    <button style="opacity:1; background-color:white;" class="btn btn-link" onClick="doComment()">CANCEL</button>
-                    <button style="font-size:15px;" class="btn btn-primary" onClick="doComment()">COMMENT</button>
+                    <button id="cancel-button" style="opacity:1; background-color:white;" class="btn btn-link" onClick="doComment()">CANCEL</button>
+                    <button id="comment-button" style="font-size:15px;" class="btn btn-primary" onClick="doComment()">COMMENT</button>
                 </div>
             </div>
         </div>
@@ -148,7 +148,10 @@
                             console.log(data);
                         })
                     }
-                } 
+                } else if(typeUser == 'Invited') {
+                    $('comment-button').style.display = 'none';
+                    $('cancel-button').style.display = 'none';
+                }
             }).catch(error => {
                 typeUser = 'Invited';
             });
@@ -313,26 +316,28 @@
         // Do comment
         function doComment() {
             let commentText = document.getElementById('comment').value;
-            let data = {
-                media_id: mediaId,
-                comment_text: commentText
+            if(commentText != '') {
+                let data = {
+                    media_id: mediaId,
+                    comment_text: commentText
+                }
+                let configs = {
+                    method: 'POST',
+                    header: {
+                        'Content-type': 'application/x-www-form-urlencoded'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                }
+                fetch('../Comments', configs)
+                    .then(response => response.json())
+                    .then(data => {
+                        // TODO: Hacer algo cuando se realiza un comentario
+                        console.log(data);
+                    }).catch(error => {
+                        console.log(error.message);
+                    });
             }
-            let configs = {
-                method: 'POST',
-                header: {
-                    'Content-type': 'application/x-www-form-urlencoded'
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify(data)
-            }
-            fetch('../Comments', configs)
-                .then(response => response.json())
-                .then(data => {
-                    // TODO: Hacer algo cuando se realiza un comentario
-                    console.log(data);
-                }).catch(error => {
-                    console.log(error.message);
-                });
         }
     </script>
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>

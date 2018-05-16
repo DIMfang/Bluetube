@@ -14,12 +14,14 @@
     <nav-bar inref="./login" upref="./register" pref="./profile" href="#" profile-img="./img/ic_person_white_48dp_1x.png"></nav-bar>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
-                <form class="form-inline my-2 my-lg-0">
-                    <input id="input-search" class="form-control mr-sm-2" type="text" placeholder="Search">
+            <div class="col-12 mt-2">
+                <!-- <form class="form-inline my-2 my-lg-0"> -->
+                <div class="d-flex">
+                    <input id="input-search" class="form-control mr-sm-2 col-4" type="text" placeholder="Search">
                     <button onclick="onSearch()" class="btn btn-outline-primary my-2 my-sm-0" type="button">Search</button>
-                    <button type="button" onClick="toprofile()" class="btn btn-outline-primary my-3 my-sm-1 ml-2">Profile</button>
-                </form>
+                    <button type="button" onClick="toprofile()" class="btn btn-outline-primary my-2 my-sm-0 ml-2">Profile</button>
+                </div>
+                    <!-- </form> -->
             </div>
         </div>
         <div class="row">

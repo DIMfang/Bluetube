@@ -1,4 +1,14 @@
 /.metadata/
 
+/.settings/
+
 /WebContent/node_modules
 /node_modules
+/build
+
+# Eclipse project files
+.classpath
+.project
+
+# Compiled stuff
+/build
