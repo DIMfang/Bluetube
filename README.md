@@ -1,5 +1,5 @@
 # BlueTube
-A Video-Sharing website where you can:
+A Video-sharing website where you can:
 - Create an account
 - Upload videos
 - Watch your videos and other user's uploaded media
@@ -7,12 +7,11 @@ A Video-Sharing website where you can:
 - Like/Dislike videos
 
 And many other features
-### What was used to make this project?
-- Backend
-  - Java Servlets
-  - Java Filters
-  - HTTP Sessions
-  - PostgreSQL Database
+### Technology stack
 - Frontend
   - Bootstrap 4
   - FontAwesome
+- Backend
+  - Java
+- Database
+  - PostgreSQL
